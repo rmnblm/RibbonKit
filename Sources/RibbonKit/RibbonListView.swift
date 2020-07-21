@@ -13,6 +13,12 @@ public protocol RibbonListViewDelegate: class {
     func ribbonListView(_ ribbonListView: RibbonListView, heightForSectionAt section: Int) -> CGFloat
 }
 
+extension RibbonListViewDelegate {
+    func ribbonListView(_ ribbonListView: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
+        return 50
+    }
+}
+
 struct CellRegistration {
     let reuseIdentifier: String
     let cellClass: AnyClass?
@@ -75,7 +81,7 @@ open class RibbonListView: UIView {
 
 extension RibbonListView: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return delegate?.ribbonListView(self, heightForSectionAt: indexPath.section) ?? 100
+        return delegate?.ribbonListView(self, heightForSectionAt: indexPath.section) ?? 50
     }
 
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -107,7 +113,7 @@ extension RibbonListView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         displayingCollectionViews.removeValue(forKey: indexPath.section)
         guard let cell = cell as? RibbonCell else { return }
-        storedOffsets[indexPath.row] = cell.collectionView.contentOffset.x
+        storedOffsets[indexPath.section] = cell.collectionView.contentOffset.x
     }
 }
 

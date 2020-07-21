@@ -16,6 +16,7 @@ class RibbonCell: UITableViewCell, ReusableView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
         return collectionView
     }()
 
