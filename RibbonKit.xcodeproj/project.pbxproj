@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3044596124C794100062BA54 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */; };
+		3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */; };
+		3044596624C7B1AB0062BA54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596524C7B1AB0062BA54 /* Constants.swift */; };
+		3044596824C7B3590062BA54 /* CellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596724C7B3590062BA54 /* CellRegistration.swift */; };
+		3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
 		30C15D2824C7436000ABB183 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2724C7436000ABB183 /* AppDelegate.swift */; };
 		30C15D2C24C7436000ABB183 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2B24C7436000ABB183 /* ViewController.swift */; };
 		30C15D3124C7436200ABB183 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30C15D3024C7436200ABB183 /* Assets.xcassets */; };
@@ -20,7 +24,7 @@
 		OBJ_25 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* UICollectionView+Reusable.swift */; };
 		OBJ_26 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* UITableView+Reusable.swift */; };
 		OBJ_27 /* RibbonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* RibbonCell.swift */; };
-		OBJ_29 /* RibbonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RibbonListView.swift */; };
+		OBJ_29 /* RibbonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RibbonList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,10 @@
 
 /* Begin PBXFileReference section */
 		3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
+		3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonConfiguration.swift; sourceTree = "<group>"; };
+		3044596524C7B1AB0062BA54 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3044596724C7B3590062BA54 /* CellRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellRegistration.swift; sourceTree = "<group>"; };
+		3044596A24C7B4D90062BA54 /* ColorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGroup.swift; sourceTree = "<group>"; };
 		30C15D2524C7436000ABB183 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C15D2724C7436000ABB183 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30C15D2B24C7436000ABB183 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,7 +57,7 @@
 		OBJ_11 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		OBJ_12 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		OBJ_13 /* RibbonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonCell.swift; sourceTree = "<group>"; };
-		OBJ_15 /* RibbonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListView.swift; sourceTree = "<group>"; };
+		OBJ_15 /* RibbonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonList.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RibbonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -72,9 +80,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3044596424C7B1760062BA54 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		3044596924C7B4D10062BA54 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3044596A24C7B4D90062BA54 /* ColorGroup.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		30C15D2624C7436000ABB183 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				3044596924C7B4D10062BA54 /* Data */,
 				30C15D3B24C7455100ABB183 /* RandomColor */,
 				30C15D2724C7436000ABB183 /* AppDelegate.swift */,
 				30C15D2B24C7436000ABB183 /* ViewController.swift */,
@@ -134,10 +159,13 @@
 		OBJ_8 /* RibbonKit */ = {
 			isa = PBXGroup;
 			children = (
+				3044596424C7B1760062BA54 /* Layout */,
 				OBJ_9 /* Reusable */,
+				3044596524C7B1AB0062BA54 /* Constants.swift */,
 				OBJ_13 /* RibbonCell.swift */,
-				OBJ_15 /* RibbonListView.swift */,
-				3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */,
+				OBJ_15 /* RibbonList.swift */,
+				3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */,
+				3044596724C7B3590062BA54 /* CellRegistration.swift */,
 			);
 			name = RibbonKit;
 			path = Sources/RibbonKit;
@@ -246,6 +274,7 @@
 				30C15D4224C7456D00ABB183 /* Hue.swift in Sources */,
 				30C15D4124C7456D00ABB183 /* ColorDefinition.swift in Sources */,
 				30C15D2C24C7436000ABB183 /* ViewController.swift in Sources */,
+				3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */,
 				30C15D4024C7456D00ABB183 /* RandomColor.swift in Sources */,
 				30C15D2824C7436000ABB183 /* AppDelegate.swift in Sources */,
 			);
@@ -256,11 +285,14 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_24 /* ReusableView.swift in Sources */,
+				3044596824C7B3590062BA54 /* CellRegistration.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
+				3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */,
 				3044596124C794100062BA54 /* PagingCollectionViewLayout.swift in Sources */,
 				OBJ_26 /* UITableView+Reusable.swift in Sources */,
 				OBJ_27 /* RibbonCell.swift in Sources */,
-				OBJ_29 /* RibbonListView.swift in Sources */,
+				OBJ_29 /* RibbonList.swift in Sources */,
+				3044596624C7B1AB0062BA54 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

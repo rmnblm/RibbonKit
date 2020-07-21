@@ -4,18 +4,19 @@ import UIKit
 
 class RibbonCell: UITableViewCell, ReusableView {
 
-    var configuration: RibbonConfiguration?
-
     private var didRegisterCells = false
 
-    private(set) lazy var collectionView: UICollectionView = {
+    private lazy var collectionViewLayout: PagingCollectionViewLayout = {
         let layout = PagingCollectionViewLayout()
-        layout.itemSize = CGSize(width: 80, height: 80)
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return layout
+    }()
+
+    private(set) lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.decelerationRate = .fast
         return collectionView
     }()
@@ -35,7 +36,6 @@ class RibbonCell: UITableViewCell, ReusableView {
         collectionView.delegate = nil
         collectionView.dataSource = nil
         collectionView.tag = 0
-        configuration = nil
     }
 
     private func setupCell() {
@@ -56,5 +56,11 @@ class RibbonCell: UITableViewCell, ReusableView {
         guard !didRegisterCells else { return }
         defer { didRegisterCells = true }
         registrations.forEach { collectionView.register($0.cellClass, forCellWithReuseIdentifier: $0.reuseIdentifier) }
+    }
+
+    func setConfiguration(_ configuration: RibbonConfiguration) {
+        collectionViewLayout.itemSize = configuration.itemSize
+        collectionViewLayout.minimumLineSpacing = configuration.minimumLineSpacing
+        collectionViewLayout.invalidateLayout()
     }
 }

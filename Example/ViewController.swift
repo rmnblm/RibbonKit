@@ -3,24 +3,15 @@
 import UIKit
 import RibbonKit
 
-struct ColorGroup {
-    let name: String
-    let colors: [UIColor]
-}
-
 class ViewController: UIViewController {
 
-    var groups = [ColorGroup]()
+    let groups = ColorGroup.exampleGroups
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
-        groups.append(ColorGroup(name: "Blue Colors", colors: randomColors(count: 20, hue: .blue)))
-        groups.append(ColorGroup(name: "Green Colors", colors: randomColors(count: 20, hue: .green)))
-        groups.append(ColorGroup(name: "Red Colors", colors: randomColors(count: 20, hue: .red)))
-
-        let ribbonList = RibbonListView()
+        let ribbonList = RibbonList()
         view.addSubview(ribbonList)
         ribbonList.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -36,18 +27,22 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: RibbonListViewDelegate {
-    func ribbonListView(_ ribbonListView: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
-        return 80
+    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
+        return groups[section].name
+    }
+
+    func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
+        return groups[section].sectionHeight
     }
 }
 
 extension ViewController: RibbonListViewDataSource {
-    func numberOfSections(in ribbonListView: RibbonListView) -> Int {
+    func numberOfSections(in ribbonList: RibbonList) -> Int {
         return groups.count
     }
 
-    func ribbonListView(_ ribbonListView: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: UICollectionViewCell = ribbonListView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) else {
+    func ribbonList(_ ribbonList: RibbonList, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) else {
             fatalError("Could not dequeue")
         }
         let group = groups[indexPath.section]
@@ -56,11 +51,11 @@ extension ViewController: RibbonListViewDataSource {
         return cell
     }
 
-    func ribbonListView(_ ribbonListView: RibbonListView, numberOfItemsInSection section: Int) -> Int {
+    func ribbonList(_ ribbonList: RibbonList, numberOfItemsInSection section: Int) -> Int {
         return groups[section].colors.count
     }
 
-    func ribbonListView(_ ribbonListView: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
-        return nil
+    func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration? {
+        return groups[section].configuration
     }
 }

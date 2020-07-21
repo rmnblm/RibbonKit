@@ -3,39 +3,30 @@
 import UIKit
 
 public protocol RibbonListViewDataSource: class {
-    func numberOfSections(in ribbonListView: RibbonListView) -> Int
-    func ribbonListView(_ ribbonListView: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    func ribbonListView(_ ribbonListView: RibbonListView, numberOfItemsInSection section: Int) -> Int
-    func ribbonListView(_ ribbonListView: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration?
+    func numberOfSections(in ribbonList: RibbonList) -> Int
+    func ribbonList(_ ribbonList: RibbonList, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    func ribbonList(_ ribbonList: RibbonList, numberOfItemsInSection section: Int) -> Int
+    func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration?
 }
 
 public protocol RibbonListViewDelegate: class {
-    func ribbonListView(_ ribbonListView: RibbonListView, heightForSectionAt section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String?
+    func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath)
+    func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath)
 }
 
 extension RibbonListViewDelegate {
-    func ribbonListView(_ ribbonListView: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
-        return 50
-    }
+    public func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat { return Constants.defaultSectionHeight }
+    public func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? { return nil }
+    public func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath) { }
 }
 
-struct CellRegistration {
-    let reuseIdentifier: String
-    let cellClass: AnyClass?
-}
-
-public struct RibbonConfiguration {
-
-}
-
-class Test: UICollectionViewCell { }
-
-open class RibbonListView: UIView {
+open class RibbonList: UIView {
 
     open weak var dataSource: RibbonListViewDataSource?
-
     open weak var delegate: RibbonListViewDelegate?
-
     open var tableView = UITableView(frame: .zero, style: .grouped)
 
     private var cellRegistrations: [CellRegistration] = []
@@ -75,21 +66,22 @@ open class RibbonListView: UIView {
 
     open func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell? {
         let collectionView = displayingCollectionViews[indexPath.section]
-        return collectionView?.dequeueReusableCell(withReuseIdentifier: identifier, for: IndexPath(row: indexPath.row, section: 0))
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: 0)
+        return collectionView?.dequeueReusableCell(withReuseIdentifier: identifier, for: fakeIndexPath)
     }
 }
 
-extension RibbonListView: UITableViewDelegate {
+extension RibbonList: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return delegate?.ribbonListView(self, heightForSectionAt: indexPath.section) ?? 50
+        return delegate?.ribbonList(self, heightForSectionAt: indexPath.section) ?? Constants.defaultSectionHeight
     }
 
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "I am a section!"
+        return delegate?.ribbonList(self, titleForHeaderInSection: section)
     }
 }
 
-extension RibbonListView: UITableViewDataSource {
+extension RibbonList: UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource?.numberOfSections(in: self) ?? 1
     }
@@ -106,7 +98,10 @@ extension RibbonListView: UITableViewDataSource {
         cell.collectionView.dataSource = self
         cell.collectionView.tag = indexPath.section
         cell.collectionView.contentOffset.x = storedOffsets[indexPath.section] ?? 0
-        cell.configuration = dataSource?.ribbonListView(self, configurationForSectionAt: indexPath.section)
+
+        let configuration = dataSource?.ribbonList(self, configurationForSectionAt: indexPath.section) ?? .default
+        cell.setConfiguration(configuration)
+
         return cell
     }
 
@@ -117,20 +112,29 @@ extension RibbonListView: UITableViewDataSource {
     }
 }
 
-extension RibbonListView: UICollectionViewDelegate {
+extension RibbonList: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        delegate?.ribbonList(self, didSelectItemAt: fakeIndexPath)
+    }
 
+    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        delegate?.ribbonList(self, didDeselectItemAt: fakeIndexPath)
+    }
 }
 
-extension RibbonListView: UICollectionViewDataSource {
+extension RibbonList: UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.ribbonListView(self, numberOfItemsInSection: collectionView.tag) ?? 0
+        return dataSource?.ribbonList(self, numberOfItemsInSection: collectionView.tag) ?? 0
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return dataSource?.ribbonListView(self, cellForItemAt: IndexPath(row: indexPath.row, section: collectionView.tag)) ?? UICollectionViewCell()
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        return dataSource?.ribbonList(self, cellForItemAt: fakeIndexPath) ?? UICollectionViewCell()
     }
 }
