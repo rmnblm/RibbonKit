@@ -19,7 +19,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 30, height: 30),
-                    minimumLineSpacing: 5
+                    minimumLineSpacing: 1
                 )
         ),
         ColorGroup(
@@ -29,7 +29,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 50, height: 50),
-                    minimumLineSpacing: 5
+                    minimumLineSpacing: 2
                 )
         ),
         ColorGroup(
@@ -39,17 +39,18 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 70, height: 70),
-                    minimumLineSpacing: 5
+                    minimumLineSpacing: 3
                 )
         ),
         ColorGroup(
             name: "Purple-ish Colors",
             colors: randomColors(count: 100, hue: .purple, luminosity: .light),
-            sectionHeight: 100,
+            sectionHeight: 92,
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 100, height: 100),
-                    minimumLineSpacing: 5
+                    itemSize: .init(width: 100, height: 20),
+                    minimumLineSpacing: 4,
+                    minimumInteritemSpacing: 4
                 )
         ),
         ColorGroup(

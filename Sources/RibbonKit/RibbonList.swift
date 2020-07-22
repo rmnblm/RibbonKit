@@ -60,6 +60,12 @@ open class RibbonList: UIView {
         tableView.register(RibbonCell.self)
     }
 
+    open func cellForItemAt(_ indexPath: IndexPath) -> UICollectionViewCell? {
+        let collectionView = displayingCollectionViews[indexPath.section]
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: 0)
+        return collectionView?.cellForItem(at: fakeIndexPath)
+    }
+
     open func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String) {
         cellRegistrations.append(.init(reuseIdentifier: identifier, cellClass: cellClass))
     }

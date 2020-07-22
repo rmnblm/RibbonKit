@@ -34,6 +34,14 @@ extension ViewController: RibbonListViewDelegate {
     func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
         return groups[section].sectionHeight
     }
+
+    func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) {
+        let cell = ribbonList.cellForItemAt(indexPath)
+        let group = groups[indexPath.section]
+        UIView.animate(withDuration: 0.5) {
+            cell?.backgroundColor = group.colors.randomElement()
+        }
+    }
 }
 
 extension ViewController: RibbonListViewDataSource {
