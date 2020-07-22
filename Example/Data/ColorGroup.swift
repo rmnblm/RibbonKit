@@ -4,7 +4,8 @@ import UIKit
 import RibbonKit
 
 struct ColorGroup {
-    let name: String
+    let headerTitle: String
+    let footerTitle: String
     let colors: [UIColor]
     let sectionHeight: CGFloat
     let configuration: RibbonConfiguration
@@ -13,7 +14,8 @@ struct ColorGroup {
 extension ColorGroup {
     static let exampleGroups: [ColorGroup] = [
         ColorGroup(
-            name: "Blue-ish Colors",
+            headerTitle: "Blue-ish Colors",
+            footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             colors: randomColors(count: 100, hue: .blue, luminosity: .light),
             sectionHeight: 30,
             configuration:
@@ -23,7 +25,8 @@ extension ColorGroup {
                 )
         ),
         ColorGroup(
-            name: "Green-ish Colors",
+            headerTitle: "Green-ish Colors",
+            footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
             colors: randomColors(count: 100, hue: .green, luminosity: .light),
             sectionHeight: 50,
             configuration:
@@ -33,7 +36,8 @@ extension ColorGroup {
                 )
         ),
         ColorGroup(
-            name: "Red-ish Colors",
+            headerTitle: "Red-ish Colors",
+            footerTitle: "A range of red colors to please your eyes. You can click on a cell to change its color.",
             colors: randomColors(count: 100, hue: .red, luminosity: .light),
             sectionHeight: 70,
             configuration:
@@ -43,7 +47,8 @@ extension ColorGroup {
                 )
         ),
         ColorGroup(
-            name: "Purple-ish Colors",
+            headerTitle: "Purple-ish Colors",
+            footerTitle: "A range of purple colors to please your eyes. You can click on a cell to change its color.",
             colors: randomColors(count: 100, hue: .purple, luminosity: .light),
             sectionHeight: RibbonConfiguration.sectionHeight(
                 numberOfRows: 4,
@@ -58,7 +63,8 @@ extension ColorGroup {
                 )
         ),
         ColorGroup(
-            name: "Orange-ish Colors",
+            headerTitle: "Orange-ish Colors",
+            footerTitle: "A range of orange colors to please your eyes. You can click on a cell to change its color.",
             colors: randomColors(count: 100, hue: .orange, luminosity: .light),
             sectionHeight: 120,
             configuration:

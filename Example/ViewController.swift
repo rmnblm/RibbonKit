@@ -9,16 +9,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Ribbons"
         view.backgroundColor = .systemBackground
 
         let ribbonList = RibbonList()
         view.addSubview(ribbonList)
         ribbonList.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            ribbonList.topAnchor.constraint(equalTo: view.topAnchor),
-            ribbonList.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            ribbonList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ribbonList.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ribbonList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            ribbonList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            ribbonList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            ribbonList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         ribbonList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         ribbonList.dataSource = self
@@ -28,7 +29,11 @@ class ViewController: UIViewController {
 
 extension ViewController: RibbonListViewDelegate {
     func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].name
+        return groups[section].headerTitle
+    }
+
+    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? {
+        return groups[section].footerTitle
     }
 
     func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {

@@ -12,6 +12,7 @@ public protocol RibbonListViewDataSource: class {
 public protocol RibbonListViewDelegate: class {
     func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat
     func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String?
+    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String?
     func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath)
     func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath)
 }
@@ -19,6 +20,7 @@ public protocol RibbonListViewDelegate: class {
 extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat { return Constants.defaultSectionHeight }
     public func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? { return nil }
+    public func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? { return nil }
     public func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath) { }
 }
@@ -84,6 +86,10 @@ extension RibbonList: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return delegate?.ribbonList(self, titleForHeaderInSection: section)
+    }
+
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return delegate?.ribbonList(self, titleForFooterInSection: section)
     }
 }
 

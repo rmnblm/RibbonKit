@@ -23,11 +23,11 @@ public struct RibbonConfiguration {
         return (CGFloat(rows) * itemSize.height) + max(minimumInteritemSpacing * CGFloat(rows - 1), 0)
     }
 
-    public static func sectionHeight(numberOfRows rows: Int, configuration: RibbonConfiguration) -> CGFloat {
-        return sectionHeight(
+    public func sectionHeight(numberOfRows rows: Int) -> CGFloat {
+        return RibbonConfiguration.sectionHeight(
             numberOfRows: rows,
-            itemSize: configuration.itemSize,
-            minimumInteritemSpacing: configuration.minimumInteritemSpacing
+            itemSize: itemSize,
+            minimumInteritemSpacing: minimumInteritemSpacing
         )
     }
 }
