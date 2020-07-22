@@ -45,7 +45,11 @@ extension ColorGroup {
         ColorGroup(
             name: "Purple-ish Colors",
             colors: randomColors(count: 100, hue: .purple, luminosity: .light),
-            sectionHeight: 92,
+            sectionHeight: RibbonConfiguration.sectionHeight(
+                numberOfRows: 4,
+                itemSize: .init(width: 100, height: 20),
+                minimumInteritemSpacing: 4
+            ),
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 100, height: 20),

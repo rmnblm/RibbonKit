@@ -18,4 +18,16 @@ public struct RibbonConfiguration {
     }
 
     public static let `default` = RibbonConfiguration()
+
+    public static func sectionHeight(numberOfRows rows: Int, itemSize: CGSize, minimumInteritemSpacing: CGFloat) -> CGFloat {
+        return (CGFloat(rows) * itemSize.height) + max(minimumInteritemSpacing * CGFloat(rows - 1), 0)
+    }
+
+    public static func sectionHeight(numberOfRows rows: Int, configuration: RibbonConfiguration) -> CGFloat {
+        return sectionHeight(
+            numberOfRows: rows,
+            itemSize: configuration.itemSize,
+            minimumInteritemSpacing: configuration.minimumInteritemSpacing
+        )
+    }
 }
