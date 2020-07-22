@@ -28,20 +28,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: RibbonListViewDelegate {
-    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].headerTitle
-    }
-
-    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? {
-        return groups[section].footerTitle
-    }
-
     func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
         return groups[section].sectionHeight
     }
 
     func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) {
-        let cell = ribbonList.cellForItemAt(indexPath)
+        let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
         UIView.animate(withDuration: 0.5) {
             cell?.backgroundColor = group.colors.randomElement()
@@ -55,9 +47,7 @@ extension ViewController: RibbonListViewDataSource {
     }
 
     func ribbonList(_ ribbonList: RibbonList, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) else {
-            fatalError("Could not dequeue")
-        }
+        let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         let group = groups[indexPath.section]
         let color = group.colors[indexPath.row]
         cell.backgroundColor = color
@@ -70,5 +60,13 @@ extension ViewController: RibbonListViewDataSource {
 
     func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration? {
         return groups[section].configuration
+    }
+
+    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
+        return groups[section].headerTitle
+    }
+
+    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? {
+        return groups[section].footerTitle
     }
 }

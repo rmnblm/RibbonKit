@@ -25,12 +25,11 @@ class RibbonCell: UITableViewCell, ReusableView {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
-
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupCell()
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         collectionView.delegate = nil
