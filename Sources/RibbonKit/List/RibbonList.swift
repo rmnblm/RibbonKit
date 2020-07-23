@@ -15,6 +15,13 @@ open class RibbonList: UIView {
     /// The delegate must adopt the RibbonListViewDelegate protocol. The delegate is not retained.
     open weak var delegate: RibbonListViewDelegate?
 
+    /// The point at which the origin of the content view is offset from the origin of the scroll view.
+    ///
+    /// The default value is `.zero`.
+    public var contentOffset: CGPoint {
+        return tableView.contentOffset
+    }
+
     private let tableView: UITableView
     private var cellRegistrations: [CellRegistration] = []
     private var displayingCollectionViews: [Int: UICollectionView] = [:]
@@ -118,6 +125,10 @@ extension RibbonList: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return delegate?.ribbonList(self, viewForFooterInSection: section)
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.ribbonListDidScroll(self)
     }
 }
 

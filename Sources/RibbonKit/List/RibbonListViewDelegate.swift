@@ -72,6 +72,13 @@ public protocol RibbonListViewDelegate: class {
     ///     - section: The index number of the section containing the footer view.
     /// - Returns: The view object to display at the bottom of the specified section.
     func ribbonList(_ ribbonList: RibbonList, viewForFooterInSection section: Int) -> UIView?
+
+    /// Tells the delegate when the user scrolls the content view within the receiver.
+    ///
+    /// The delegate typically implements this method to obtain the change in content offset from ribbonList and draw the affected portion of the content view.
+    /// - Parameters:
+    ///     - ribbonList: The ribbonList object in which the scrolling occurred.
+    func ribbonListDidScroll(_ ribbonList: RibbonList)
 }
 
 extension RibbonListViewDelegate {
@@ -101,5 +108,9 @@ extension RibbonListViewDelegate {
 
     public func ribbonList(_ ribbonList: RibbonList, viewForFooterInSection section: Int) -> UIView? {
         return nil
+    }
+
+    public func ribbonListDidScroll(_ ribbonList: RibbonList) {
+        
     }
 }
