@@ -2,7 +2,7 @@
 
 import UIKit
 
-class RibbonCell: UITableViewCell, ReusableView {
+final class RibbonCell: UITableViewCell, ReusableView {
 
     private var didRegisterCells = false
 
