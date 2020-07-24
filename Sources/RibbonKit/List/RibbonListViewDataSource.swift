@@ -70,6 +70,10 @@ public protocol RibbonListViewDataSource: class {
 }
 
 extension RibbonListViewDataSource {
+    public func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration? {
+        return nil
+    }
+
     public func numberOfSections(in ribbonList: RibbonList) -> Int {
         return 1
     }

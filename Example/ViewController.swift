@@ -7,6 +7,8 @@ class ViewController: UIViewController {
 
     let groups = ColorGroup.exampleGroups
 
+    private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Ribbons"
@@ -24,6 +26,10 @@ class ViewController: UIViewController {
         ribbonList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         ribbonList.dataSource = self
         ribbonList.delegate = self
+    }
+
+    @objc private func didTapAdd() {
+        
     }
 }
 

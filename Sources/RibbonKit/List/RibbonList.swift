@@ -104,6 +104,21 @@ open class RibbonList: UIView {
         }
         return cell
     }
+
+    /// TODO
+    open func insertSection() {
+        
+    }
+
+    /// TODO
+    open func reloadSection(at section: Int) {
+        displayingCollectionViews[section]?.reloadData()
+    }
+
+    /// TODO
+    open func reloadData() {
+        tableView.reloadData()
+    }
 }
 
 extension RibbonList: UITableViewDelegate {
