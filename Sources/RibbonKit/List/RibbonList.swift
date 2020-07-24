@@ -79,7 +79,7 @@ open class RibbonList: UIView {
     ///
     /// Prior to dequeueing any cells, call this method or the `register(_:forCellReuseIdentifier:)` method to tell the ribbon list how to create new cells. If a cell of the specified type is not currently in a reuse queue, the ribbon list uses the provided information to create a new cell object automatically.
     ///
-    /// If you previously registered a class or nib file with the same reuse identifier, the class you specify in the cellClass parameter replaces the old entry. You may specify nil for cellClass if you want to unregister the class from the specified reuse identifier.
+    /// If you previously registered a class with the same reuse identifier, the class you specify in the cellClass parameter replaces the old entry. You may specify nil for cellClass if you want to unregister the class from the specified reuse identifier.
     ///
     /// - Parameters:
     ///     - cellClass: The class of a cell that you want to use in the list (must be a UICollectionViewCell subclass).
@@ -106,17 +106,9 @@ open class RibbonList: UIView {
     }
 
     /// TODO
-    open func insertSection() {
-        
-    }
-
-    /// TODO
-    open func reloadSection(at section: Int) {
-        displayingCollectionViews[section]?.reloadData()
-    }
-
-    /// TODO
     open func reloadData() {
+        displayingCollectionViews.removeAll()
+        storedOffsets.removeAll()
         tableView.reloadData()
     }
 }
