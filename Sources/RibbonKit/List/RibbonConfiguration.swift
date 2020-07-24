@@ -15,19 +15,19 @@ public struct RibbonConfiguration {
     public let minimumInteritemSpacing: CGFloat
 
     /// TODO
-    public let contentInset: UIEdgeInsets
+    public let sectionInset: UIEdgeInsets
 
     /// TODO
     public init(
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
         minimumLineSpacing: CGFloat = 10.0,
         minimumInteritemSpacing: CGFloat = 10.0,
-        contentInset: UIEdgeInsets = .zero
+        sectionInset: UIEdgeInsets = .zero
     ) {
         self.itemSize = itemSize
         self.minimumLineSpacing = minimumLineSpacing
         self.minimumInteritemSpacing = minimumInteritemSpacing
-        self.contentInset = contentInset
+        self.sectionInset = sectionInset
     }
 
     /// TODO
