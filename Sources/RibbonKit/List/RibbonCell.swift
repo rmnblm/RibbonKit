@@ -58,6 +58,7 @@ class RibbonCell: UITableViewCell, ReusableView {
     }
 
     func setConfiguration(_ configuration: RibbonConfiguration) {
+        collectionView.contentInset = configuration.contentInset
         collectionViewLayout.itemSize = configuration.itemSize
         collectionViewLayout.minimumLineSpacing = configuration.minimumLineSpacing
         collectionViewLayout.minimumInteritemSpacing = configuration.minimumInteritemSpacing
