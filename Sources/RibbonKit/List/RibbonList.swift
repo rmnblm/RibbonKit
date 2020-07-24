@@ -105,7 +105,33 @@ open class RibbonList: UIView {
         return cell
     }
 
-    /// TODO
+    /// Registers a class for use in creating new ribbon list header or footer views.
+    ///
+    /// Before dequeueing any header or footer views, call this method or the `register(_:forHeaderFooterViewReuseIdentifier:)` method to tell the ribbon list how to create new instances of your views. If a view of the specified type is not currently in a reuse queue, the ribbon list uses the provided information to create a one automatically.
+    ///
+    /// If you previously registered a class file with the same reuse identifier, the class you specify in the cellClass parameter replaces the old entry. You may specify nil for cellClass if you want to unregister the class from the specified reuse identifier.
+    /// - Parameters:
+    ///     - cellClass: The class of the header or footer view that you want to register. You must specify either `UITableViewHeaderFooterView` or a subclass of it.
+    ///     - identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
+    open func register(_ cellClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+        tableView.register(cellClass, forHeaderFooterViewReuseIdentifier: identifier)
+    }
+
+    /// Returns a reusable header or footer view located by its identifier.
+    ///
+    /// For performance reasons, a ribbon list's delegate should generally reuse `UITableViewHeaderFooterView` objects when it is asked to provide them. A ribbon list maintains a queue or list of `UITableViewHeaderFooterView` objects that the ribbon list's delegate has marked for reuse. It marks a view for reuse by assigning it a reuse identifier when it creates it (that is, in the `init(reuseIdentifier:)` method of `UITableViewHeaderFooterView`).
+    ///
+    /// You can use this method to access specific template header and footer views that you previously created. You can access a view’s reuse identifier through its `reuseIdentifier` property.
+    ///
+    /// - Parameters:
+    ///     - identifier: A string identifying the header or footer view to be reused. This parameter must not be nil.
+    open func dequeueReusableHeaderFooterView(withIdentifier identifier: String) -> UITableViewHeaderFooterView? {
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
+    }
+
+    /// Reloads the items and sections of the ribbon list.
+    ///
+    /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
     open func reloadData() {
         displayingCollectionViews.removeAll()
         storedOffsets.removeAll()
