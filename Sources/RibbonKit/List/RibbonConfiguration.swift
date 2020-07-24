@@ -20,8 +20,8 @@ public struct RibbonConfiguration {
     /// TODO
     public init(
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
-        minimumLineSpacing: CGFloat = 8.0,
-        minimumInteritemSpacing: CGFloat = 8.0,
+        minimumLineSpacing: CGFloat = 6.0,
+        minimumInteritemSpacing: CGFloat = 6.0,
         sectionInset: UIEdgeInsets = .zero
     ) {
         self.itemSize = itemSize
