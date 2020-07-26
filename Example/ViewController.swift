@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
 extension ViewController: RibbonListViewDelegate {
     func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
-        return groups[section].sectionHeight
+        return groups[section].configuration.estimatedSectionHeight()
     }
 
     func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) {

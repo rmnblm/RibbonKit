@@ -6,6 +6,12 @@ import UIKit
 public struct RibbonConfiguration {
 
     /// TODO
+    public let numberOfRows: Int
+
+    /// TODO
+    public let sectionHeight: CGFloat?
+
+    /// TODO
     public let itemSize: CGSize
 
     /// TODO
@@ -19,11 +25,15 @@ public struct RibbonConfiguration {
 
     /// TODO
     public init(
+        numberOfRows: Int = 1,
+        sectionHeight: CGFloat? = nil,
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
         minimumLineSpacing: CGFloat = 6.0,
         minimumInteritemSpacing: CGFloat = 6.0,
         sectionInset: UIEdgeInsets = .zero
     ) {
+        self.numberOfRows = numberOfRows
+        self.sectionHeight = sectionHeight
         self.itemSize = itemSize
         self.minimumLineSpacing = minimumLineSpacing
         self.minimumInteritemSpacing = minimumInteritemSpacing
@@ -34,9 +44,10 @@ public struct RibbonConfiguration {
     public static let `default` = RibbonConfiguration()
 
     /// TODO
-    public func sectionHeight(numberOfRows rows: Int = 1) -> CGFloat {
+    public func estimatedSectionHeight() -> CGFloat {
+        if let sectionHeight = sectionHeight { return sectionHeight }
         return RibbonConfiguration.sectionHeight(
-            numberOfRows: rows,
+            numberOfRows: numberOfRows,
             itemSize: itemSize,
             minimumInteritemSpacing: minimumInteritemSpacing
         )
