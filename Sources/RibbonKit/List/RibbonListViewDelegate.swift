@@ -79,6 +79,16 @@ public protocol RibbonListViewDelegate: class {
     /// - Parameters:
     ///     - ribbonList: The ribbonList object in which the scrolling occurred.
     func ribbonListDidScroll(_ ribbonList: RibbonList)
+
+    /// Tells the delegate that the specified cell is about to be displayed in the ribbon list.
+    ///
+    /// The ribbon list calls this method before adding a cell to its content. Use this method to detect cell additions, as opposed to monitoring the cell itself to see when it appears.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object that is adding the cell.
+    ///     - cell: The cell object being added.
+    ///     - indexPath: The index path of the data item that the cell represents.
+    func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 }
 
 extension RibbonListViewDelegate {
@@ -111,6 +121,10 @@ extension RibbonListViewDelegate {
     }
 
     public func ribbonListDidScroll(_ ribbonList: RibbonList) {
+        
+    }
+
+    public func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
     }
 }

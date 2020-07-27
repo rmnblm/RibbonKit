@@ -214,6 +214,11 @@ extension RibbonList: UICollectionViewDelegate {
         let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
         delegate?.ribbonList(self, didDeselectItemAt: fakeIndexPath)
     }
+
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        delegate?.ribbonList(self, willDisplay: cell, forItemAt: fakeIndexPath)
+    }
 }
 
 extension RibbonList: UICollectionViewDataSource {
