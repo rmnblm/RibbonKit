@@ -6,15 +6,18 @@ import RibbonKit
 class ViewController: UIViewController {
 
     let groups = ColorGroup.exampleGroups
+    let ribbonList = RibbonList()
 
-    private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+    private lazy var addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(didTapAdd))
+    private lazy var removeButton = UIBarButtonItem(title: "Remove", style: .plain, target: self, action: #selector(didTapRemove))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Ribbons"
+        navigationItem.leftBarButtonItem = addButton
+        navigationItem.rightBarButtonItem = removeButton
         view.backgroundColor = .systemBackground
 
-        let ribbonList = RibbonList()
         view.addSubview(ribbonList)
         ribbonList.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -29,7 +32,21 @@ class ViewController: UIViewController {
     }
 
     @objc private func didTapAdd() {
-        
+        let section = Int.random(in: 0..<groups.count)
+        let group = groups[section]
+        let itemIndex = group.insertRandom()
+        let indexPath = IndexPath(item: itemIndex, section: section)
+        ribbonList.insertItems(at: [indexPath])
+        print("Insert at \(indexPath)")
+    }
+
+    @objc private func didTapRemove() {
+        let section = Int.random(in: 0..<groups.count)
+        let group = groups[section]
+        guard let itemIndex = group.removeRandom() else { return }
+        let indexPath = IndexPath(item: itemIndex, section: section)
+        ribbonList.deleteItems(at: [indexPath])
+        print("Delete at \(indexPath)")
     }
 }
 

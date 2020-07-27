@@ -137,6 +137,45 @@ open class RibbonList: UIView {
         storedOffsets.removeAll()
         tableView.reloadData()
     }
+
+    private func sectionMutations(for indexPaths: [IndexPath]) -> [Int: [IndexPath]] {
+        return indexPaths
+            .reduce([Int: [IndexPath]]()) { (dict, indexPath) in
+                var dict = dict
+                dict[indexPath.section, default: []].append(IndexPath(item: indexPath.item, section: 0))
+                return dict
+            }
+    }
+
+    open func insertItems(at indexPaths: [IndexPath]) {
+        let mutations = sectionMutations(for: indexPaths)
+        mutations.forEach {
+            guard let collectionView = displayingCollectionViews[$0.key] else { return }
+            collectionView.insertItems(at: $0.value)
+        }
+
+        // TODO: Update offsets
+    }
+
+    open func deleteItems(at indexPaths: [IndexPath]) {
+        let mutations = sectionMutations(for: indexPaths)
+        mutations.forEach {
+            guard let collectionView = displayingCollectionViews[$0.key] else { return }
+            collectionView.deleteItems(at: $0.value)
+        }
+
+        // TODO: Update offsets
+    }
+
+    open func reloadItems(at indexPaths: [IndexPath]) {
+        let mutations = sectionMutations(for: indexPaths)
+        mutations.forEach {
+            guard let collectionView = displayingCollectionViews[$0.key] else { return }
+            collectionView.reloadItems(at: $0.value)
+        }
+
+        // TODO: Update offsets
+    }
 }
 
 extension RibbonList: UITableViewDelegate {
@@ -235,3 +274,4 @@ extension RibbonList: UICollectionViewDataSource {
         return dataSource?.ribbonList(self, cellForItemAt: fakeIndexPath) ?? UICollectionViewCell()
     }
 }
+

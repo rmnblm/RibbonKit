@@ -3,11 +3,35 @@
 import UIKit
 import RibbonKit
 
-struct ColorGroup {
+class ColorGroup {
     let headerTitle: String
     let footerTitle: String
-    let colors: [UIColor]
     let configuration: RibbonConfiguration
+    let newColorClosure: (() -> UIColor)
+
+    private(set) var colors: [UIColor]
+
+    init(headerTitle: String, footerTitle: String, configuration: RibbonConfiguration, newColorClosure: @escaping (() -> UIColor)) {
+        self.headerTitle = headerTitle
+        self.footerTitle = footerTitle
+        self.newColorClosure = newColorClosure
+        self.colors = (0..<3).map { _ in newColorClosure() }
+        self.configuration = configuration
+    }
+
+    func insertRandom() -> Int {
+        let index = Int.random(in: 0..<colors.count)
+        let color = newColorClosure()
+        colors.insert(color, at: index)
+        return index
+    }
+
+    func removeRandom() -> Int? {
+        guard !colors.isEmpty else { return nil }
+        let index = Int.random(in: 0..<colors.count)
+        colors.remove(at: index)
+        return index
+    }
 }
 
 extension ColorGroup {
@@ -15,58 +39,80 @@ extension ColorGroup {
         ColorGroup(
             headerTitle: "Blue-ish Colors",
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
-            colors: randomColors(count: 100, hue: .blue, luminosity: .light),
             configuration:
                 RibbonConfiguration(
                     sectionHeight: 30,
                     itemSize: .init(width: 30, height: 30),
                     minimumLineSpacing: 1
-                )
+                ),
+            newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
         ColorGroup(
             headerTitle: "Green-ish Colors",
             footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
-            colors: randomColors(count: 100, hue: .green, luminosity: .light),
             configuration:
                 RibbonConfiguration(
                     sectionHeight: 50,
                     itemSize: .init(width: 50, height: 50),
                     minimumLineSpacing: 2
-                )
+                ),
+            newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         ),
         ColorGroup(
             headerTitle: "Red-ish Colors",
             footerTitle: "A range of red colors to please your eyes. You can click on a cell to change its color.",
-            colors: randomColors(count: 100, hue: .red, luminosity: .light),
             configuration:
                 RibbonConfiguration(
                     sectionHeight: 70,
                     itemSize: .init(width: 70, height: 70),
                     minimumLineSpacing: 3
-                )
+                ),
+            newColorClosure: { randomColor(hue: .red, luminosity: .light) }
         ),
         ColorGroup(
             headerTitle: "Purple-ish Colors",
             footerTitle: "A range of purple colors to please your eyes. You can click on a cell to change its color.",
-            colors: randomColors(count: 100, hue: .purple, luminosity: .light),
             configuration:
                 RibbonConfiguration(
                     numberOfRows: 4,
                     itemSize: .init(width: 100, height: 20),
                     minimumLineSpacing: 4,
                     minimumInteritemSpacing: 4
-                )
+                ),
+            newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
         ),
         ColorGroup(
             headerTitle: "Orange-ish Colors",
             footerTitle: "A range of orange colors to please your eyes. You can click on a cell to change its color.",
-            colors: randomColors(count: 100, hue: .orange, luminosity: .light),
             configuration:
                 RibbonConfiguration(
                     sectionHeight: 120,
                     itemSize: .init(width: 120, height: 120),
                     minimumLineSpacing: 5
-                )
+                ),
+            newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
+        ),
+        ColorGroup(
+            headerTitle: "Blue-ish Colors",
+            footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
+            configuration:
+                RibbonConfiguration(
+                    sectionHeight: 30,
+                    itemSize: .init(width: 30, height: 30),
+                    minimumLineSpacing: 1
+                ),
+            newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
+        ),
+        ColorGroup(
+            headerTitle: "Green-ish Colors",
+            footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
+            configuration:
+                RibbonConfiguration(
+                    sectionHeight: 50,
+                    itemSize: .init(width: 50, height: 50),
+                    minimumLineSpacing: 2
+                ),
+            newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         )
     ]
 }
