@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		303F475224CF6E7800763149 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475124CF6E7800763149 /* AppDelegate.swift */; };
+		303F475424CF6E7800763149 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475324CF6E7800763149 /* ViewController.swift */; };
+		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
+		303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303F475A24CF6E7900763149 /* LaunchScreen.storyboard */; };
+		303F476224CF6EFC00763149 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
+		303F476324CF6F0200763149 /* RandomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3C24C7456D00ABB183 /* RandomColor.swift */; };
+		303F476424CF6F0200763149 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3F24C7456D00ABB183 /* Luminosity.swift */; };
+		303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */; };
+		303F476624CF6F0200763149 /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3E24C7456D00ABB183 /* Hue.swift */; };
 		3044596124C794100062BA54 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */; };
 		3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */; };
 		3044596824C7B3590062BA54 /* CellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596724C7B3590062BA54 /* CellRegistration.swift */; };
@@ -29,6 +38,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		303F476724CF6F5100763149 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "RibbonKit::RibbonKit";
+			remoteInfo = RibbonKit;
+		};
 		30C15D3924C743CD00ABB183 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
@@ -39,6 +55,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		303F475124CF6E7800763149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		303F475324CF6E7800763149 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		303F475824CF6E7900763149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		303F475B24CF6E7900763149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		303F475D24CF6E7900763149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonConfiguration.swift; sourceTree = "<group>"; };
 		3044596724C7B3590062BA54 /* CellRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellRegistration.swift; sourceTree = "<group>"; };
@@ -66,6 +88,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		303F474C24CF6E7800763149 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		30C15D2224C7436000ABB183 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,6 +112,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		303F475024CF6E7800763149 /* Example-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				303F475124CF6E7800763149 /* AppDelegate.swift */,
+				303F475324CF6E7800763149 /* ViewController.swift */,
+				303F475824CF6E7900763149 /* Assets.xcassets */,
+				303F475A24CF6E7900763149 /* LaunchScreen.storyboard */,
+				303F475D24CF6E7900763149 /* Info.plist */,
+			);
+			path = "Example-tvOS";
+			sourceTree = "<group>";
+		};
+		303F476124CF6EE600763149 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3044596924C7B4D10062BA54 /* Data */,
+				30C15D3B24C7455100ABB183 /* RandomColor */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		3044596424C7B1760062BA54 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,8 +152,6 @@
 		30C15D2624C7436000ABB183 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				3044596924C7B4D10062BA54 /* Data */,
-				30C15D3B24C7455100ABB183 /* RandomColor */,
 				30C15D2724C7436000ABB183 /* AppDelegate.swift */,
 				30C15D2B24C7436000ABB183 /* ViewController.swift */,
 				30C15D3024C7436200ABB183 /* Assets.xcassets */,
@@ -156,6 +204,7 @@
 			children = (
 				"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */,
 				30C15D2524C7436000ABB183 /* Example.app */,
+				303F474F24CF6E7800763149 /* Example-tvOS.app */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -167,7 +216,9 @@
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_16 /* Tests */,
+				303F476124CF6EE600763149 /* Shared */,
 				30C15D2624C7436000ABB183 /* Example */,
+				303F475024CF6E7800763149 /* Example-tvOS */,
 				OBJ_17 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -205,6 +256,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		303F474E24CF6E7800763149 /* Example-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 303F476024CF6E7900763149 /* Build configuration list for PBXNativeTarget "Example-tvOS" */;
+			buildPhases = (
+				303F474B24CF6E7800763149 /* Sources */,
+				303F474C24CF6E7800763149 /* Frameworks */,
+				303F474D24CF6E7800763149 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				303F476824CF6F5100763149 /* PBXTargetDependency */,
+			);
+			name = "Example-tvOS";
+			productName = "Example-tvOS";
+			productReference = 303F474F24CF6E7800763149 /* Example-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		30C15D2424C7436000ABB183 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 30C15D3824C7436200ABB183 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -249,6 +318,10 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 9999;
 				TargetAttributes = {
+					303F474E24CF6E7800763149 = {
+						CreatedOnToolsVersion = 12.0;
+						ProvisioningStyle = Automatic;
+					};
 					30C15D2424C7436000ABB183 = {
 						CreatedOnToolsVersion = 12.0;
 						ProvisioningStyle = Automatic;
@@ -270,11 +343,21 @@
 			targets = (
 				"RibbonKit::RibbonKit" /* RibbonKit */,
 				30C15D2424C7436000ABB183 /* Example */,
+				303F474E24CF6E7800763149 /* Example-tvOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		303F474D24CF6E7800763149 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */,
+				303F475924CF6E7900763149 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		30C15D2324C7436000ABB183 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,6 +370,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		303F474B24CF6E7800763149 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303F476324CF6F0200763149 /* RandomColor.swift in Sources */,
+				303F476624CF6F0200763149 /* Hue.swift in Sources */,
+				303F475424CF6E7800763149 /* ViewController.swift in Sources */,
+				303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */,
+				303F475224CF6E7800763149 /* AppDelegate.swift in Sources */,
+				303F476224CF6EFC00763149 /* ColorGroup.swift in Sources */,
+				303F476424CF6F0200763149 /* Luminosity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		30C15D2124C7436000ABB183 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -321,6 +418,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		303F476824CF6F5100763149 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "RibbonKit::RibbonKit" /* RibbonKit */;
+			targetProxy = 303F476724CF6F5100763149 /* PBXContainerItemProxy */;
+		};
 		30C15D3A24C743CD00ABB183 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "RibbonKit::RibbonKit" /* RibbonKit */;
@@ -329,6 +431,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		303F475A24CF6E7900763149 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				303F475B24CF6E7900763149 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		30C15D3224C7436200ABB183 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -340,6 +450,130 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		303F475E24CF6E7900763149 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Example-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swisscom.RibbonKit-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+			};
+			name = Debug;
+		};
+		303F475F24CF6E7900763149 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Example-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swisscom.RibbonKit-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		30C15D3624C7436200ABB183 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -574,6 +808,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		303F476024CF6E7900763149 /* Build configuration list for PBXNativeTarget "Example-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				303F475E24CF6E7900763149 /* Debug */,
+				303F475F24CF6E7900763149 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		30C15D3824C7436200ABB183 /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

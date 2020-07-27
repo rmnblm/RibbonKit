@@ -59,7 +59,9 @@ open class RibbonList: UIView {
         tableView.dataSource = self
         tableView.allowsSelection = false
         tableView.backgroundColor = .clear
+        #if os(iOS)
         tableView.separatorStyle = .none
+        #endif
         tableView.register(RibbonCell.self)
     }
 
