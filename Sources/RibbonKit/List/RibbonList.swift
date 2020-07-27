@@ -176,6 +176,13 @@ open class RibbonList: UIView {
 
         // TODO: Update offsets
     }
+
+    open func reloadSection(at section: Int) {
+        guard let collectionView = displayingCollectionViews[section] else { return }
+        collectionView.reloadData()
+
+        // TODO: Update offsets
+    }
 }
 
 extension RibbonList: UITableViewDelegate {
