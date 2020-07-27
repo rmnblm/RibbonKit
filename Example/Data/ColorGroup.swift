@@ -20,7 +20,7 @@ class ColorGroup {
     }
 
     func insertRandom() -> Int {
-        let index = Int.random(in: 0..<colors.count)
+        let index = colors.isEmpty ? 0 : Int.random(in: 0..<colors.count)
         let color = newColorClosure()
         colors.insert(color, at: index)
         return index

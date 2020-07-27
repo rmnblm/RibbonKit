@@ -41,7 +41,9 @@ class ViewController: UIViewController {
     }
 
     @objc private func didTapRemove() {
-        let section = Int.random(in: 0..<groups.count)
+        let sectionsWithItems = groups.enumerated().compactMap { return $1.colors.isEmpty ? nil : $0 }
+        guard !sectionsWithItems.isEmpty else { return }
+        guard let section = sectionsWithItems.randomElement() else { return }
         let group = groups[section]
         guard let itemIndex = group.removeRandom() else { return }
         let indexPath = IndexPath(item: itemIndex, section: section)
