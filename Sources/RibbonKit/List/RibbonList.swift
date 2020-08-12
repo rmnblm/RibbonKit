@@ -22,6 +22,15 @@ open class RibbonList: UIView {
         return tableView.contentOffset
     }
 
+    /// The background view of the ribbon list.
+    ///
+    /// Assign a background view to change the color behind your ribbon list's sections and rows. The default value of this property is nil.
+    /// When you assign a view to this property, the ribbon list automatically resizes that view to match its own bounds. Your background view appears behind all ribbons and does not scroll with the rest of the list's content.
+    open var backgroundView: UIView? {
+        get { return tableView.backgroundView }
+        set { tableView.backgroundView = newValue }
+    }
+
     private let tableView: UITableView
     private var cellRegistrations: [CellRegistration] = []
     private var displayingCollectionViews: [Int: UICollectionView] = [:]
@@ -267,6 +276,14 @@ extension RibbonList: UICollectionViewDelegate {
         let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
         delegate?.ribbonList(self, willDisplay: cell, forItemAt: fakeIndexPath)
     }
+
+    #if os(iOS)
+    @available(iOS 13.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        return delegate?.ribbonList(self, contextMenuConfigurationForItemAt: fakeIndexPath, point: point)
+    }
+    #endif
 }
 
 extension RibbonList: UICollectionViewDataSource {

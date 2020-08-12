@@ -89,6 +89,23 @@ public protocol RibbonListViewDelegate: class {
     ///     - cell: The cell object being added.
     ///     - indexPath: The index path of the data item that the cell represents.
     func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
+
+    #if os(iOS)
+    /// Returns a context menu configuration for the item at a point.
+    ///
+    /// Use this method to provide a UIContextMenuConfiguration describing the menu to present.
+    /// Return nil to prevent the interaction from beginning.
+    /// Return an empty configuration to begin the interaction and then fail with a cancellation effect.
+    /// Use the empty configuration to indicate to users that it’s possible for this element to present a menu, but that there are no actions to present at this time.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list containing the item.
+    ///     - indexPath: The index path of the item.
+    ///     - point: The location of the interaction in the ribbon list's coordinate space.
+    /// - Returns: A context menu configuration for the indexPath.
+    @available(iOS 13.0, *)
+    func ribbonList(_ ribbonList: RibbonList, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+    #endif
 }
 
 extension RibbonListViewDelegate {
@@ -127,4 +144,11 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
     }
+
+    #if os(iOS)
+    @available(iOS 13.0, *)
+    public func ribbonList(_ ribbonList: RibbonList, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return nil
+    }
+    #endif
 }

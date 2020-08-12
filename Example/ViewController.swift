@@ -64,6 +64,16 @@ extension ViewController: RibbonListViewDelegate {
             cell?.backgroundColor = group.colors.randomElement()
         }
     }
+
+    func ribbonList(_ ribbonList: RibbonList, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let share = UIAction(title: "Share") { _ in }
+        let delete = UIAction(title: "Delete") { _ in }
+
+        return UIContextMenuConfiguration(identifier: nil,
+          previewProvider: nil) { _ in
+          UIMenu(title: "Actions", children: [share, delete])
+        }
+    }
 }
 
 extension ViewController: RibbonListViewDataSource {
