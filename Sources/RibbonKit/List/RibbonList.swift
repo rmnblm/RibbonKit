@@ -153,9 +153,11 @@ open class RibbonList: UIView {
     ///
     /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
     open func reloadData() {
+        CATransaction.begin()
         displayingCollectionViews.removeAll()
         storedOffsets.removeAll()
         tableView.reloadData()
+        CATransaction.commit()
     }
 
     private func sectionMutations(for indexPaths: [IndexPath]) -> [Int: [IndexPath]] {
