@@ -19,7 +19,14 @@ open class RibbonList: UIView {
     ///
     /// The default value is `.zero`.
     public var contentOffset: CGPoint {
-        return tableView.contentOffset
+        get { tableView.contentOffset }
+        set { tableView.contentOffset = newValue }
+    }
+
+    /// The custom distance that the content view is inset from the safe area or scroll view edges.
+    public var contentInset: UIEdgeInsets {
+        get { tableView.contentInset }
+        set { tableView.contentInset = newValue }
     }
 
     /// The view that is displayed above the table's content.
