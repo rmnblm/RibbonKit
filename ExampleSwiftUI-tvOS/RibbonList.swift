@@ -83,7 +83,7 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
     }
 
     func makeUIView(context: Context) -> RibbonListView {
-        let list = RibbonKit.RibbonListView()
+        let list = RibbonListView()
         list.delegate = context.coordinator
         list.dataSource = context.coordinator
         list.register(HostCell.self, forCellWithReuseIdentifier: "Cell")
@@ -154,8 +154,9 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
             let headerHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForHeaderInSection: nextIndexPath.section) ?? 0.0
             let sectionHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForSectionAt: nextIndexPath.section) ?? 0.0
             let footerHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForFooterInSection: nextIndexPath.section) ?? 0.0
+            let sectionSpacing: CGFloat = 28 // this is added by UIKit automatically in tvOS
             
-            let yOffset = (headerHeight + sectionHeight + footerHeight) * CGFloat(nextIndexPath.section)
+            let yOffset = (headerHeight + sectionHeight + footerHeight + sectionSpacing) * CGFloat(nextIndexPath.section)
             coordinator.addCoordinatedAnimations({
                 ribbonList.setContentOffsetY(yOffset, animated: true)
             }, completion: nil)
