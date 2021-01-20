@@ -12,7 +12,7 @@ public protocol RibbonListViewDataSource: class {
     /// - Parameters:
     ///     - ribbonList: An object representing the ribbon list requesting this information.
     /// - Returns: The number of sections in ribbonList.
-    func numberOfSections(in ribbonList: RibbonList) -> Int
+    func numberOfSections(in ribbonList: RibbonListView) -> Int
 
     /// Asks the data source for a cell to insert in a particular location of the ribbon list.
     ///
@@ -24,7 +24,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: The ribbonList object requesting the cell.
     ///     - indexPath: An index path locating a item in ribbonList.
     /// - Returns: An object inheriting from UICollectionViewCell that the ribbon list can use for the specified item. UIKit raises an assertion if you return nil.
-    func ribbonList(_ ribbonList: RibbonList, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    func ribbonList(_ ribbonList: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 
     /// Tells the data source to return the number of items in a given section of a ribbon list.
     ///
@@ -32,7 +32,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: An object representing the ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: The number of rows in section.
-    func ribbonList(_ ribbonList: RibbonList, numberOfItemsInSection section: Int) -> Int
+    func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int
 
     /// Asks the data source to return a configuration of the specified section of the ribbon list.
     ///
@@ -42,7 +42,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: An object representing the ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A ribbon configuration to use for the section.
-    func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration?
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration?
 
     /// Asks the data source for the title of the header of the specified section of the ribbon list.
     ///
@@ -54,7 +54,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: The ribbonList object asking for the title.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A string to use as the title of the section header. If you return nil, the section will have no title.
-    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String?
+    func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String?
 
     /// Asks the data source for the title of the footer of the specified section of the ribbon list.
     ///
@@ -66,23 +66,12 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: The ribbonList object asking for the title.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A string to use as the title of the section footer. If you return nil, the section will have no title.
-    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String?
+    func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String?
 }
 
 extension RibbonListViewDataSource {
-    public func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration? {
-        return nil
-    }
-
-    public func numberOfSections(in ribbonList: RibbonList) -> Int {
-        return 1
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
-        return nil
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? {
-        return nil
-    }
+    public func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? { nil }
+    public func numberOfSections(in ribbonList: RibbonListView) -> Int { 1 }
+    public func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? { nil }
 }

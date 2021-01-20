@@ -3,7 +3,7 @@
 import UIKit
 
 /// TODO
-public struct RibbonConfiguration {
+public struct RibbonConfiguration: Hashable {
 
     /// TODO
     public let numberOfRows: Int

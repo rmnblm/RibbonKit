@@ -6,7 +6,7 @@ import RibbonKit
 class ViewController: UIViewController {
 
     let groups = ColorGroup.exampleGroups
-    let ribbonList = RibbonList()
+    let ribbonList = RibbonListView()
 
     private lazy var addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(didTapAdd))
     private lazy var removeButton = UIBarButtonItem(title: "Remove", style: .plain, target: self, action: #selector(didTapRemove))
@@ -52,11 +52,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: RibbonListViewDelegate {
-    func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
-        return groups[section].configuration.estimatedSectionHeight()
-    }
-
-    func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) {
+    func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) {
         let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
         UIView.animate(withDuration: 0.5) {
@@ -66,11 +62,11 @@ extension ViewController: RibbonListViewDelegate {
 }
 
 extension ViewController: RibbonListViewDataSource {
-    func numberOfSections(in ribbonList: RibbonList) -> Int {
+    func numberOfSections(in ribbonList: RibbonListView) -> Int {
         return groups.count
     }
 
-    func ribbonList(_ ribbonList: RibbonList, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func ribbonList(_ ribbonList: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         let group = groups[indexPath.section]
         let color = group.colors[indexPath.row]
@@ -78,19 +74,19 @@ extension ViewController: RibbonListViewDataSource {
         return cell
     }
 
-    func ribbonList(_ ribbonList: RibbonList, numberOfItemsInSection section: Int) -> Int {
+    func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int {
         return groups[section].colors.count
     }
 
-    func ribbonList(_ ribbonList: RibbonList, configurationForSectionAt section: Int) -> RibbonConfiguration? {
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
         return groups[section].configuration
     }
 
-    func ribbonList(_ ribbonList: RibbonList, titleForHeaderInSection section: Int) -> String? {
+    func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? {
         return groups[section].headerTitle
     }
 
-    func ribbonList(_ ribbonList: RibbonList, titleForFooterInSection section: Int) -> String? {
+    func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? {
         return groups[section].footerTitle
     }
 }

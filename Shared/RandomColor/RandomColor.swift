@@ -42,7 +42,7 @@ private var colorDictionary: [Hue: ColorDefinition] = [
 ]
 
 extension Hue {
-    var range: Range {
+    var range: CRange {
         switch self {
         case .value(let value): return (value, value)
         case .random: return (0, 360)
@@ -67,7 +67,7 @@ Generate a single random color with some conditions.
 */
 public func randomColor(hue: Hue = .random, luminosity: Luminosity = .random) -> Color {
     
-    func random(in range: Range) -> Int {
+    func random(in range: CRange) -> Int {
         assert(range.max >= range.min, "Max in range should be greater than min")
         return Int(arc4random_uniform(UInt32(range.max - range.min))) + range.min
     }

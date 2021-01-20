@@ -13,7 +13,7 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - indexPath: An index path that locates a row in ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) that row should be.
-    func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat
 
     /// Tells the delegate that the item at the specified index path was selected.
     ///
@@ -22,7 +22,7 @@ public protocol RibbonListViewDelegate: class {
     /// - Parameters:
     ///     - ribbonList: The ribbon list object that is notifying you of the selection change.
     ///     - indexPath: The index path of the cell that was selected.
-    func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath)
+    func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath)
 
     /// Tells the delegate that the item at the specified index path was deselected.
     ///
@@ -31,7 +31,7 @@ public protocol RibbonListViewDelegate: class {
     /// - Parameters:
     ///     - ribbonList: The ribbon list object that is notifying you of the selection change.
     ///     - indexPath: The index path of the cell that was deselected.
-    func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath)
+    func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath)
 
     /// Asks the delegate for the height to use for the header of a particular section.
     ///
@@ -41,7 +41,7 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the header for section.
-    func ribbonList(_ ribbonList: RibbonList, heightForHeaderInSection section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat
 
     /// Asks the delegate for a view object to display in the header of the specified section of the ribbon list.
     ///
@@ -51,7 +51,7 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbonList asking for the view.
     ///     - section: The index number of the section containing the header view.
     /// - Returns: The view object to display at the top of the specified section.
-    func ribbonList(_ ribbonList: RibbonList, viewForHeaderInSection section: Int) -> UIView?
+    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView?
 
     /// Asks the delegate for the height to use for the footer of a particular section.
     ///
@@ -61,7 +61,7 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the footer for section.
-    func ribbonList(_ ribbonList: RibbonList, heightForFooterInSection section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat
 
     /// Asks the delegate for a view object to display in the footer of the specified section of the ribbon list.
     ///
@@ -71,14 +71,14 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbonList asking for the view.
     ///     - section: The index number of the section containing the footer view.
     /// - Returns: The view object to display at the bottom of the specified section.
-    func ribbonList(_ ribbonList: RibbonList, viewForFooterInSection section: Int) -> UIView?
+    func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView?
 
     /// Tells the delegate when the user scrolls the content view within the receiver.
     ///
     /// The delegate typically implements this method to obtain the change in content offset from ribbonList and draw the affected portion of the content view.
     /// - Parameters:
     ///     - ribbonList: The ribbonList object in which the scrolling occurred.
-    func ribbonListDidScroll(_ ribbonList: RibbonList)
+    func ribbonListDidScroll(_ ribbonList: RibbonListView)
 
     /// Tells the delegate that the specified cell is about to be displayed in the ribbon list.
     ///
@@ -88,7 +88,26 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbon list object that is adding the cell.
     ///     - cell: The cell object being added.
     ///     - indexPath: The index path of the data item that the cell represents.
-    func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
+    func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
+    
+    /// Tells the delegate that a focus update occurred.
+    ///
+    /// The ribbon list calls this method when a focus-related change occurs. You can use this method to update your app's state information or to animate changes to your app's visual appearance.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object notifying you of the focus change.
+    ///     - context: The context object containing metadata associated with the focus change. This object contains the index path of the previously focused item and the currently focused item.
+    ///     - coordinator: The animation coordinator to use when creating any additional animations.
+    func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
+    
+    /// Asks the delegate whether the item at the specified index path can be focused.
+    ///
+    /// You can use this method, or a cell’s canBecomeFocused method, to control which items in the collection view can receive focus. The focus engine calls the cell’s `canBecomeFocused` method first, the default implementation of which defers to the ribbon list and this delegate method.
+    /// If you do not implement this method, the ability to focus on items depends on whether the ribbon list's items are selectable. When the items are selectable, they can also be focused as if this method had returned true; otherwise, they do not receive focus.
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object requesting this information.
+    ///     - indexPath: The index path of an item in the ribbon list.
+    func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool
 
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
@@ -104,51 +123,28 @@ public protocol RibbonListViewDelegate: class {
     ///     - point: The location of the interaction in the ribbon list's coordinate space.
     /// - Returns: A context menu configuration for the indexPath.
     @available(iOS 13.0, *)
-    func ribbonList(_ ribbonList: RibbonList, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
     #endif
 }
 
 extension RibbonListViewDelegate {
-    public func ribbonList(_ ribbonList: RibbonList, heightForSectionAt section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+    public func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
+        return ribbonList.dataSource?.ribbonList(ribbonList, configurationForSectionAt: section)?.estimatedSectionHeight() ?? UITableView.automaticDimension
     }
-
-    public func ribbonList(_ ribbonList: RibbonList, didSelectItemAt indexPath: IndexPath) {
-
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, didDeselectItemAt indexPath: IndexPath) {
-
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, heightForFooterInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, viewForFooterInSection section: Int) -> UIView? {
-        return nil
-    }
-
-    public func ribbonListDidScroll(_ ribbonList: RibbonList) {
-        
-    }
-
-    public func ribbonList(_ ribbonList: RibbonList, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-    }
+    
+    public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
+    public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { .leastNormalMagnitude }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { .leastNormalMagnitude }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
+    public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
 
     #if os(iOS)
     @available(iOS 13.0, *)
-    public func ribbonList(_ ribbonList: RibbonList, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return nil
-    }
+    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
     #endif
 }

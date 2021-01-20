@@ -24,25 +24,25 @@
 
 import Foundation
 
-typealias Range = (min: Int, max: Int)
+typealias CRange = (min: Int, max: Int)
 
 struct ColorDefinition {
-    let hueRange: Range?
-    let lowerBounds: [Range]
+    let hueRange: CRange?
+    let lowerBounds: [CRange]
     
-    lazy var saturationRange: Range = {
+    lazy var saturationRange: CRange = {
         let sMin = self.lowerBounds[0].0
         let sMax = self.lowerBounds[self.lowerBounds.count - 1].0
         return (sMin, sMax)
     }()
     
-    lazy var brightnessRange: Range = {
+    lazy var brightnessRange: CRange = {
         let bMin = self.lowerBounds[self.lowerBounds.count - 1].1
         let bMax = self.lowerBounds[0].1
         return (bMin, bMax)
     }()
     
-    init(hueRange: Range?, lowerBounds: [Range]) {
+    init(hueRange: CRange?, lowerBounds: [CRange]) {
         self.hueRange = hueRange
         self.lowerBounds = lowerBounds
     }

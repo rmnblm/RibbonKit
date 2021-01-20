@@ -39,7 +39,7 @@ final class RibbonCell: UITableViewCell, ReusableView {
 
     private func setupCell() {
         backgroundColor = .clear
-        backgroundView = nil
+        backgroundView = UIView()
 
         contentView.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
