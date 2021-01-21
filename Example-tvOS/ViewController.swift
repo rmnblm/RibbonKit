@@ -66,30 +66,6 @@ extension ViewController: RibbonListViewDelegate {
             cell?.backgroundColor = group.colors.randomElement()
         }
     }
-    
-    func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        #if os(tvOS)
-        if let indexPath = context.previouslyFocusedIndexPath { ribbonList.cellForItem(at: indexPath)?.layer.zPosition = 0 }
-        if let indexPath = context.nextFocusedIndexPath { ribbonList.cellForItem(at: indexPath)?.layer.zPosition = 1 }
-
-        guard let nextIndexPath = context.nextFocusedIndexPath else { return }
-        if let previousIndexPath = context.previouslyFocusedIndexPath, previousIndexPath.section == nextIndexPath.section { return }
-
-        var yOffset: CGFloat? = nil
-        if let headerFrame = ribbonList.frameForHeader(in: nextIndexPath.section) {
-            yOffset = headerFrame.origin.y
-        }
-        else if let cellFrame = ribbonList.frameForCell(at: nextIndexPath) {
-            yOffset = cellFrame.origin.y
-        }
-
-        if let yOffset = yOffset {
-            coordinator.addCoordinatedAnimations({
-                ribbonList.setContentOffsetY(yOffset, animated: true)
-            }, completion: nil)
-        }
-        #endif
-    }
 }
 
 extension ViewController: RibbonListViewDataSource {
