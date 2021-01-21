@@ -14,6 +14,26 @@ public protocol RibbonListViewDelegate: class {
     ///     - indexPath: An index path that locates a row in ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) that row should be.
     func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat
+    
+    /// Asks the delegate for the height to use for the header of a particular section.
+    ///
+    /// Use this method to specify the height of custom header views returned by your `ribbonList(_:viewForHeaderInSection:)` method.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the header for section.
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat
+
+    /// Asks the delegate for the height to use for the footer of a particular section.
+    ///
+    /// Use this method to specify the height of custom footer views returned by your `ribbonList(_:viewForFooterInSection:)` method.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the footer for section.
+    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat
 
     /// Tells the delegate that the item at the specified index path was selected.
     ///
@@ -32,47 +52,7 @@ public protocol RibbonListViewDelegate: class {
     ///     - ribbonList: The ribbon list object that is notifying you of the selection change.
     ///     - indexPath: The index path of the cell that was deselected.
     func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath)
-
-    /// Asks the delegate for the height to use for the header of a particular section.
-    ///
-    /// Use this method to specify the height of custom header views returned by your `ribbonList(_:viewForHeaderInSection:)` method.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: The ribbon list requesting this information.
-    ///     - section: An index number identifying a section of ribbonList.
-    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the header for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat
-
-    /// Asks the delegate for a view object to display in the header of the specified section of the ribbon list.
-    ///
-    /// Use this method to return a UILabel, UIImageView, or custom view for your header. If you implement this method, you must also implement the `tableView(_:heightForHeaderInSection:)` method to specify the height of your custom view.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: The ribbonList asking for the view.
-    ///     - section: The index number of the section containing the header view.
-    /// - Returns: The view object to display at the top of the specified section.
-    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView?
-
-    /// Asks the delegate for the height to use for the footer of a particular section.
-    ///
-    /// Use this method to specify the height of custom footer views returned by your `ribbonList(_:viewForFooterInSection:)` method.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: The ribbon list requesting this information.
-    ///     - section: An index number identifying a section of ribbonList.
-    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the footer for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat
-
-    /// Asks the delegate for a view object to display in the footer of the specified section of the ribbon list.
-    ///
-    /// Use this method to return a UILabel, UIImageView, or custom view for your footer. If you implement this method, you must also implement the `tableView(_:heightForFooterInSection:)` method to specify the height of your custom view.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: The ribbonList asking for the view.
-    ///     - section: The index number of the section containing the footer view.
-    /// - Returns: The view object to display at the bottom of the specified section.
-    func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView?
-
+    
     /// Tells the delegate when the user scrolls the content view within the receiver.
     ///
     /// The delegate typically implements this method to obtain the change in content offset from ribbonList and draw the affected portion of the content view.
@@ -129,16 +109,16 @@ public protocol RibbonListViewDelegate: class {
 
 extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
-        return ribbonList.dataSource?.ribbonList(ribbonList, configurationForSectionAt: section)?.estimatedSectionHeight() ?? UITableView.automaticDimension
+        return ribbonList.dataSource?.ribbonList(ribbonList, configurationForSectionAt: section)?.calculatedSectionHeight() ?? UITableView.automaticDimension
     }
     
     public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { .leastNormalMagnitude }
-    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { .leastNormalMagnitude }
-    public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView? { nil }
+    
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { 44 }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { 44 }
+    
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }

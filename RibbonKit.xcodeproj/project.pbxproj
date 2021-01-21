@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300F60EA25B972AD008AB9EA /* RibbonListResaubleHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */; };
+		300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */; };
+		300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */; };
 		303F475224CF6E7800763149 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475124CF6E7800763149 /* AppDelegate.swift */; };
 		303F475424CF6E7800763149 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475324CF6E7800763149 /* ViewController.swift */; };
 		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
@@ -16,9 +19,7 @@
 		303F476424CF6F0200763149 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3F24C7456D00ABB183 /* Luminosity.swift */; };
 		303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */; };
 		303F476624CF6F0200763149 /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3E24C7456D00ABB183 /* Hue.swift */; };
-		3044596124C794100062BA54 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */; };
 		3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */; };
-		3044596824C7B3590062BA54 /* CellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596724C7B3590062BA54 /* CellRegistration.swift */; };
 		3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
 		3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */; };
 		30BF3FD225B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF3FD125B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift */; };
@@ -50,8 +51,6 @@
 		30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */; };
 		OBJ_24 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* ReusableView.swift */; };
 		OBJ_25 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* UICollectionView+Reusable.swift */; };
-		OBJ_26 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* UITableView+Reusable.swift */; };
-		OBJ_27 /* RibbonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* RibbonCell.swift */; };
 		OBJ_29 /* RibbonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RibbonListView.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,15 +93,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListResaubleHostView.swift; sourceTree = "<group>"; };
+		300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHeaderView.swift; sourceTree = "<group>"; };
+		300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableFooterView.swift; sourceTree = "<group>"; };
 		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		303F475124CF6E7800763149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		303F475324CF6E7800763149 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		303F475824CF6E7900763149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		303F475B24CF6E7900763149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		303F475D24CF6E7900763149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
 		3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonConfiguration.swift; sourceTree = "<group>"; };
-		3044596724C7B3590062BA54 /* CellRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellRegistration.swift; sourceTree = "<group>"; };
 		3044596A24C7B4D90062BA54 /* ColorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGroup.swift; sourceTree = "<group>"; };
 		3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewFocusUpdateContext.swift; sourceTree = "<group>"; };
 		30BF3FCF25B8221900BE8A98 /* ExampleSwiftUI-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExampleSwiftUI-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,11 +130,9 @@
 		30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDelegate.swift; sourceTree = "<group>"; };
 		OBJ_10 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		OBJ_11 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
-		OBJ_12 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
-		OBJ_13 /* RibbonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonCell.swift; sourceTree = "<group>"; };
 		OBJ_15 /* RibbonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListView.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RibbonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RibbonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,14 +187,6 @@
 				30C15D3B24C7455100ABB183 /* RandomColor */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		3044596424C7B1760062BA54 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				3044596024C794100062BA54 /* PagingCollectionViewLayout.swift */,
-			);
-			path = Layout;
 			sourceTree = "<group>";
 		};
 		3044596924C7B4D10062BA54 /* Data */ = {
@@ -271,7 +261,6 @@
 		30F07A2C24C867A100BFFE5E /* List */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_13 /* RibbonCell.swift */,
 				OBJ_15 /* RibbonListView.swift */,
 				3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */,
 				30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */,
@@ -279,14 +268,6 @@
 				3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */,
 			);
 			path = List;
-			sourceTree = "<group>";
-		};
-		30F07A2D24C867B600BFFE5E /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				3044596724C7B3590062BA54 /* CellRegistration.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		OBJ_16 /* Tests */ = {
@@ -335,8 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				30BF401025B83E5B00BE8A98 /* Extensions */,
-				30F07A2D24C867B600BFFE5E /* Helpers */,
-				3044596424C7B1760062BA54 /* Layout */,
 				OBJ_9 /* Reusable */,
 				30F07A2C24C867A100BFFE5E /* List */,
 			);
@@ -348,8 +327,10 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* ReusableView.swift */,
+				300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */,
+				300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */,
+				300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */,
 				OBJ_11 /* UICollectionView+Reusable.swift */,
-				OBJ_12 /* UITableView+Reusable.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -555,17 +536,16 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_24 /* ReusableView.swift in Sources */,
-				3044596824C7B3590062BA54 /* CellRegistration.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
+				300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */,
+				300F60EA25B972AD008AB9EA /* RibbonListResaubleHostView.swift in Sources */,
 				30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */,
-				3044596124C794100062BA54 /* PagingCollectionViewLayout.swift in Sources */,
-				OBJ_26 /* UITableView+Reusable.swift in Sources */,
-				OBJ_27 /* RibbonCell.swift in Sources */,
 				OBJ_29 /* RibbonListView.swift in Sources */,
 				30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */,
 				30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */,
 				3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */,
+				300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */,
 				30F07A2B24C8679900BFFE5E /* RibbonListViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -996,9 +976,8 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RibbonKit.xcodeproj/RibbonKit_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -1009,8 +988,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = RibbonKit;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Debug;
 		};
@@ -1024,9 +1002,8 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = RibbonKit.xcodeproj/RibbonKit_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -1037,8 +1014,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = RibbonKit;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				TVOS_DEPLOYMENT_TARGET = 13.0;
 			};
 			name = Release;
 		};

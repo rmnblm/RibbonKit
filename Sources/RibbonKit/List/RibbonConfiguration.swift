@@ -9,52 +9,56 @@ public struct RibbonConfiguration: Hashable {
     public let numberOfRows: Int
 
     /// TODO
-    public let sectionHeight: CGFloat?
+    public let sectionInsets: UIEdgeInsets
 
     /// TODO
     public let itemSize: CGSize
 
     /// TODO
-    public let minimumLineSpacing: CGFloat
+    public let interItemSpacing: CGFloat
 
     /// TODO
-    public let minimumInteritemSpacing: CGFloat
-
+    public let interGroupSpacing: CGFloat
+    
     /// TODO
-    public let sectionInset: UIEdgeInsets
+    public let headerInsets: UIEdgeInsets
+    
+    /// TODO
+    public let footerInsets: UIEdgeInsets
 
     /// TODO
     public init(
         numberOfRows: Int = 1,
-        sectionHeight: CGFloat? = nil,
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
-        minimumLineSpacing: CGFloat = 6.0,
-        minimumInteritemSpacing: CGFloat = 6.0,
-        sectionInset: UIEdgeInsets = .zero
+        interItemSpacing: CGFloat = 6.0,
+        interGroupSpacing: CGFloat = 6.0,
+        sectionInset: UIEdgeInsets = .zero,
+        headerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15),
+        footerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15)
     ) {
         self.numberOfRows = numberOfRows
-        self.sectionHeight = sectionHeight
         self.itemSize = itemSize
-        self.minimumLineSpacing = minimumLineSpacing
-        self.minimumInteritemSpacing = minimumInteritemSpacing
-        self.sectionInset = sectionInset
+        self.interItemSpacing = interItemSpacing
+        self.interGroupSpacing = interGroupSpacing
+        self.sectionInsets = sectionInset
+        self.headerInsets = headerInsets
+        self.footerInsets = footerInsets
     }
 
     /// TODO
     public static let `default` = RibbonConfiguration()
 
     /// TODO
-    public func estimatedSectionHeight() -> CGFloat {
-        if let sectionHeight = sectionHeight { return sectionHeight }
+    public func calculatedSectionHeight() -> CGFloat {
         return RibbonConfiguration.sectionHeight(
             numberOfRows: numberOfRows,
             itemSize: itemSize,
-            minimumInteritemSpacing: minimumInteritemSpacing
+            interItemSpacing: interItemSpacing
         )
     }
 
     /// TODO
-    public static func sectionHeight(numberOfRows rows: Int, itemSize: CGSize, minimumInteritemSpacing: CGFloat) -> CGFloat {
-        return (CGFloat(rows) * itemSize.height) + max(minimumInteritemSpacing * CGFloat(rows - 1), 0)
+    public static func sectionHeight(numberOfRows rows: Int, itemSize: CGSize, interItemSpacing: CGFloat) -> CGFloat {
+        return (CGFloat(rows) * itemSize.height) + max(interItemSpacing * CGFloat(rows - 1), 0)
     }
 }

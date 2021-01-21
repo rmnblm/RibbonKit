@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: RibbonListViewDelegate {
+extension ViewController: RibbonListViewDelegate {    
     func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) {
         let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
@@ -92,11 +92,23 @@ extension ViewController: RibbonListViewDataSource {
     func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
         return groups[section].configuration
     }
-
-    func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].headerTitle
+    
+    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        let label = UILabel()
+        label.text = groups[section].headerTitle
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
+        ])
+        return view
     }
-
+    
     func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? {
         return groups[section].footerTitle
     }

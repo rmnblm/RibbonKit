@@ -3,6 +3,13 @@
 import UIKit
 import RibbonKit
 
+private class Cell: UICollectionViewCell {
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        layer.borderWidth = isFocused ? 3.0 : 0.0
+        layer.borderColor = isFocused ? UIColor.red.cgColor : UIColor.clear.cgColor
+    }
+}
+
 class ViewController: UIViewController {
 
     let groups = ColorGroup.exampleGroups
@@ -25,7 +32,7 @@ class ViewController: UIViewController {
             ribbonList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             ribbonList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        ribbonList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        ribbonList.register(Cell.self, forCellWithReuseIdentifier: "Cell")
         ribbonList.dataSource = self
         ribbonList.delegate = self
     }
@@ -59,6 +66,30 @@ extension ViewController: RibbonListViewDelegate {
             cell?.backgroundColor = group.colors.randomElement()
         }
     }
+    
+    func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        #if os(tvOS)
+        if let indexPath = context.previouslyFocusedIndexPath { ribbonList.cellForItem(at: indexPath)?.layer.zPosition = 0 }
+        if let indexPath = context.nextFocusedIndexPath { ribbonList.cellForItem(at: indexPath)?.layer.zPosition = 1 }
+
+        guard let nextIndexPath = context.nextFocusedIndexPath else { return }
+        if let previousIndexPath = context.previouslyFocusedIndexPath, previousIndexPath.section == nextIndexPath.section { return }
+
+        var yOffset: CGFloat? = nil
+        if let headerFrame = ribbonList.frameForHeader(in: nextIndexPath.section) {
+            yOffset = headerFrame.origin.y
+        }
+        else if let cellFrame = ribbonList.frameForCell(at: nextIndexPath) {
+            yOffset = cellFrame.origin.y
+        }
+
+        if let yOffset = yOffset {
+            coordinator.addCoordinatedAnimations({
+                ribbonList.setContentOffsetY(yOffset, animated: true)
+            }, completion: nil)
+        }
+        #endif
+    }
 }
 
 extension ViewController: RibbonListViewDataSource {
@@ -67,7 +98,7 @@ extension ViewController: RibbonListViewDataSource {
     }
 
     func ribbonList(_ ribbonList: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cell: Cell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Cell
         let group = groups[indexPath.section]
         let color = group.colors[indexPath.row]
         cell.backgroundColor = color
@@ -81,9 +112,21 @@ extension ViewController: RibbonListViewDataSource {
     func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
         return groups[section].configuration
     }
-
-    func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].headerTitle
+    
+    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        let label = UILabel()
+        label.text = groups[section].headerTitle
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
+        ])
+        return view
     }
 
     func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? {

@@ -40,15 +40,8 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
         }
     }
 
-    private class HostHeaderView: UITableViewHeaderFooterView {
+    private class HostHeaderView: UIView {
         private var hostController: UIHostingController<Header>?
-
-        override func prepareForReuse() {
-            if let hostView = hostController?.view {
-                hostView.removeFromSuperview()
-            }
-            hostController = nil
-        }
 
         var hostedHeaderView: Header? {
             willSet {
@@ -87,7 +80,6 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
         list.delegate = context.coordinator
         list.dataSource = context.coordinator
         list.register(HostCell.self, forCellWithReuseIdentifier: "Cell")
-        list.register(HostHeaderView.self, forHeaderFooterViewReuseIdentifier: "Header")
         return list
     }
 
@@ -104,8 +96,7 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
     class Coordinator: NSObject, RibbonListViewDelegate, RibbonListViewDataSource {
 
         fileprivate var ribbonsHash: Int? = nil
-        fileprivate var isFocusable: Bool = true
-        var parent: RibbonList
+        fileprivate var parent: RibbonList
 
         init(_ parent: RibbonList) {
             self.parent = parent
@@ -126,7 +117,7 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
         }
 
         func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? {
-            let headerView = ribbonList.dequeueReusableHeaderFooterView(withIdentifier: "Header") as! HostHeaderView
+            let headerView = HostHeaderView()
             headerView.hostedHeaderView = parent.headerBuilder(section)
             return headerView
         }
@@ -138,11 +129,7 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
         func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int {
             return parent.ribbons[section].items.count
         }
-        
-        func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool {
-            return isFocusable
-        }
-        
+
         func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
             #if os(tvOS)
             if let indexPath = context.previouslyFocusedIndexPath { ribbonList.cellForItem(at: indexPath)?.layer.zPosition = 0 }
@@ -151,15 +138,19 @@ struct RibbonList<Section: Hashable, Item: Hashable, Cell: View, Header: View>: 
             guard let nextIndexPath = context.nextFocusedIndexPath else { return }
             if let previousIndexPath = context.previouslyFocusedIndexPath, previousIndexPath.section == nextIndexPath.section { return }
 
-            let headerHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForHeaderInSection: nextIndexPath.section) ?? 0.0
-            let sectionHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForSectionAt: nextIndexPath.section) ?? 0.0
-            let footerHeight = ribbonList.delegate?.ribbonList(ribbonList, heightForFooterInSection: nextIndexPath.section) ?? 0.0
-            let sectionSpacing: CGFloat = 28 // this is added by UIKit automatically in tvOS
-            
-            let yOffset = (headerHeight + sectionHeight + footerHeight + sectionSpacing) * CGFloat(nextIndexPath.section)
-            coordinator.addCoordinatedAnimations({
-                ribbonList.setContentOffsetY(yOffset, animated: true)
-            }, completion: nil)
+            var yOffset: CGFloat? = nil
+            if let headerFrame = ribbonList.frameForHeader(in: nextIndexPath.section) {
+                yOffset = headerFrame.origin.y
+            }
+            else if let cellFrame = ribbonList.frameForCell(at: nextIndexPath) {
+                yOffset = cellFrame.origin.y
+            }
+
+            if let yOffset = yOffset {
+                coordinator.addCoordinatedAnimations({
+                    ribbonList.setContentOffsetY(yOffset, animated: true)
+                }, completion: nil)
+            }
             #endif
         }
     }
