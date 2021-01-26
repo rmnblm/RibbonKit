@@ -198,11 +198,13 @@ open class RibbonListView: UIView {
         return collectionView?.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: kind, at: fakeIndexPath)
     }
     
+    /// TODO
     open func frameForCell(at indexPath: IndexPath) -> CGRect? {
         guard let cell = cellForItem(at: indexPath) else { return nil }
         return cell.convert(cell.frame, to: self)
     }
     
+    /// TODO
     open func frameForHeader(at section: Int) -> CGRect? {
         guard let headerView = headerView(for: section) else { return nil }
         return headerView.frame
