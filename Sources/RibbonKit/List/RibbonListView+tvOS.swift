@@ -218,29 +218,25 @@ open class RibbonListView: UIView {
             section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
             
             var supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] = []
-            if self.hasHeader(in: sectionIndex) {
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 44)
-                    ),
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .topLeading
-                )
-                supplementaryItems.append(header)
-            }
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 44)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .topLeading
+            )
+            supplementaryItems.append(header)
             
-            if self.hasFooter(in: sectionIndex) {
-                let footer = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 44)
-                    ),
-                    elementKind: UICollectionView.elementKindSectionFooter,
-                    alignment: .bottomLeading
-                )
-                supplementaryItems.append(footer)
-            }
+            let footer = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 44)
+                ),
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottomLeading
+            )
+            supplementaryItems.append(footer)
             section.boundarySupplementaryItems = supplementaryItems
             
             return section
