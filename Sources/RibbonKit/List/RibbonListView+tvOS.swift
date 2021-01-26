@@ -216,39 +216,25 @@ open class RibbonListView: UIView {
                 bottom: configuration.sectionInsets.bottom,
                 trailing: configuration.sectionInsets.right
             )
-            
-            var supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] = []
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 44)
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 0)
                 ),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .topLeading
             )
-            supplementaryItems.append(header)
-            
             let footer = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 44)
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 0)
                 ),
                 elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottomLeading
             )
-            supplementaryItems.append(footer)
-            section.boundarySupplementaryItems = supplementaryItems
-            
+            section.boundarySupplementaryItems = [header, footer]
             return section
         }
-    }
-    
-    private func hasHeader(in section: Int) -> Bool {
-        dataSource?.ribbonList(self, titleForHeaderInSection: section) != nil || dataSource?.ribbonList(self, viewForHeaderInSection: section) != nil
-    }
-    
-    private func hasFooter(in section: Int) -> Bool {
-        dataSource?.ribbonList(self, titleForFooterInSection: section) != nil || dataSource?.ribbonList(self, viewForFooterInSection: section) != nil
     }
 }
 
