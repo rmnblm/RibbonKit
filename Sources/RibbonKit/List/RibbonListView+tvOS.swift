@@ -29,6 +29,12 @@ open class RibbonListView: UIView {
         get { collectionView.contentInset }
         set { collectionView.contentInset = newValue }
     }
+    
+    /// A Boolean value that determines whether scrolling is enabled.
+    public var isScrollEnabled: Bool {
+        get { collectionView.isScrollEnabled }
+        set { collectionView.isScrollEnabled = newValue }
+    }
 
     /// The background view of the ribbon list.
     ///
