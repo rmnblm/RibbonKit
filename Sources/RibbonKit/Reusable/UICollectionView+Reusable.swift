@@ -15,6 +15,7 @@ extension UICollectionView {
         return cell
     }
     
+    #if os(tvOS)
     func register<T: UICollectionReusableView>(_: T.Type, forSupplementaryViewOfKind kind: String) where T: ReusableView {
         register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.defaultReuseIdentifier)
     }
@@ -25,4 +26,5 @@ extension UICollectionView {
         }
         return cell
     }
+    #endif
 }

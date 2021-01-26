@@ -1,5 +1,6 @@
 //  Copyright © 2020 Swisscom. All rights reserved.
 
+#if os(tvOS)
 import UIKit
 
 final class RibbonListReusableHeaderView: UICollectionReusableView, ReusableView {
@@ -41,3 +42,4 @@ final class RibbonListReusableHeaderView: UICollectionReusableView, ReusableView
         ])
     }
 }
+#endif

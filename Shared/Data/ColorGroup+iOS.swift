@@ -1,5 +1,6 @@
 //  Copyright © 2020 Swisscom. All rights reserved.
 
+#if os(iOS)
 import UIKit
 import RibbonKit
 
@@ -15,7 +16,7 @@ class ColorGroup {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         self.newColorClosure = newColorClosure
-        self.colors = (0..<10).map { _ in newColorClosure() }
+        self.colors = (0..<3).map { _ in newColorClosure() }
         self.configuration = configuration
     }
 
@@ -42,7 +43,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 30, height: 30),
-                    interGroupSpacing: 1
+                    minimumLineSpacing: 1
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -52,7 +53,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 50, height: 50),
-                    interGroupSpacing: 2
+                    minimumLineSpacing: 2
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         ),
@@ -62,7 +63,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 70, height: 70),
-                    interGroupSpacing: 3
+                    minimumLineSpacing: 3
                 ),
             newColorClosure: { randomColor(hue: .red, luminosity: .light) }
         ),
@@ -73,8 +74,8 @@ extension ColorGroup {
                 RibbonConfiguration(
                     numberOfRows: 4,
                     itemSize: .init(width: 100, height: 20),
-                    interItemSpacing: 4,
-                    interGroupSpacing: 4
+                    minimumLineSpacing: 4,
+                    interItemSpacing: 4
                 ),
             newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
         ),
@@ -84,7 +85,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 120, height: 120),
-                    interGroupSpacing: 5
+                    minimumLineSpacing: 5
                 ),
             newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
         ),
@@ -94,7 +95,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 30, height: 30),
-                    interGroupSpacing: 1
+                    minimumLineSpacing: 1
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -104,9 +105,10 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 50, height: 50),
-                    interGroupSpacing: 2
+                    minimumLineSpacing: 2
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         )
     ]
 }
+#endif

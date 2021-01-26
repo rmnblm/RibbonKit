@@ -2,6 +2,7 @@
 
 import UIKit
 
+#if os(tvOS)
 /// A view that presents data using paginated items arranged in rows.
 open class RibbonListView: UIView {
 
@@ -299,4 +300,4 @@ extension RibbonListView: UICollectionViewDataSource {
         return dataSource?.ribbonList(self, cellForItemAt: indexPath) ?? UICollectionViewCell()
     }
 }
-
+#endif

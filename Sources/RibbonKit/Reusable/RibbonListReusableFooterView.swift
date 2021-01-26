@@ -1,5 +1,6 @@
 //  Copyright © 2020 Swisscom. All rights reserved.
 
+#if os(tvOS)
 import UIKit
 
 final class RibbonListReusableFooterView: UICollectionReusableView, ReusableView {
@@ -42,3 +43,4 @@ final class RibbonListReusableFooterView: UICollectionReusableView, ReusableView
         ])
     }
 }
+#endif

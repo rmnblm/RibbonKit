@@ -10,13 +10,14 @@ public struct RibbonConfiguration: Hashable {
 
     /// TODO
     public let sectionInsets: UIEdgeInsets
-
+    
     /// TODO
     public let itemSize: CGSize
-
+    
     /// TODO
     public let interItemSpacing: CGFloat
 
+    #if os(tvOS)
     /// TODO
     public let interGroupSpacing: CGFloat
     
@@ -25,14 +26,21 @@ public struct RibbonConfiguration: Hashable {
     
     /// TODO
     public let footerInsets: UIEdgeInsets
+    #endif
+    
+    #if os(iOS)
+    /// TODO
+    public let minimumLineSpacing: CGFloat
+    #endif
 
+    #if os(tvOS)
     /// TODO
     public init(
         numberOfRows: Int = 1,
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
         interItemSpacing: CGFloat = 6.0,
         interGroupSpacing: CGFloat = 6.0,
-        sectionInset: UIEdgeInsets = .zero,
+        sectionInsets: UIEdgeInsets = .zero,
         headerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15),
         footerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15)
     ) {
@@ -40,10 +48,28 @@ public struct RibbonConfiguration: Hashable {
         self.itemSize = itemSize
         self.interItemSpacing = interItemSpacing
         self.interGroupSpacing = interGroupSpacing
-        self.sectionInsets = sectionInset
+        self.sectionInsets = sectionInsets
         self.headerInsets = headerInsets
         self.footerInsets = footerInsets
     }
+    #endif
+    
+    #if os(iOS)
+    /// TODO
+    public init(
+        numberOfRows: Int = 1,
+        sectionInsets: UIEdgeInsets = .zero,
+        itemSize: CGSize = .init(width: 80.0, height: 80.0),
+        minimumLineSpacing: CGFloat = 6.0,
+        interItemSpacing: CGFloat = 6.0
+    ) {
+        self.numberOfRows = numberOfRows
+        self.sectionInsets = sectionInsets
+        self.itemSize = itemSize
+        self.minimumLineSpacing = minimumLineSpacing
+        self.interItemSpacing = interItemSpacing
+    }
+    #endif
 
     /// TODO
     public static let `default` = RibbonConfiguration()

@@ -116,8 +116,21 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
     
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { 44 }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { 44 }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat {
+        #if os(tvOS)
+        return 44
+        #else
+        return UITableView.automaticDimension
+        #endif
+    }
+    
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat {
+        #if os(tvOS)
+        return 44
+        #else
+        return UITableView.automaticDimension
+        #endif
+    }
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
