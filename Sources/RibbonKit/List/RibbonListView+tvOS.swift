@@ -211,10 +211,10 @@ open class RibbonListView: UIView {
             else {
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             }
-            group.interItemSpacing = .fixed(configuration.interItemSpacing)
+            group.interItemSpacing = .fixed(configuration.interGroupSpacing)
             
             let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = configuration.interGroupSpacing
+            section.interGroupSpacing = configuration.interItemSpacing
             section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
