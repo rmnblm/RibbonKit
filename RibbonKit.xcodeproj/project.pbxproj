@@ -29,22 +29,8 @@
 		3057F98925BFFDF7002E3274 /* RibbonListView+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F98825BFFDF7002E3274 /* RibbonListView+iOS.swift */; };
 		3057F99E25BFFE48002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
 		3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
-		3057F9A325BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
-		30BF3FD225B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF3FD125B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift */; };
-		30BF3FD425B8221900BE8A98 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF3FD325B8221900BE8A98 /* ContentView.swift */; };
-		30BF3FD625B8221B00BE8A98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BF3FD525B8221B00BE8A98 /* Assets.xcassets */; };
-		30BF3FD925B8221B00BE8A98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BF3FD825B8221B00BE8A98 /* Preview Assets.xcassets */; };
-		30BF3FE325B8227A00BE8A98 /* RibbonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF3FE225B8227A00BE8A98 /* RibbonList.swift */; };
-		30BF3FED25B8231E00BE8A98 /* RibbonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "RibbonKit::RibbonKit::Product" /* RibbonKit.framework */; };
-		30BF3FEE25B8231E00BE8A98 /* RibbonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = "RibbonKit::RibbonKit::Product" /* RibbonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		30BF3FF825B82F7A00BE8A98 /* ColorGroup+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */; };
-		30BF3FFC25B82F7D00BE8A98 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3F24C7456D00ABB183 /* Luminosity.swift */; };
-		30BF3FFD25B82F7D00BE8A98 /* RandomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3C24C7456D00ABB183 /* RandomColor.swift */; };
-		30BF3FFE25B82F7D00BE8A98 /* ColorDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */; };
-		30BF3FFF25B82F7D00BE8A98 /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3E24C7456D00ABB183 /* Hue.swift */; };
 		30BF400425B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF400525B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
-		30BF400625B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */; };
 		30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */; };
 		30C15D2824C7436000ABB183 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2724C7436000ABB183 /* AppDelegate.swift */; };
@@ -70,13 +56,6 @@
 			remoteGlobalIDString = "RibbonKit::RibbonKit";
 			remoteInfo = RibbonKit;
 		};
-		30BF3FEF25B8231E00BE8A98 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "RibbonKit::RibbonKit";
-			remoteInfo = RibbonKit;
-		};
 		30C15D3924C743CD00ABB183 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
@@ -85,20 +64,6 @@
 			remoteInfo = RibbonKit;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		30BF3FF125B8231E00BE8A98 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				30BF3FEE25B8231E00BE8A98 /* RibbonKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListResaubleHostView.swift; sourceTree = "<group>"; };
@@ -119,13 +84,6 @@
 		3057F97D25BFFDA3002E3274 /* RibbonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonCell.swift; sourceTree = "<group>"; };
 		3057F98825BFFDF7002E3274 /* RibbonListView+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RibbonListView+iOS.swift"; sourceTree = "<group>"; };
 		3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorGroup+iOS.swift"; sourceTree = "<group>"; };
-		30BF3FCF25B8221900BE8A98 /* ExampleSwiftUI-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ExampleSwiftUI-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		30BF3FD125B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSwiftUI_tvOSApp.swift; sourceTree = "<group>"; };
-		30BF3FD325B8221900BE8A98 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		30BF3FD525B8221B00BE8A98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		30BF3FD825B8221B00BE8A98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		30BF3FDA25B8221B00BE8A98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		30BF3FE225B8227A00BE8A98 /* RibbonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonList.swift; sourceTree = "<group>"; };
 		30BF400325B833E000BE8A98 /* Lorem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
 		30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
 		30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Hashable.swift"; sourceTree = "<group>"; };
@@ -154,14 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30BF3FCC25B8221800BE8A98 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				30BF3FED25B8231E00BE8A98 /* RibbonKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,27 +179,6 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
-		30BF3FD025B8221900BE8A98 /* ExampleSwiftUI-tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				30BF3FD125B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift */,
-				30BF3FD325B8221900BE8A98 /* ContentView.swift */,
-				30BF3FE225B8227A00BE8A98 /* RibbonList.swift */,
-				30BF3FD525B8221B00BE8A98 /* Assets.xcassets */,
-				30BF3FDA25B8221B00BE8A98 /* Info.plist */,
-				30BF3FD725B8221B00BE8A98 /* Preview Content */,
-			);
-			path = "ExampleSwiftUI-tvOS";
-			sourceTree = "<group>";
-		};
-		30BF3FD725B8221B00BE8A98 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				30BF3FD825B8221B00BE8A98 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 		30BF3FEC25B8231E00BE8A98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,7 +244,6 @@
 				"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */,
 				30C15D2524C7436000ABB183 /* Example.app */,
 				303F474F24CF6E7800763149 /* Example-tvOS.app */,
-				30BF3FCF25B8221900BE8A98 /* ExampleSwiftUI-tvOS.app */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -330,7 +258,6 @@
 				303F476124CF6EE600763149 /* Shared */,
 				30C15D2624C7436000ABB183 /* Example */,
 				303F475024CF6E7800763149 /* Example-tvOS */,
-				30BF3FD025B8221900BE8A98 /* ExampleSwiftUI-tvOS */,
 				OBJ_17 /* Products */,
 				30BF3FEC25B8231E00BE8A98 /* Frameworks */,
 			);
@@ -392,25 +319,6 @@
 			productReference = 303F474F24CF6E7800763149 /* Example-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		30BF3FCE25B8221800BE8A98 /* ExampleSwiftUI-tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 30BF3FDD25B8221B00BE8A98 /* Build configuration list for PBXNativeTarget "ExampleSwiftUI-tvOS" */;
-			buildPhases = (
-				30BF3FCB25B8221800BE8A98 /* Sources */,
-				30BF3FCC25B8221800BE8A98 /* Frameworks */,
-				30BF3FCD25B8221800BE8A98 /* Resources */,
-				30BF3FF125B8231E00BE8A98 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				30BF3FF025B8231E00BE8A98 /* PBXTargetDependency */,
-			);
-			name = "ExampleSwiftUI-tvOS";
-			productName = "ExampleSwiftUI-tvOS";
-			productReference = 30BF3FCF25B8221900BE8A98 /* ExampleSwiftUI-tvOS.app */;
-			productType = "com.apple.product-type.application";
-		};
 		30C15D2424C7436000ABB183 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 30C15D3824C7436200ABB183 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -459,10 +367,6 @@
 						CreatedOnToolsVersion = 12.0;
 						ProvisioningStyle = Automatic;
 					};
-					30BF3FCE25B8221800BE8A98 = {
-						CreatedOnToolsVersion = 12.3;
-						ProvisioningStyle = Automatic;
-					};
 					30C15D2424C7436000ABB183 = {
 						CreatedOnToolsVersion = 12.0;
 						ProvisioningStyle = Automatic;
@@ -485,7 +389,6 @@
 				"RibbonKit::RibbonKit" /* RibbonKit */,
 				30C15D2424C7436000ABB183 /* Example */,
 				303F474E24CF6E7800763149 /* Example-tvOS */,
-				30BF3FCE25B8221800BE8A98 /* ExampleSwiftUI-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -497,15 +400,6 @@
 			files = (
 				303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */,
 				303F475924CF6E7900763149 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30BF3FCD25B8221800BE8A98 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				30BF3FD925B8221B00BE8A98 /* Preview Assets.xcassets in Resources */,
-				30BF3FD625B8221B00BE8A98 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,23 +428,6 @@
 				3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */,
 				303F476224CF6EFC00763149 /* ColorGroup+tvOS.swift in Sources */,
 				303F476424CF6F0200763149 /* Luminosity.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30BF3FCB25B8221800BE8A98 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				30BF3FE325B8227A00BE8A98 /* RibbonList.swift in Sources */,
-				30BF3FD425B8221900BE8A98 /* ContentView.swift in Sources */,
-				30BF3FD225B8221900BE8A98 /* ExampleSwiftUI_tvOSApp.swift in Sources */,
-				30BF3FF825B82F7A00BE8A98 /* ColorGroup+tvOS.swift in Sources */,
-				30BF3FFD25B82F7D00BE8A98 /* RandomColor.swift in Sources */,
-				30BF3FFE25B82F7D00BE8A98 /* ColorDefinition.swift in Sources */,
-				30BF3FFF25B82F7D00BE8A98 /* Hue.swift in Sources */,
-				3057F9A325BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */,
-				30BF400625B833E000BE8A98 /* Lorem.swift in Sources */,
-				30BF3FFC25B82F7D00BE8A98 /* Luminosity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,11 +478,6 @@
 			isa = PBXTargetDependency;
 			target = "RibbonKit::RibbonKit" /* RibbonKit */;
 			targetProxy = 303F476724CF6F5100763149 /* PBXContainerItemProxy */;
-		};
-		30BF3FF025B8231E00BE8A98 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "RibbonKit::RibbonKit" /* RibbonKit */;
-			targetProxy = 30BF3FEF25B8231E00BE8A98 /* PBXContainerItemProxy */;
 		};
 		30C15D3A24C743CD00ABB183 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -754,134 +626,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 14.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		30BF3FDB25B8221B00BE8A98 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"ExampleSwiftUI-tvOS/Preview Content\"";
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ExampleSwiftUI-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.swisscom.ExampleSwiftUI-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.3;
-			};
-			name = Debug;
-		};
-		30BF3FDC25B8221B00BE8A98 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_ASSET_PATHS = "\"ExampleSwiftUI-tvOS/Preview Content\"";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "ExampleSwiftUI-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.swisscom.ExampleSwiftUI-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.3;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1121,15 +865,6 @@
 			buildConfigurations = (
 				303F475E24CF6E7900763149 /* Debug */,
 				303F475F24CF6E7900763149 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		30BF3FDD25B8221B00BE8A98 /* Build configuration list for PBXNativeTarget "ExampleSwiftUI-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				30BF3FDB25B8221B00BE8A98 /* Debug */,
-				30BF3FDC25B8221B00BE8A98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
