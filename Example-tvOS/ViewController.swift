@@ -98,8 +98,8 @@ extension ViewController: RibbonListViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
         ])
         return view

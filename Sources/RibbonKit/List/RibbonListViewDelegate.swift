@@ -118,7 +118,7 @@ extension RibbonListViewDelegate {
     
     public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat {
         #if os(tvOS)
-        return 0.0
+        return 44.0
         #else
         return UITableView.automaticDimension
         #endif
@@ -126,7 +126,7 @@ extension RibbonListViewDelegate {
     
     public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat {
         #if os(tvOS)
-        return 0.0
+        return 44.0
         #else
         return UITableView.automaticDimension
         #endif

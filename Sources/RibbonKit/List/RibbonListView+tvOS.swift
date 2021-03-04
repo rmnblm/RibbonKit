@@ -225,7 +225,7 @@ open class RibbonListView: UIView {
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 0)
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 44.0)
                 ),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .topLeading
@@ -233,7 +233,7 @@ open class RibbonListView: UIView {
             let footer = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 0)
+                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 44.0)
                 ),
                 elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottomLeading
