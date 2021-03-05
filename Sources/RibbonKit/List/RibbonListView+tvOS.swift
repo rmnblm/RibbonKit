@@ -257,6 +257,11 @@ extension RibbonListView: UICollectionViewDelegate {
         delegate?.ribbonList(self, willDisplay: cell, forItemAt: indexPath)
     }
     
+    public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
+        let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        return delegate?.ribbonList(self, shouldUpdateFocusIn: newContext) ?? true
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)

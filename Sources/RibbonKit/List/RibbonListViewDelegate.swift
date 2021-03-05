@@ -70,6 +70,17 @@ public protocol RibbonListViewDelegate: class {
     ///     - indexPath: The index path of the data item that the cell represents.
     func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
     
+    /// Asks the delegate whether a change in focus should occur.
+    ///
+    /// Before a focus change can occur, the focus engine asks all affected views if such a change should occur. In response, the ribbon list calls this method to give you the opportunity to allow or prevent the change. Return this method to prevent changes that should not occur. For example, you might use it to ensure that the navigation between cells occurs in a specific order.
+    ///
+    /// If you do not implement this method, the ribbon list assumes a return value of `true`.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object notifying you of the focus change.
+    ///     - context: The context object containing metadata associated with the focus change. This object contains the index path of the previously focused item and the currently focused item.     
+    func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool
+    
     /// Tells the delegate that a focus update occurred.
     ///
     /// The ribbon list calls this method when a focus-related change occurs. You can use this method to update your app's state information or to animate changes to your app's visual appearance.
@@ -133,6 +144,7 @@ extension RibbonListViewDelegate {
     }
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
 
