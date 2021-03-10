@@ -54,7 +54,7 @@ open class RibbonListView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.allowsSelection = false
+        
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
