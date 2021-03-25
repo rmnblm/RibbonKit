@@ -59,9 +59,9 @@ public struct RibbonConfiguration: Hashable {
     public init(
         numberOfRows: Int = 1,
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
+        interItemSpacing: CGFloat = 6.0,
         sectionInsets: UIEdgeInsets = .zero,
-        minimumLineSpacing: CGFloat = 6.0,
-        interItemSpacing: CGFloat = 6.0
+        minimumLineSpacing: CGFloat = 6.0
     ) {
         self.numberOfRows = numberOfRows
         self.itemSize = itemSize
