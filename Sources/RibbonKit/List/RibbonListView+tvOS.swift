@@ -44,11 +44,6 @@ open class RibbonListView: UIView {
         get { collectionView.backgroundView }
         set { collectionView.backgroundView = newValue }
     }
-    
-    open override var mask: UIView? {
-        get { collectionView.mask }
-        set { collectionView.mask = newValue }
-    }
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
