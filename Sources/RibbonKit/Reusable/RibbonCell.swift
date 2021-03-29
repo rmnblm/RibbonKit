@@ -3,6 +3,15 @@
 #if os(iOS)
 import UIKit
 
+final class RibbonCollectionView: UICollectionView {
+    override func accessibilityElementCount() -> Int {
+        guard let dataSource = dataSource else { return 0 }
+        let numberOfSections = dataSource.numberOfSections?(in: self) ?? 1
+        return (0..<numberOfSections)
+            .reduce(0, { $0 + dataSource.collectionView(self, numberOfItemsInSection: $1) })
+    }
+}
+
 final class RibbonCell: UITableViewCell, ReusableView {
 
     private var didRegisterCells = false
@@ -13,8 +22,8 @@ final class RibbonCell: UITableViewCell, ReusableView {
         return layout
     }()
 
-    private(set) lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+    private(set) lazy var collectionView: RibbonCollectionView = {
+        let collectionView = RibbonCollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
