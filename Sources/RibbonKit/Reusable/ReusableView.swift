@@ -1,4 +1,4 @@
-//  Copyright © 2020 Swisscom. All rights reserved.
+//  Copyright © 2020 Roman Blum. All rights reserved.
 
 import UIKit
 
