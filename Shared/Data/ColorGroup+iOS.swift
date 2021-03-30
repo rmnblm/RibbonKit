@@ -74,8 +74,8 @@ extension ColorGroup {
                 RibbonConfiguration(
                     numberOfRows: 4,
                     itemSize: .init(width: 100, height: 20),
-                    minimumLineSpacing: 4,
-                    interItemSpacing: 4
+                    interItemSpacing: 4,
+                    minimumLineSpacing: 4
                 ),
             newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
         ),

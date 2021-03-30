@@ -213,7 +213,7 @@ open class RibbonListView: UIView {
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = configuration.interItemSpacing
-            section.orthogonalScrollingBehavior = orthogonalScrollingBehavior
+            section.orthogonalScrollingBehavior = self.orthogonalScrollingBehavior
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
                 leading: configuration.sectionInsets.left,
