@@ -36,6 +36,9 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
+    /// The section's scrolling behavior in relation to the main layout axis.
+    public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+
     /// The background view of the ribbon list.
     ///
     /// Assign a background view to change the color behind your ribbon list's sections and rows. The default value of this property is nil.
@@ -210,7 +213,7 @@ open class RibbonListView: UIView {
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = configuration.interItemSpacing
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+            section.orthogonalScrollingBehavior = orthogonalScrollingBehavior
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
                 leading: configuration.sectionInsets.left,
