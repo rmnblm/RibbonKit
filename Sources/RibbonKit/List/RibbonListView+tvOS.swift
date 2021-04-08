@@ -36,8 +36,8 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
-    /// The section's scrolling behavior in relation to the main layout axis.
-    public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+    /// TODO
+    public var scrollingBehaviour: RibbonListViewScrollingBehaviour = .sectionPaging
 
     /// The background view of the ribbon list.
     ///
@@ -52,7 +52,6 @@ open class RibbonListView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
@@ -60,6 +59,8 @@ open class RibbonListView: UIView {
         collectionView.register(RibbonListReusableFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
         return collectionView
     }()
+
+    private var currentlyFocusedIndexPath: IndexPath?
 
     /// Initializes and returns a ribbon list having the given frame.
     ///
@@ -149,50 +150,20 @@ open class RibbonListView: UIView {
         collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: identifier, for: indexPath)
     }
     
-    /// Sets the y-offset from the content view's origin that corresponds to the receiver's origin.
-    open func setContentOffsetY(_ contentOffsetY: CGFloat, animated: Bool) {
-        collectionView.setContentOffset(.init(x: 0, y: contentOffsetY), animated: animated)
+    /// Sets the offset from the content view’s origin that corresponds to the receiver’s origin.
+    open func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+        collectionView.setContentOffset(contentOffset, animated: animated)
     }
 
     /// Reloads the items and sections of the ribbon list.
     ///
     /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
     open func reloadData() {
-        CATransaction.begin()
         collectionView.reloadData()
-        CATransaction.commit()
     }
 
-    open func insertItems(at indexPaths: [IndexPath]) {
-        collectionView.insertItems(at: indexPaths)
-    }
-
-    open func deleteItems(at indexPaths: [IndexPath]) {
-        collectionView.deleteItems(at: indexPaths)
-    }
-
-    open func reloadItems(at indexPaths: [IndexPath]) {
-        collectionView.reloadItems(at: indexPaths)
-    }
-
-    open func reloadSection(at sections: IndexSet) {
-        collectionView.reloadSections(sections)
-    }
-    
-    public func frameForHeader(in section: Int) -> CGRect? {
-        collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: section))?.frame
-    }
-    
-    public func frameForFooter(in section: Int) -> CGRect? {
-        collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, at: IndexPath(item: 0, section: section))?.frame
-    }
-    
-    public func frameForCell(at indexPath: IndexPath) -> CGRect? {
-        collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)?.frame
-    }
-    
     private func buildLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+        let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1 / CGFloat(configuration.numberOfRows)))
@@ -213,31 +184,58 @@ open class RibbonListView: UIView {
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = configuration.interItemSpacing
-            section.orthogonalScrollingBehavior = self.orthogonalScrollingBehavior
+            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
                 leading: configuration.sectionInsets.left,
                 bottom: configuration.sectionInsets.bottom,
                 trailing: configuration.sectionInsets.right
             )
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex) ?? 44.0)
-                ),
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .topLeading
-            )
-            let footer = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex) ?? 44.0)
-                ),
-                elementKind: UICollectionView.elementKindSectionFooter,
-                alignment: .bottomLeading
-            )
-            section.boundarySupplementaryItems = [header, footer]
+
+            var header: NSCollectionLayoutBoundarySupplementaryItem?
+            if let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight > 0.0 {
+                header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(headerHeight)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )
+            }
+
+            var footer: NSCollectionLayoutBoundarySupplementaryItem?
+            if let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight > 0.0 {
+                footer = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(footerHeight)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionFooter,
+                    alignment: .bottomLeading
+                )
+            }
+
+            section.boundarySupplementaryItems = [header, footer].compactMap { $0 }
             return section
+        }
+
+        layout.delegate = self
+        return layout
+    }
+}
+
+extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
+    func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        switch scrollingBehaviour {
+        case .none:
+            return proposedContentOffset
+        case .sectionPaging:
+            guard
+                let indexPath = currentlyFocusedIndexPath,
+                let frame = collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: indexPath.section))?.frame
+            else { return proposedContentOffset }
+            return .init(x: proposedContentOffset.x, y: frame.origin.y)
         }
     }
 }
@@ -261,6 +259,7 @@ extension RibbonListView: UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
     }
@@ -268,7 +267,7 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
     }
-    
+
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.ribbonListDidScroll(self)
     }
@@ -316,6 +315,25 @@ extension RibbonListView: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return dataSource?.ribbonList(self, cellForItemAt: indexPath) ?? UICollectionViewCell()
+    }
+}
+
+public enum RibbonListViewScrollingBehaviour {
+    case none
+    case sectionPaging
+}
+
+protocol RibbonListViewCompositionalLayoutDelegate: class {
+    func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint
+}
+
+class RibbonListViewCompositionalLayout: UICollectionViewCompositionalLayout {
+
+    weak var delegate: RibbonListViewCompositionalLayoutDelegate?
+
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        return delegate?.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
+            ?? super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
     }
 }
 #endif
