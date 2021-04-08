@@ -36,8 +36,11 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
-    /// TODO
-    public var scrollingBehaviour: RibbonListViewScrollingBehaviour = .sectionPaging
+    /// The ribbon list's horizontal scrolling behavior.
+    public var horizontalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+
+    /// The ribbon list's vertical scrolling behavior.
+    public var verticalScrollingBehaviour: RibbonListViewScrollingBehaviour = .sectionPaging
 
     /// The background view of the ribbon list.
     ///
@@ -90,12 +93,21 @@ open class RibbonListView: UIView {
 
     /// Returns the ribbon cell at the specified index path.
     ///
-    ///
     /// - Parameters:
     ///     - indexPath: The index path locating the row in the ribbon list.
     /// - Returns: An object representing a cell of the list, or nil if the cell is not visible or indexPath is out of range.
     open func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
         return collectionView.cellForItem(at: indexPath)
+    }
+
+    /// Scrolls the ribbon list contents until the specified item is visible.
+    ///
+    /// - Parameters:
+    ///     - indexPath: The index path of the item to scroll into view.
+    ///     - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes. For a list of possible values, see UICollectionView.ScrollPosition.
+    ///     - animated: Specify true to animate the scrolling behavior or false to adjust the ribbon list's visible content immediately.
+    open func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
+        collectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
     }
 
     /// Registers a class for use in creating new ribbon list cells.
@@ -184,7 +196,7 @@ open class RibbonListView: UIView {
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = configuration.interItemSpacing
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+            section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
                 leading: configuration.sectionInsets.left,
@@ -227,7 +239,7 @@ open class RibbonListView: UIView {
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
     func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        switch scrollingBehaviour {
+        switch verticalScrollingBehaviour {
         case .none:
             return proposedContentOffset
         case .sectionPaging:
@@ -241,6 +253,10 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
 }
 
 extension RibbonListView: UICollectionViewDelegate {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        delegate?.ribbonListDidEndScrollingAnimation(self)
+    }
+
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.ribbonList(self, didSelectItemAt: indexPath)
     }

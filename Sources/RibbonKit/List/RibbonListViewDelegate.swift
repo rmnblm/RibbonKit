@@ -100,6 +100,14 @@ public protocol RibbonListViewDelegate: class {
     ///     - indexPath: The index path of an item in the ribbon list.
     func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool
 
+    /// Tells the delegate when a scrolling animation in the scroll view concludes.
+    ///
+    /// The scroll view calls this method at the end of its implementations of the setContentOffset(_:animated:) methods, but only if animations are requested.
+    ///
+    /// - Parameters:
+    ///     - scrollView: The ribbon list object that is performing the scrolling animation.
+    func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView)
+
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
     ///
@@ -134,6 +142,8 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
+
+    func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
     @available(iOS 13.0, *)
