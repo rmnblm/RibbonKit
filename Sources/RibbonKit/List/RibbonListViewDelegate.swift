@@ -143,7 +143,7 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
 
-    func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
+    public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
     @available(iOS 13.0, *)
