@@ -66,6 +66,7 @@ open class RibbonListView: UIView {
         return collectionView
     }()
 
+    private var scrollToTopIndexPath: IndexPath?
     private var forcedNextFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
 
@@ -182,7 +183,10 @@ open class RibbonListView: UIView {
         guard let press = presses.first else { return }
         switch press.type {
         case .menu:
-            guard contentOffset != .zero else { super.pressesBegan(presses, with: event); return }
+            guard
+                scrollsTopOnExitCommand,
+                contentOffset != .zero
+            else { super.pressesBegan(presses, with: event); return }
             scrollToTop()
         default:
             super.pressesBegan(presses, with: event)
@@ -193,7 +197,7 @@ open class RibbonListView: UIView {
         guard let press = presses.first else { return }
         switch press.type {
         case .menu:
-            guard contentOffset == .zero else { return }
+            if contentOffset != .zero { return }
             super.pressesEnded(presses, with: event)
         default:
             super.pressesEnded(presses, with: event)
@@ -264,7 +268,7 @@ open class RibbonListView: UIView {
 
     private func scrollToTop() {
         guard contentOffset != .zero else { return }
-        let indexPath = IndexPath(item: 0, section: 0)
+        let indexPath = scrollToTopIndexPath ?? IndexPath(item: 0, section: 0)
         forcedNextFocusedIndexPath = indexPath
         setContentOffset(.zero, animated: true)
     }
@@ -314,6 +318,9 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         forcedNextFocusedIndexPath = nil
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
+        if context.previouslyFocusedIndexPath?.section == 0 {
+            scrollToTopIndexPath = context.previouslyFocusedIndexPath
+        }
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
     }
