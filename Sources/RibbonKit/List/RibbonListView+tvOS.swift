@@ -36,6 +36,9 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
+    /// A Boolean value that determines whether the list scrolls to top on exit command.
+    public var scrollsTopOnExitCommand: Bool = true
+
     /// The ribbon list's horizontal scrolling behavior.
     public var horizontalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 
@@ -46,7 +49,7 @@ open class RibbonListView: UIView {
     ///
     /// Assign a background view to change the color behind your ribbon list's sections and rows. The default value of this property is nil.
     /// When you assign a view to this property, the ribbon list automatically resizes that view to match its own bounds. Your background view appears behind all ribbons and does not scroll with the rest of the list's content.
-    open var backgroundView: UIView? {
+    public var backgroundView: UIView? {
         get { collectionView.backgroundView }
         set { collectionView.backgroundView = newValue }
     }
@@ -63,6 +66,7 @@ open class RibbonListView: UIView {
         return collectionView
     }()
 
+    private var forcedNextFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
 
     /// Initializes and returns a ribbon list having the given frame.
@@ -174,6 +178,28 @@ open class RibbonListView: UIView {
         collectionView.reloadData()
     }
 
+    override open func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard let press = presses.first else { return }
+        switch press.type {
+        case .menu:
+            guard contentOffset != .zero else { super.pressesBegan(presses, with: event); return }
+            scrollToTop()
+        default:
+            super.pressesBegan(presses, with: event)
+        }
+    }
+
+    override open func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard let press = presses.first else { return }
+        switch press.type {
+        case .menu:
+            guard contentOffset == .zero else { return }
+            super.pressesEnded(presses, with: event)
+        default:
+            super.pressesEnded(presses, with: event)
+        }
+    }
+
     private func buildLayout() -> UICollectionViewLayout {
         let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
@@ -235,6 +261,13 @@ open class RibbonListView: UIView {
         layout.delegate = self
         return layout
     }
+
+    private func scrollToTop() {
+        guard contentOffset != .zero else { return }
+        let indexPath = IndexPath(item: 0, section: 0)
+        forcedNextFocusedIndexPath = indexPath
+        setContentOffset(.zero, animated: true)
+    }
 }
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
@@ -254,6 +287,10 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
 
 extension RibbonListView: UICollectionViewDelegate {
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if forcedNextFocusedIndexPath != nil {
+            setNeedsFocusUpdate()
+            updateFocusIfNeeded()
+        }
         delegate?.ribbonListDidEndScrollingAnimation(self)
     }
 
@@ -275,13 +312,17 @@ extension RibbonListView: UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        forcedNextFocusedIndexPath = nil
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
+        guard let forcedNextFocusedIndexPath = forcedNextFocusedIndexPath else {
+            return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
+        }
+        return indexPath == forcedNextFocusedIndexPath
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
