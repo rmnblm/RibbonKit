@@ -59,8 +59,6 @@ open class RibbonListView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
-        collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-        collectionView.register(RibbonListResaubleHostView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
         collectionView.register(RibbonListReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(RibbonListReusableFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
         return collectionView
@@ -102,7 +100,16 @@ open class RibbonListView: UIView {
     ///     - indexPath: The index path locating the row in the ribbon list.
     /// - Returns: An object representing a cell of the list, or nil if the cell is not visible or indexPath is out of range.
     open func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
-        return collectionView.cellForItem(at: indexPath)
+        collectionView.cellForItem(at: indexPath)
+    }
+
+    /// Gets the supplementary view at the specified index path.
+    ///
+    /// - Parameters:
+    ///     - elementKind: The kind of supplementary view to locate. This value is defined by the layout object.
+    ///     - indexPath: The index path of the supplementary view.
+    open func supplementaryView(forElementKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView? {
+        collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
     }
 
     /// Scrolls the ribbon list contents until the specified item is visible.
@@ -137,7 +144,7 @@ open class RibbonListView: UIView {
     ///     - indexPath: The index path specifying the location of the cell. Always specify the index path provided to you by your data source object. This method uses the index path to perform additional configuration based on the cell’s position in the ribbon list.
     /// - Returns: A UICollectionViewCell object with the associated reuse identifier. This method always returns a valid cell.
     open func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+        collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
 
     /// Registers a class for use in creating supplementary views for the ribbon list.
@@ -221,7 +228,6 @@ open class RibbonListView: UIView {
             else {
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             }
-            group.interItemSpacing = .fixed(configuration.interGroupSpacing)
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = configuration.interItemSpacing
@@ -356,18 +362,14 @@ extension RibbonListView: UICollectionViewDataSource {
                 headerView.label.text = title
                 return headerView
             }
-            let view: RibbonListResaubleHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-            view.hostView = dataSource?.ribbonList(self, viewForHeaderInSection: indexPath.section)
-            return view
+            return dataSource?.ribbonList(self, viewForHeaderInSection: indexPath.section) ?? UICollectionReusableView()
         case UICollectionView.elementKindSectionFooter:
             if let title = dataSource?.ribbonList(self, titleForFooterInSection: indexPath.section) {
                 let footerView: RibbonListReusableFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
                 footerView.label.text = title
                 return footerView
             }
-            let view: RibbonListResaubleHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-            view.hostView = dataSource?.ribbonList(self, viewForFooterInSection: indexPath.section)
-            return view
+            return dataSource?.ribbonList(self, viewForFooterInSection: indexPath.section) ?? UICollectionReusableView()
         default:
             return UICollectionReusableView()
         }

@@ -34,7 +34,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: The ribbonList asking for the view.
     ///     - section: The index number of the section containing the header view.
     /// - Returns: The view object to display at the top of the specified section.
-    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView?
+    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UICollectionReusableView
 
     /// Asks the delegate for a view object to display in the footer of the specified section of the ribbon list.
     ///
@@ -44,7 +44,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - ribbonList: The ribbonList asking for the view.
     ///     - section: The index number of the section containing the footer view.
     /// - Returns: The view object to display at the bottom of the specified section.
-    func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView?
+    func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UICollectionReusableView
     
     /// Asks the data source for the title of the header of the specified section of the ribbon list.
     ///
@@ -90,10 +90,9 @@ public protocol RibbonListViewDataSource: class {
 }
 
 extension RibbonListViewDataSource {
-    public func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? { nil }
     public func numberOfSections(in ribbonList: RibbonListView) -> Int { 1 }
     public func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UICollectionReusableView { UICollectionReusableView() }
     public func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UICollectionReusableView { UICollectionReusableView() }
 }
