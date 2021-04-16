@@ -297,6 +297,14 @@ extension RibbonListView: UICollectionViewDelegate {
         delegate?.ribbonListDidEndScrollingAnimation(self)
     }
 
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        delegate?.ribbonListWillBeginDecelerating(self)
+    }
+
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        delegate?.ribbonListDidEndDecelerating(self)
+    }
+
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.ribbonList(self, didSelectItemAt: indexPath)
     }

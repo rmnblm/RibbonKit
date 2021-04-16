@@ -95,6 +95,7 @@ public protocol RibbonListViewDelegate: class {
     ///
     /// You can use this method, or a cell’s canBecomeFocused method, to control which items in the collection view can receive focus. The focus engine calls the cell’s `canBecomeFocused` method first, the default implementation of which defers to the ribbon list and this delegate method.
     /// If you do not implement this method, the ability to focus on items depends on whether the ribbon list's items are selectable. When the items are selectable, they can also be focused as if this method had returned true; otherwise, they do not receive focus.
+    ///
     /// - Parameters:
     ///     - ribbonList: The ribbon list object requesting this information.
     ///     - indexPath: The index path of an item in the ribbon list.
@@ -105,8 +106,22 @@ public protocol RibbonListViewDelegate: class {
     /// The scroll view calls this method at the end of its implementations of the setContentOffset(_:animated:) methods, but only if animations are requested.
     ///
     /// - Parameters:
-    ///     - scrollView: The ribbon list object that is performing the scrolling animation.
+    ///     - ribbonList: The ribbon list object that is performing the scrolling animation.
     func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView)
+
+    /// Tells the delegate that the ribbon list has ended decelerating the scrolling movement.
+    ///
+    /// The ribbon list calls this method when the scrolling movement comes to a halt.
+    /// 
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object that is performing the scrolling animation.
+    func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView)
+
+    /// Tells the delegate that the scroll view is starting to decelerate the scrolling movement.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object that is performing the scrolling animation. 
+    func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView)
 
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
@@ -144,6 +159,8 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
 
     public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
+    public func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView) { }
+    public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
     @available(iOS 13.0, *)
