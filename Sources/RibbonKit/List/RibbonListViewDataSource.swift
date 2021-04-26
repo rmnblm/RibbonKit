@@ -26,6 +26,27 @@ public protocol RibbonListViewDataSource: class {
     /// - Returns: An object inheriting from UICollectionViewCell that the ribbon list can use for the specified item. UIKit raises an assertion if you return nil.
     func ribbonList(_ ribbonList: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 
+    #if os(iOS)
+    /// Asks the delegate for a view object to display in the header of the specified section of the ribbon list.
+    ///
+    /// Use this method to return a UILabel, UIImageView, or custom view for your header. If you implement this method, you must also implement the `tableView(_:heightForHeaderInSection:)` method to specify the height of your custom view.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbonList asking for the view.
+    ///     - section: The index number of the section containing the header view.
+    /// - Returns: The view object to display at the top of the specified section.
+    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView?
+
+    /// Asks the delegate for a view object to display in the footer of the specified section of the ribbon list.
+    ///
+    /// Use this method to return a UILabel, UIImageView, or custom view for your footer. If you implement this method, you must also implement the `tableView(_:heightForFooterInSection:)` method to specify the height of your custom view.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbonList asking for the view.
+    ///     - section: The index number of the section containing the footer view.
+    /// - Returns: The view object to display at the bottom of the specified section.
+    func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView?
+    #else
     /// Asks the delegate for a view object to display in the header of the specified section of the ribbon list.
     ///
     /// Use this method to return a UILabel, UIImageView, or custom view for your header. If you implement this method, you must also implement the `tableView(_:heightForHeaderInSection:)` method to specify the height of your custom view.
@@ -45,6 +66,7 @@ public protocol RibbonListViewDataSource: class {
     ///     - section: The index number of the section containing the footer view.
     /// - Returns: The view object to display at the bottom of the specified section.
     func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UICollectionReusableView
+    #endif
     
     /// Asks the data source for the title of the header of the specified section of the ribbon list.
     ///
@@ -92,7 +114,12 @@ public protocol RibbonListViewDataSource: class {
 extension RibbonListViewDataSource {
     public func numberOfSections(in ribbonList: RibbonListView) -> Int { 1 }
     public func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UICollectionReusableView { UICollectionReusableView() }
     public func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? { nil }
+    #if os(iOS)
+    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UIView? { nil }
+    #else
+    public func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UICollectionReusableView { UICollectionReusableView() }
     public func ribbonList(_ ribbonList: RibbonListView, viewForFooterInSection section: Int) -> UICollectionReusableView { UICollectionReusableView() }
+    #endif
 }
