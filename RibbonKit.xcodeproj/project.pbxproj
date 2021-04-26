@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		300F60EA25B972AD008AB9EA /* RibbonListResaubleHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */; };
 		300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */; };
 		300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */; };
 		303F475224CF6E7800763149 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475124CF6E7800763149 /* AppDelegate.swift */; };
@@ -66,7 +65,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListResaubleHostView.swift; sourceTree = "<group>"; };
 		300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHeaderView.swift; sourceTree = "<group>"; };
 		300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableFooterView.swift; sourceTree = "<group>"; };
 		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,7 +287,6 @@
 			children = (
 				OBJ_10 /* ReusableView.swift */,
 				3057F97D25BFFDA3002E3274 /* RibbonCell.swift */,
-				300F60E925B972AD008AB9EA /* RibbonListResaubleHostView.swift */,
 				300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */,
 				300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */,
 				OBJ_11 /* UICollectionView+Reusable.swift */,
@@ -458,7 +455,6 @@
 				3057F98925BFFDF7002E3274 /* RibbonListView+iOS.swift in Sources */,
 				300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */,
-				300F60EA25B972AD008AB9EA /* RibbonListResaubleHostView.swift in Sources */,
 				3057F97E25BFFDA3002E3274 /* RibbonCell.swift in Sources */,
 				30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */,
 				OBJ_29 /* RibbonListView+tvOS.swift in Sources */,

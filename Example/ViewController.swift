@@ -6,7 +6,13 @@ import RibbonKit
 class ViewController: UIViewController {
 
     let groups = ColorGroup.exampleGroups
-    let ribbonList = RibbonListView()
+    private lazy var ribbonList: RibbonListView = {
+        let list = RibbonListView()
+        list.delegate = self
+        list.dataSource = self
+        list.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        return list
+    }()
 
     private lazy var addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(didTapAdd))
     private lazy var removeButton = UIBarButtonItem(title: "Remove", style: .plain, target: self, action: #selector(didTapRemove))
@@ -26,9 +32,6 @@ class ViewController: UIViewController {
             ribbonList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             ribbonList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        ribbonList.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        ribbonList.dataSource = self
-        ribbonList.delegate = self
     }
 
     @objc private func didTapAdd() {
@@ -70,6 +73,10 @@ extension ViewController: RibbonListViewDelegate {
           UIMenu(title: "Actions", children: [share, delete])
         }
     }
+
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
+        return groups[section].configuration
+    }
 }
 
 extension ViewController: RibbonListViewDataSource {
@@ -87,10 +94,6 @@ extension ViewController: RibbonListViewDataSource {
 
     func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int {
         return groups[section].colors.count
-    }
-
-    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
-        return groups[section].configuration
     }
     
     func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? {

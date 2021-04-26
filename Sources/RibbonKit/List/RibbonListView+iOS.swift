@@ -236,8 +236,6 @@ open class RibbonListView: UIView {
             guard let collectionView = displayingCollectionViews[$0.key] else { return }
             collectionView.insertItems(at: $0.value)
         }
-
-        // TODO: Update offsets
     }
 
     open func deleteItems(at indexPaths: [IndexPath]) {
@@ -246,8 +244,6 @@ open class RibbonListView: UIView {
             guard let collectionView = displayingCollectionViews[$0.key] else { return }
             collectionView.deleteItems(at: $0.value)
         }
-
-        // TODO: Update offsets
     }
 
     open func reloadItems(at indexPaths: [IndexPath]) {
@@ -256,15 +252,11 @@ open class RibbonListView: UIView {
             guard let collectionView = displayingCollectionViews[$0.key] else { return }
             collectionView.reloadItems(at: $0.value)
         }
-
-        // TODO: Update offsets
     }
 
     open func reloadSection(at section: Int) {
         guard let collectionView = displayingCollectionViews[section] else { return }
         collectionView.reloadData()
-
-        // TODO: Update offsets
     }
 }
 
