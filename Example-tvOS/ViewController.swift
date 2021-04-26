@@ -88,21 +88,9 @@ extension ViewController: RibbonListViewDataSource {
     func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
         return groups[section].configuration
     }
-    
-    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        let label = UILabel()
-        label.text = groups[section].headerTitle
-        label.font = .systemFont(ofSize: 30, weight: .bold)
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4)
-        ])
-        return view
+
+    func ribbonList(_ ribbonList: RibbonListView, titleForHeaderInSection section: Int) -> String? {
+        return groups[section].headerTitle
     }
 
     func ribbonList(_ ribbonList: RibbonListView, titleForFooterInSection section: Int) -> String? {

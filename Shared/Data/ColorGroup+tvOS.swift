@@ -43,7 +43,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 30, height: 30),
-                    interGroupSpacing: 1
+                    interItemSpacing: 1
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -53,7 +53,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 50, height: 50),
-                    interGroupSpacing: 2
+                    interItemSpacing: 2
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         ),
@@ -63,7 +63,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 70, height: 70),
-                    interGroupSpacing: 3
+                    interItemSpacing: 3
                 ),
             newColorClosure: { randomColor(hue: .red, luminosity: .light) }
         ),
@@ -74,8 +74,7 @@ extension ColorGroup {
                 RibbonConfiguration(
                     numberOfRows: 4,
                     itemSize: .init(width: 100, height: 20),
-                    interItemSpacing: 4,
-                    interGroupSpacing: 4
+                    interItemSpacing: 4
                 ),
             newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
         ),
@@ -85,7 +84,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 120, height: 120),
-                    interGroupSpacing: 5
+                    interItemSpacing: 5
                 ),
             newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
         ),
@@ -95,7 +94,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 30, height: 30),
-                    interGroupSpacing: 1
+                    interItemSpacing: 1
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -105,7 +104,7 @@ extension ColorGroup {
             configuration:
                 RibbonConfiguration(
                     itemSize: .init(width: 50, height: 50),
-                    interGroupSpacing: 2
+                    interItemSpacing: 2
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         )

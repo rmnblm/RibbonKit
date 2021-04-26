@@ -100,7 +100,7 @@ extension ViewController: RibbonListViewDataSource {
         let view = UIView()
         let label = UILabel()
         label.text = groups[section].headerTitle
-        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = .systemFont(ofSize: 15, weight: .bold)
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

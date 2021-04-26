@@ -7,7 +7,7 @@ final class RibbonListReusableHeaderView: UICollectionReusableView, ReusableView
     
     lazy var label: UILabel = {
        let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 30)
         return label
     }()
     

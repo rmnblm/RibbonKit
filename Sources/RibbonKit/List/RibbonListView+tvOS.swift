@@ -186,6 +186,21 @@ open class RibbonListView: UIView {
         collectionView.reloadData()
     }
 
+    /// Inserts new items at the specified index paths.
+    open func insertItems(at indexPaths: [IndexPath]) {
+        collectionView.insertItems(at: indexPaths)
+    }
+
+    /// Deletes the items at the specified index paths.
+    open func deleteItems(at indexPaths: [IndexPath]) {
+        collectionView.deleteItems(at: indexPaths)
+    }
+
+    /// Reloads just the items at the specified index paths.
+    open func reloadItems(at indexPaths: [IndexPath]) {
+        collectionView.reloadItems(at: indexPaths)
+    }
+
     override open func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         guard let press = presses.first else { super.pressesBegan(presses, with: event); return }
         switch press.type {
