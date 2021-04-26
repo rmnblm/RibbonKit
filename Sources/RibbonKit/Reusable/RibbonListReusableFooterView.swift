@@ -7,7 +7,7 @@ final class RibbonListReusableFooterView: UICollectionReusableView, ReusableView
     
     lazy var label: UILabel = {
        let label = UILabel()
-        label.font = .systemFont(ofSize: 28)
+        label.font = .systemFont(ofSize: 24)
         label.numberOfLines = 0
         return label
     }()
