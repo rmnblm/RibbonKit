@@ -3,7 +3,7 @@
 import UIKit
 
 /// Methods for managing selections, configuring section headers and footers, deleting and reordering cells, and performing other actions in a ribbon list.
-public protocol RibbonListViewDelegate: class {
+public protocol RibbonListViewDelegate: AnyObject {
 
     /// Asks the delegate for the height to use for the specified section.
     ///
@@ -154,8 +154,8 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { UITableView.automaticDimension }
     public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { UITableView.automaticDimension }
     #else
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { 80 }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { 80 }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { 0.0 }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { 0.0 }
     #endif
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }

@@ -3,7 +3,7 @@
 import UIKit
 
 /// The methods adopted by the object you use to manage data and provide cells for a ribbon list.
-public protocol RibbonListViewDataSource: class {
+public protocol RibbonListViewDataSource: AnyObject {
 
     /// Asks the data source to return the number of sections in the ribbon list.
     ///

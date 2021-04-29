@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol ReusableView: class {
+protocol ReusableView: AnyObject {
     static var defaultReuseIdentifier: String { get }
 }
 
