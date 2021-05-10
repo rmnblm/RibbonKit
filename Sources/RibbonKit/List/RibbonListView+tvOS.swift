@@ -53,6 +53,12 @@ open class RibbonListView: UIView {
         get { collectionView.backgroundView }
         set { collectionView.backgroundView = newValue }
     }
+    
+    /// An array of visible cells currently displayed by the ribbon list.
+    public var visibleCells: [UICollectionViewCell] { collectionView.visibleCells }
+    
+    /// An array of the visible items in the ribbon list.
+    public var indexPathsForVisibleItems: [IndexPath] { collectionView.indexPathsForVisibleItems }
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
