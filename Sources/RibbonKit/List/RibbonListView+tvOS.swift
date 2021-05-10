@@ -36,9 +36,6 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
-    /// A Boolean value that determines whether the list scrolls to top on exit command.
-    public var scrollsTopOnExitCommand: Bool = true
-
     /// The ribbon list's horizontal scrolling behavior.
     public var horizontalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 
@@ -70,7 +67,6 @@ open class RibbonListView: UIView {
         return collectionView
     }()
 
-    private var isScrollingToTop = false
     private var forcedNextFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
 
@@ -207,26 +203,6 @@ open class RibbonListView: UIView {
         collectionView.reloadItems(at: indexPaths)
     }
 
-    override open func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        guard let press = presses.first else { super.pressesBegan(presses, with: event); return }
-        switch press.type {
-        case .menu:
-            guard scrollsTopOnExitCommand, contentOffset != .zero else { break }
-            scrollToTop()
-        default:
-            super.pressesBegan(presses, with: event)
-        }
-    }
-
-    override open func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        if
-            let press = presses.first,
-            press.type == .menu,
-            contentOffset != .zero
-        { return }
-        super.pressesEnded(presses, with: event)
-    }
-
     private func buildLayout() -> UICollectionViewLayout {
         let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
@@ -287,12 +263,6 @@ open class RibbonListView: UIView {
         layout.delegate = self
         return layout
     }
-
-    private func scrollToTop() {
-        guard contentOffset != .zero else { return }
-        isScrollingToTop = true
-        setContentOffset(.zero, animated: true)
-    }
 }
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
@@ -312,11 +282,6 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
 
 extension RibbonListView: UICollectionViewDelegate {
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if isScrollingToTop {
-            isScrollingToTop = false
-            setNeedsFocusUpdate()
-            updateFocusIfNeeded()
-        }
         delegate?.ribbonListDidEndScrollingAnimation(self)
     }
 
