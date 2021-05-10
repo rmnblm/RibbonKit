@@ -208,20 +208,16 @@ open class RibbonListView: UIView {
             guard scrollsTopOnExitCommand, contentOffset != .zero else { break }
             scrollToTop()
         default:
-            break
+            super.pressesBegan(presses, with: event)
         }
-        super.pressesBegan(presses, with: event)
     }
 
     override open func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        guard let press = presses.first else { super.pressesEnded(presses, with: event); return }
-        switch press.type {
-        case .menu:
-            if contentOffset != .zero { return }
-            break
-        default:
-            break
-        }
+        if
+            let press = presses.first,
+            press.type == .menu,
+            contentOffset != .zero
+        { return }
         super.pressesEnded(presses, with: event)
     }
 
