@@ -57,7 +57,7 @@ open class RibbonListView: UIView {
     /// An array of the visible items in the ribbon list.
     public var indexPathsForVisibleItems: [IndexPath] { collectionView.indexPathsForVisibleItems }
 
-    private lazy var collectionView: UICollectionView = {
+    public private(set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
