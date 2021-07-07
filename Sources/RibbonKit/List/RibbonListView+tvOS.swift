@@ -24,6 +24,10 @@ open class RibbonListView: UIView {
         set { collectionView.contentOffset = newValue }
     }
 
+    public var contentSize: CGSize {
+        collectionView.contentSize 
+    }
+
     /// The custom distance that the content view is inset from the safe area or scroll view edges.
     public var contentInset: UIEdgeInsets {
         get { collectionView.contentInset }
@@ -203,6 +207,14 @@ open class RibbonListView: UIView {
         collectionView.reloadItems(at: indexPaths)
     }
 
+    open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)
+    }
+
+    open func layoutAttributesForSupplementaryView(ofKind kind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: kind, at: indexPath)
+    }
+
     private func buildLayout() -> UICollectionViewLayout {
         let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
@@ -375,7 +387,7 @@ public enum RibbonListViewScrollingBehaviour {
     case sectionPaging
 }
 
-protocol RibbonListViewCompositionalLayoutDelegate: class {
+protocol RibbonListViewCompositionalLayoutDelegate: AnyObject {
     func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint
 }
 
