@@ -6,29 +6,29 @@ import UIKit
 public struct RibbonConfiguration: Hashable {
 
     /// TODO
-    public let numberOfRows: Int
+    public var numberOfRows: Int
 
     /// TODO
-    public let sectionInsets: UIEdgeInsets
+    public var sectionInsets: UIEdgeInsets
     
     /// TODO
-    public let itemSize: CGSize
+    public var itemSize: CGSize
     
     /// TODO
-    public let interItemSpacing: CGFloat
+    public var interItemSpacing: CGFloat
 
     #if os(tvOS)
     
     /// TODO
-    public let headerInsets: UIEdgeInsets
+    public var headerInsets: UIEdgeInsets
     
     /// TODO
-    public let footerInsets: UIEdgeInsets
+    public var footerInsets: UIEdgeInsets
     #endif
     
     #if os(iOS)
     /// TODO
-    public let minimumLineSpacing: CGFloat
+    public var minimumLineSpacing: CGFloat
     #endif
 
     #if os(tvOS)
