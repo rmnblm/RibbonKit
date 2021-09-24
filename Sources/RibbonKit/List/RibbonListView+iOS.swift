@@ -358,7 +358,7 @@ extension RibbonListView: UITableViewDataSource {
     }
 }
 
-extension RibbonListView: UICollectionViewDelegate {
+extension RibbonListView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
         delegate?.ribbonList(self, didSelectItemAt: fakeIndexPath)
@@ -386,6 +386,16 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
         return delegate?.ribbonList(self, canFocusItemAt: fakeIndexPath) ?? true
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let fakeIndexPath = IndexPath(row: indexPath.row, section: collectionView.tag)
+        let configuration = dataSource?.ribbonList(self, configurationForSectionAt: fakeIndexPath.section) ?? .default
+        var itemSize = configuration.itemSize
+        if let width = delegate?.ribbonList(self, widthForItemAt: fakeIndexPath) {
+            itemSize.width = width
+        }
+        return itemSize
     }
 
     #if os(iOS)

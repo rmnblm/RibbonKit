@@ -133,6 +133,16 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - ribbonList: The ribbon list object that is performing the scrolling animation. 
     func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView)
 
+    /// Asks the delegate for the width of the specified item’s cell.
+    ///
+    /// Note: This function is ignored if `RibbonConfiguration.numberOfRows > 1`.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object requesting this information.
+    ///     - indexPath: The index path of an item in the ribbon list.
+    /// - Returns: The width of the specified item. The value must be greater than 0. If `nil` is returned, the `itemSize.width` property of the configuration will be used as fallback.
+    func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat?
+
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
     ///
@@ -177,6 +187,8 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
     public func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView) { }
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
+
+    public func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat? { nil }
 
     #if os(iOS)
     @available(iOS 13.0, *)
