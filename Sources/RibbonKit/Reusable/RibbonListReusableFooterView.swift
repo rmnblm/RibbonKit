@@ -1,6 +1,5 @@
 //  Copyright © 2020 Roman Blum. All rights reserved.
 
-#if os(tvOS)
 import UIKit
 
 final class RibbonListReusableFooterView: UICollectionReusableView, ReusableView {
@@ -43,4 +42,3 @@ final class RibbonListReusableFooterView: UICollectionReusableView, ReusableView
         ])
     }
 }
-#endif

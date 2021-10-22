@@ -15,25 +15,29 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) that row should be.
     func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat
     
-    /// Asks the delegate for the height to use for the header of a particular section.
+    /// Asks the delegate for the estimated height to use for the header of a particular section.
     ///
     /// Use this method to specify the height of custom header views returned by your `ribbonList(_:viewForHeaderInSection:)` method.
+    ///
+    /// Important: The final size of the dimension is determined when the content is rendered.
     ///
     /// - Parameters:
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the header for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
 
-    /// Asks the delegate for the height to use for the footer of a particular section.
+    /// Asks the delegate for the estimated height to use for the footer of a particular section.
     ///
     /// Use this method to specify the height of custom footer views returned by your `ribbonList(_:viewForFooterInSection:)` method.
+    ///
+    /// Important: The final size of the dimension is determined when the content is rendered.
     ///
     /// - Parameters:
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the footer for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat
+    func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForFooterInSection section: Int) -> CGFloat
 
     /// Tells the delegate that the item at the specified index path was selected.
     ///
@@ -170,13 +174,8 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
 
-    #if os(iOS)
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { UITableView.automaticDimension }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { UITableView.automaticDimension }
-    #else
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> CGFloat { 0.0 }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> CGFloat { 0.0 }
-    #endif
+    public func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForHeaderInSection section: Int) -> CGFloat { 0.0 }
+    public func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForFooterInSection section: Int) -> CGFloat { 0.0 }
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }

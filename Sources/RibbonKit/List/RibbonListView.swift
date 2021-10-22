@@ -2,7 +2,6 @@
 
 import UIKit
 
-#if os(tvOS)
 /// A view that presents data using paginated items arranged in rows.
 open class RibbonListView: UIView {
 
@@ -46,6 +45,31 @@ open class RibbonListView: UIView {
     /// The ribbon list's vertical scrolling behavior.
     public var verticalScrollingBehaviour: RibbonListViewScrollingBehaviour = .sectionPaging
 
+    /// The view that is displayed above the table's content.
+    ///
+    /// Use this property to specify a header view for your entire list. The header view is the first item to appear in the list's view's scrolling content, and it is separate from the header views you add to individual sections. The default value of this property is nil.
+    /// When assigning a view to this property, set the height of that view to a nonzero value. The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
+    open var headerView: UIView? {
+        didSet {
+            let config = UICollectionViewCompositionalLayoutConfiguration()
+            if headerView != nil {
+                let headerFooterSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .estimated(44)
+                )
+
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerFooterSize,
+                    elementKind: "header",
+                    alignment: .top
+                )
+
+                config.boundarySupplementaryItems = [header]
+            }
+            (collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout)?.configuration = config
+        }
+    }
+
     /// The background view of the ribbon list.
     ///
     /// Assign a background view to change the color behind your ribbon list's sections and rows. The default value of this property is nil.
@@ -68,6 +92,7 @@ open class RibbonListView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(RibbonListReusableFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
+        collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
         return collectionView
     }()
 
@@ -215,11 +240,11 @@ open class RibbonListView: UIView {
         return collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: kind, at: indexPath)
     }
 
-    private func buildLayout() -> UICollectionViewLayout {
+    private func buildLayout() -> UICollectionViewCompositionalLayout {
         let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
             let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
 
-            let section: NSCollectionLayoutSection
+            let group: NSCollectionLayoutGroup
             if configuration.numberOfRows > 1 {
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -231,9 +256,11 @@ open class RibbonListView: UIView {
                     widthDimension: .absolute(configuration.itemSize.width),
                     heightDimension: .absolute(self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight())
                 )
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: configuration.numberOfRows)
-
-                section = NSCollectionLayoutSection(group: group)
+                group = NSCollectionLayoutGroup.vertical(
+                    layoutSize: groupSize,
+                    subitem: item,
+                    count: configuration.numberOfRows
+                )
             }
             else {
                 let numberOfItems = self.dataSource?.ribbonList(self, numberOfItemsInSection: sectionIndex) ?? 0
@@ -257,12 +284,14 @@ open class RibbonListView: UIView {
                     widthDimension: .estimated(1),
                     heightDimension: .absolute(self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight())
                 )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: itemGroups)
-                group.interItemSpacing = .fixed(configuration.interItemSpacing)
-
-                section = NSCollectionLayoutSection(group: group)
+                group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    subitems: itemGroups
+                )
             }
+            group.interItemSpacing = .fixed(configuration.interItemSpacing)
 
+            let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
@@ -272,7 +301,7 @@ open class RibbonListView: UIView {
             )
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
-            if let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight > 0.0 {
+            if let headerHeight = self.delegate?.ribbonList(self, estimatedHeightForHeaderInSection: sectionIndex), headerHeight > 0.0 {
                 header = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -284,7 +313,7 @@ open class RibbonListView: UIView {
             }
 
             var footer: NSCollectionLayoutBoundarySupplementaryItem?
-            if let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight > 0.0 {
+            if let footerHeight = self.delegate?.ribbonList(self, estimatedHeightForFooterInSection: sectionIndex), footerHeight > 0.0 {
                 footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -298,7 +327,6 @@ open class RibbonListView: UIView {
             section.boundarySupplementaryItems = [header, footer].compactMap { $0 }
             return section
         }
-
         layout.delegate = self
         return layout
     }
@@ -381,19 +409,15 @@ extension RibbonListView: UICollectionViewDelegate {
 extension RibbonListView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            if let title = dataSource?.ribbonList(self, titleForHeaderInSection: indexPath.section) {
-                let headerView: RibbonListReusableHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-                headerView.label.text = title
-                return headerView
+        case "header":
+            let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
+            if let headerView = headerView {
+                hostView.setView(headerView)
             }
+            return hostView
+        case UICollectionView.elementKindSectionHeader:
             return dataSource?.ribbonList(self, viewForHeaderInSection: indexPath.section) ?? UICollectionReusableView()
         case UICollectionView.elementKindSectionFooter:
-            if let title = dataSource?.ribbonList(self, titleForFooterInSection: indexPath.section) {
-                let footerView: RibbonListReusableFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-                footerView.label.text = title
-                return footerView
-            }
             return dataSource?.ribbonList(self, viewForFooterInSection: indexPath.section) ?? UICollectionReusableView()
         default:
             return UICollectionReusableView()
@@ -431,4 +455,3 @@ class RibbonListViewCompositionalLayout: UICollectionViewCompositionalLayout {
             ?? super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
     }
 }
-#endif

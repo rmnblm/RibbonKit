@@ -1,11 +1,11 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
     name: "RibbonKit",
     platforms: [
-        .iOS(.v12), .tvOS(.v13)
+        .iOS(.v13), .tvOS(.v13)
     ],
     products: [
         .library(

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */; };
 		300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */; };
-		303F475224CF6E7800763149 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475124CF6E7800763149 /* AppDelegate.swift */; };
-		303F475424CF6E7800763149 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303F475324CF6E7800763149 /* ViewController.swift */; };
 		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
 		303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303F475A24CF6E7900763149 /* LaunchScreen.storyboard */; };
 		303F476224CF6EFC00763149 /* ColorGroup+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */; };
@@ -21,11 +19,6 @@
 		3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */; };
 		3044596B24C7B4D90062BA54 /* ColorGroup+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */; };
 		3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */; };
-		3057F97325BFFBB0002E3274 /* CellRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F97025BFFBAF002E3274 /* CellRegistration.swift */; };
-		3057F97425BFFBB0002E3274 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F97225BFFBAF002E3274 /* PagingCollectionViewLayout.swift */; };
-		3057F97925BFFC34002E3274 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F97825BFFC34002E3274 /* UITableView+Reusable.swift */; };
-		3057F97E25BFFDA3002E3274 /* RibbonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F97D25BFFDA3002E3274 /* RibbonCell.swift */; };
-		3057F98925BFFDF7002E3274 /* RibbonListView+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F98825BFFDF7002E3274 /* RibbonListView+iOS.swift */; };
 		3057F99E25BFFE48002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
 		3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
 		30BF400425B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
@@ -40,11 +33,14 @@
 		30C15D4124C7456D00ABB183 /* ColorDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */; };
 		30C15D4224C7456D00ABB183 /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3E24C7456D00ABB183 /* Hue.swift */; };
 		30C15D4324C7456D00ABB183 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3F24C7456D00ABB183 /* Luminosity.swift */; };
+		30DFDD4C2721B42500EAAF87 /* RibbonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DFDD4B2721B42500EAAF87 /* RibbonListView.swift */; };
+		30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */; };
+		30DFDD502721C10000EAAF87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2B24C7436000ABB183 /* ViewController.swift */; };
+		30DFDD512721C13F00EAAF87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2724C7436000ABB183 /* AppDelegate.swift */; };
 		30F07A2B24C8679900BFFE5E /* RibbonListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */; };
 		30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */; };
 		OBJ_24 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* ReusableView.swift */; };
 		OBJ_25 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* UICollectionView+Reusable.swift */; };
-		OBJ_29 /* RibbonListView+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RibbonListView+tvOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,19 +64,12 @@
 		300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHeaderView.swift; sourceTree = "<group>"; };
 		300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableFooterView.swift; sourceTree = "<group>"; };
 		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		303F475124CF6E7800763149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		303F475324CF6E7800763149 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		303F475824CF6E7900763149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		303F475B24CF6E7900763149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		303F475D24CF6E7900763149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonConfiguration.swift; sourceTree = "<group>"; };
 		3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorGroup+tvOS.swift"; sourceTree = "<group>"; };
 		3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewFocusUpdateContext.swift; sourceTree = "<group>"; };
-		3057F97025BFFBAF002E3274 /* CellRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRegistration.swift; sourceTree = "<group>"; };
-		3057F97225BFFBAF002E3274 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
-		3057F97825BFFC34002E3274 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
-		3057F97D25BFFDA3002E3274 /* RibbonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonCell.swift; sourceTree = "<group>"; };
-		3057F98825BFFDF7002E3274 /* RibbonListView+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RibbonListView+iOS.swift"; sourceTree = "<group>"; };
 		3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorGroup+iOS.swift"; sourceTree = "<group>"; };
 		30BF400325B833E000BE8A98 /* Lorem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
 		30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
@@ -95,12 +84,13 @@
 		30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDefinition.swift; sourceTree = "<group>"; };
 		30C15D3E24C7456D00ABB183 /* Hue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		30C15D3F24C7456D00ABB183 /* Luminosity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Luminosity.swift; sourceTree = "<group>"; };
+		30DFDD4B2721B42500EAAF87 /* RibbonListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RibbonListView.swift; sourceTree = "<group>"; };
+		30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHostView.swift; sourceTree = "<group>"; };
 		30F07A2924C7BF0400BFFE5E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDataSource.swift; sourceTree = "<group>"; };
 		30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDelegate.swift; sourceTree = "<group>"; };
 		OBJ_10 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		OBJ_11 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
-		OBJ_15 /* RibbonListView+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RibbonListView+tvOS.swift"; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		"RibbonKit::RibbonKit::Product" /* RibbonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RibbonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,8 +123,6 @@
 		303F475024CF6E7800763149 /* Example-tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				303F475124CF6E7800763149 /* AppDelegate.swift */,
-				303F475324CF6E7800763149 /* ViewController.swift */,
 				303F475824CF6E7900763149 /* Assets.xcassets */,
 				303F475A24CF6E7900763149 /* LaunchScreen.storyboard */,
 				303F475D24CF6E7900763149 /* Info.plist */,
@@ -145,6 +133,7 @@
 		303F476124CF6EE600763149 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				30DFDD4F2721C0F600EAAF87 /* UI */,
 				3044596924C7B4D10062BA54 /* Data */,
 				30C15D3B24C7455100ABB183 /* RandomColor */,
 			);
@@ -159,22 +148,6 @@
 				30BF400325B833E000BE8A98 /* Lorem.swift */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		3057F96F25BFFBAF002E3274 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				3057F97025BFFBAF002E3274 /* CellRegistration.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		3057F97125BFFBAF002E3274 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				3057F97225BFFBAF002E3274 /* PagingCollectionViewLayout.swift */,
-			);
-			path = Layout;
 			sourceTree = "<group>";
 		};
 		30BF3FEC25B8231E00BE8A98 /* Frameworks */ = {
@@ -196,8 +169,6 @@
 		30C15D2624C7436000ABB183 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				30C15D2724C7436000ABB183 /* AppDelegate.swift */,
-				30C15D2B24C7436000ABB183 /* ViewController.swift */,
 				30C15D3024C7436200ABB183 /* Assets.xcassets */,
 				30C15D3224C7436200ABB183 /* LaunchScreen.storyboard */,
 				30C15D3524C7436200ABB183 /* Info.plist */,
@@ -216,11 +187,19 @@
 			path = RandomColor;
 			sourceTree = "<group>";
 		};
+		30DFDD4F2721C0F600EAAF87 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				30C15D2724C7436000ABB183 /* AppDelegate.swift */,
+				30C15D2B24C7436000ABB183 /* ViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		30F07A2C24C867A100BFFE5E /* List */ = {
 			isa = PBXGroup;
 			children = (
-				3057F98825BFFDF7002E3274 /* RibbonListView+iOS.swift */,
-				OBJ_15 /* RibbonListView+tvOS.swift */,
+				30DFDD4B2721B42500EAAF87 /* RibbonListView.swift */,
 				3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */,
 				30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */,
 				30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */,
@@ -272,8 +251,6 @@
 		OBJ_8 /* RibbonKit */ = {
 			isa = PBXGroup;
 			children = (
-				3057F96F25BFFBAF002E3274 /* Helpers */,
-				3057F97125BFFBAF002E3274 /* Layout */,
 				30BF401025B83E5B00BE8A98 /* Extensions */,
 				OBJ_9 /* Reusable */,
 				30F07A2C24C867A100BFFE5E /* List */,
@@ -286,11 +263,10 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* ReusableView.swift */,
-				3057F97D25BFFDA3002E3274 /* RibbonCell.swift */,
 				300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */,
 				300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */,
+				30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */,
 				OBJ_11 /* UICollectionView+Reusable.swift */,
-				3057F97825BFFC34002E3274 /* UITableView+Reusable.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -416,14 +392,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30DFDD502721C10000EAAF87 /* ViewController.swift in Sources */,
 				303F476324CF6F0200763149 /* RandomColor.swift in Sources */,
 				303F476624CF6F0200763149 /* Hue.swift in Sources */,
-				303F475424CF6E7800763149 /* ViewController.swift in Sources */,
 				303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */,
-				303F475224CF6E7800763149 /* AppDelegate.swift in Sources */,
 				30BF400525B833E000BE8A98 /* Lorem.swift in Sources */,
 				3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */,
 				303F476224CF6EFC00763149 /* ColorGroup+tvOS.swift in Sources */,
+				30DFDD512721C13F00EAAF87 /* AppDelegate.swift in Sources */,
 				303F476424CF6F0200763149 /* Luminosity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,18 +424,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				3057F97425BFFBB0002E3274 /* PagingCollectionViewLayout.swift in Sources */,
-				3057F97325BFFBB0002E3274 /* CellRegistration.swift in Sources */,
 				OBJ_24 /* ReusableView.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
-				3057F98925BFFDF7002E3274 /* RibbonListView+iOS.swift in Sources */,
+				30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */,
 				300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */,
-				3057F97E25BFFDA3002E3274 /* RibbonCell.swift in Sources */,
 				30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */,
-				OBJ_29 /* RibbonListView+tvOS.swift in Sources */,
 				30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */,
-				3057F97925BFFC34002E3274 /* UITableView+Reusable.swift in Sources */,
+				30DFDD4C2721B42500EAAF87 /* RibbonListView.swift in Sources */,
 				30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */,
 				3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */,
 				300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */,
