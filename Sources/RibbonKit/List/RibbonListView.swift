@@ -39,6 +39,11 @@ open class RibbonListView: UIView {
         set { collectionView.isScrollEnabled = newValue }
     }
 
+    public var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
+        get { collectionView.contentInsetAdjustmentBehavior }
+        set { collectionView.contentInsetAdjustmentBehavior = newValue }
+    }
+
     /// The ribbon list's horizontal scrolling behavior.
     public var horizontalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuousGroupLeadingBoundary
 
@@ -47,19 +52,19 @@ open class RibbonListView: UIView {
 
     /// The view that is displayed above the table's content.
     ///
+    /// Important: A height must be specified using the delegate method `ribbonListHeaderHeightDimension(_:) -> RibbonListLayoutDimension`, returning a non-negative floating-point value.
+    ///
     /// Use this property to specify a header view for your entire list. The header view is the first item to appear in the list's view's scrolling content, and it is separate from the header views you add to individual sections. The default value of this property is nil.
     /// When assigning a view to this property, set the height of that view to a nonzero value. The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
     open var headerView: UIView? {
         didSet {
             let config = UICollectionViewCompositionalLayoutConfiguration()
-            if headerView != nil {
-                let headerFooterSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(44)
-                )
-
+            if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
                 let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerFooterSize,
+                    layoutSize: NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1.0),
+                        heightDimension: headerSize.uiDimension
+                    ),
                     elementKind: "header",
                     alignment: .top
                 )
@@ -301,11 +306,11 @@ open class RibbonListView: UIView {
             )
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
-            if let headerHeight = self.delegate?.ribbonList(self, estimatedHeightForHeaderInSection: sectionIndex), headerHeight > 0.0 {
+            if let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
                 header = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(headerHeight)
+                        heightDimension: headerHeight.uiDimension
                     ),
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
@@ -313,11 +318,11 @@ open class RibbonListView: UIView {
             }
 
             var footer: NSCollectionLayoutBoundarySupplementaryItem?
-            if let footerHeight = self.delegate?.ribbonList(self, estimatedHeightForFooterInSection: sectionIndex), footerHeight > 0.0 {
+            if let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
                 footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(footerHeight)
+                        heightDimension: footerHeight.uiDimension
                     ),
                     elementKind: UICollectionView.elementKindSectionFooter,
                     alignment: .bottomLeading

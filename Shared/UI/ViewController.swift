@@ -124,8 +124,8 @@ extension ViewController: RibbonListViewDelegate {
         return groups[section].configuration
     }
 
-    func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension {
+        return .absolute(100)
     }
 }
 

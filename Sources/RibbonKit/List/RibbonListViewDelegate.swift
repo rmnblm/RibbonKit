@@ -14,8 +14,18 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - indexPath: An index path that locates a row in ribbonList.
     /// - Returns: A nonnegative floating-point value that specifies the height (in points) that row should be.
     func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat
+
+
+    /// Asks the delegate for the height to use for the global header of the list.
+    ///
+    /// Important: The final size of the dimension is determined when the content is rendered.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list requesting this information.
+    /// - Returns: A layout dimension that specifies the height (in points) of the global header.
+    func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListLayoutDimension
     
-    /// Asks the delegate for the estimated height to use for the header of a particular section.
+    /// Asks the delegate for the height to use for the header of a particular section.
     ///
     /// Use this method to specify the height of custom header views returned by your `ribbonList(_:viewForHeaderInSection:)` method.
     ///
@@ -24,10 +34,10 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Parameters:
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
-    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the header for section.
-    func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
+    /// - Returns: A layout dimension that specifies the height (in points) of the header for section.
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension
 
-    /// Asks the delegate for the estimated height to use for the footer of a particular section.
+    /// Asks the delegate for the height to use for the footer of a particular section.
     ///
     /// Use this method to specify the height of custom footer views returned by your `ribbonList(_:viewForFooterInSection:)` method.
     ///
@@ -36,8 +46,8 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Parameters:
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
-    /// - Returns: A nonnegative floating-point value that specifies the height (in points) of the footer for section.
-    func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForFooterInSection section: Int) -> CGFloat
+    /// - Returns: A layout dimension that specifies the height (in points) of the footer for section.
+    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListLayoutDimension
 
     /// Tells the delegate that the item at the specified index path was selected.
     ///
@@ -169,13 +179,15 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
         return ribbonList.dataSource?.ribbonList(ribbonList, configurationForSectionAt: section)?.calculatedSectionHeight() ?? UITableView.automaticDimension
     }
+
+    public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListLayoutDimension { .zero }
     
     public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
 
-    public func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForHeaderInSection section: Int) -> CGFloat { 0.0 }
-    public func ribbonList(_ ribbonList: RibbonListView, estimatedHeightForFooterInSection section: Int) -> CGFloat { 0.0 }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension { .zero }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListLayoutDimension { .zero }
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
