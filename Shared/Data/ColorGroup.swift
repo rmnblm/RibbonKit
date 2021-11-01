@@ -1,6 +1,5 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
-#if os(iOS)
 import UIKit
 import RibbonKit
 
@@ -16,7 +15,7 @@ class ColorGroup {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         self.newColorClosure = newColorClosure
-        self.colors = (0..<3).map { _ in newColorClosure() }
+        self.colors = (0..<10).map { _ in newColorClosure() }
         self.configuration = configuration
     }
 
@@ -42,8 +41,7 @@ extension ColorGroup {
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 30, height: 30),
-                    interItemSpacing: 1
+                    layout: .horizontal(heightDimension: .absolute(30), itemWidthDimensions: [.absolute(30), .absolute(100)])
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -52,8 +50,7 @@ extension ColorGroup {
             footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 50, height: 50),
-                    interItemSpacing: 2
+                    layout: .horizontal(heightDimension: .absolute(50), itemWidthDimension: .absolute(50))
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         ),
@@ -62,8 +59,7 @@ extension ColorGroup {
             footerTitle: "A range of red colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 70, height: 70),
-                    interItemSpacing: 3
+                    layout: .horizontal(heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
             newColorClosure: { randomColor(hue: .red, luminosity: .light) }
         ),
@@ -72,9 +68,9 @@ extension ColorGroup {
             footerTitle: "A range of purple colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    numberOfRows: 4,
-                    itemSize: .init(width: 100, height: 20),
-                    interItemSpacing: 4
+                    layout: .vertical(numberOfRows: 4, heightDimension: .absolute(70), itemWidthDimension: .absolute(70)),
+                    interItemSpacing: 4,
+                    interGroupSpacing: 4
                 ),
             newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
         ),
@@ -83,8 +79,7 @@ extension ColorGroup {
             footerTitle: "A range of orange colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 120, height: 120),
-                    interItemSpacing: 5
+                    layout: .vertical(numberOfRows: 4, heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
             newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
         ),
@@ -93,8 +88,7 @@ extension ColorGroup {
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 30, height: 30),
-                    interItemSpacing: 1
+                    layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
         ),
@@ -103,11 +97,9 @@ extension ColorGroup {
             footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonConfiguration(
-                    itemSize: .init(width: 50, height: 50),
-                    interItemSpacing: 2
+                    layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
         )
     ]
 }
-#endif

@@ -1,8 +1,8 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
 import UIKit
 
-public enum RibbonListLayoutDimension {
+public enum RibbonListLayoutDimension: Hashable {
     case estimated(CGFloat)
     case absolute(CGFloat)
     case fractionalHeight(CGFloat)

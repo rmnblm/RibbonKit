@@ -1,4 +1,4 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
 import UIKit
 import RibbonKit
@@ -100,10 +100,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: RibbonListViewDelegate {
-    func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat? {
-        return indexPath.item == 0 ? 20 : nil
-    }
-
     func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) {
         let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
@@ -124,7 +120,7 @@ extension ViewController: RibbonListViewDelegate {
     }
     #endif
 
-    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration? {
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration {
         return groups[section].configuration
     }
 

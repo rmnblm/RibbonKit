@@ -1,4 +1,4 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
 import UIKit
 
@@ -246,43 +246,38 @@ open class RibbonListView: UIView {
 
     private func buildLayout() -> UICollectionViewCompositionalLayout {
         let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            let configuration = self.dataSource?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
+            let configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
 
             let group: NSCollectionLayoutGroup
-            if configuration.numberOfRows > 1 {
+            if configuration.layout.orientation == .vertical {
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1 / CGFloat(configuration.numberOfRows))
+                    heightDimension: .fractionalHeight(1 / CGFloat(configuration.layout.numberOfRows))
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .absolute(configuration.itemSize.width),
-                    heightDimension: .absolute(self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight())
+                    widthDimension: configuration.layout.itemWidthDimensions.first?.uiDimension ?? .estimated(80),
+                    heightDimension: configuration.layout.heightDimension.uiDimension
                 )
                 group = NSCollectionLayoutGroup.vertical(
                     layoutSize: groupSize,
                     subitem: item,
-                    count: configuration.numberOfRows
+                    count: configuration.layout.numberOfRows
                 )
             }
             else {
-                let numberOfItems = self.dataSource?.ribbonList(self, numberOfItemsInSection: sectionIndex) ?? 0
-
-                let items: [NSCollectionLayoutItem] = (0..<numberOfItems).map { itemIndex in
-                    let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
-                    let itemWidth = self.delegate?.ribbonList(self, widthForItemAt: indexPath) ?? configuration.itemSize.width
-
+                let items: [NSCollectionLayoutItem] = (0..<configuration.layout.itemWidthDimensions.count).map { itemIndex in
+                    let itemWidth = configuration.layout.itemWidthDimensions[itemIndex]
                     let itemSize = NSCollectionLayoutSize(
-                        widthDimension: .absolute(itemWidth),
+                        widthDimension: itemWidth.uiDimension,
                         heightDimension: .fractionalHeight(1)
                     )
                     return NSCollectionLayoutItem(layoutSize: itemSize)
                 }
 
-                let sectionHeight = self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight()
                 let itemGroupSize = NSCollectionLayoutSize(
                     widthDimension: .estimated(1),
-                    heightDimension: .absolute(sectionHeight)
+                    heightDimension: configuration.layout.heightDimension.uiDimension
                 )
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
             }

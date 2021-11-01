@@ -1,4 +1,4 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
 import UIKit
 
@@ -54,15 +54,6 @@ public protocol RibbonListViewDataSource: AnyObject {
     /// - Returns: The number of rows in section.
     func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int
 
-    /// Asks the data source to return a configuration of the specified section of the ribbon list.
-    ///
-    /// If you do not implement this method, the ribbon list configures the list with `.default` configuration.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: An object representing the ribbon list requesting this information.
-    ///     - section: An index number identifying a section of ribbonList.
-    /// - Returns: A ribbon configuration to use for the section.
-    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration?
 }
 
 extension RibbonListViewDataSource {

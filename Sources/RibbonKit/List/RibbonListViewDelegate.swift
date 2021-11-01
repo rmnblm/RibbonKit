@@ -1,20 +1,9 @@
-//  Copyright © 2020 Roman Blum. All rights reserved.
+//  Copyright © 2021 Roman Blum. All rights reserved.
 
 import UIKit
 
 /// Methods for managing selections, configuring section headers and footers, deleting and reordering cells, and performing other actions in a ribbon list.
 public protocol RibbonListViewDelegate: AnyObject {
-
-    /// Asks the delegate for the height to use for the specified section.
-    ///
-    /// Before it appears onscreen, the ribbon list calls this method for the rows in the visible portion of the list. As the user scrolls vertically, the ribbon list calls the method for items only when they move onscreen. It calls the method each time the row appears onscreen, regardless of whether it appeared onscreen previously.
-    ///
-    /// - Parameters:
-    ///     - ribbonList: The ribbon list requesting this information.
-    ///     - indexPath: An index path that locates a row in ribbonList.
-    /// - Returns: A nonnegative floating-point value that specifies the height (in points) that row should be.
-    func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat
-
 
     /// Asks the delegate for the height to use for the global header of the list.
     ///
@@ -147,15 +136,15 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - ribbonList: The ribbon list object that is performing the scrolling animation. 
     func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView)
 
-    /// Asks the delegate for the width of the specified item’s cell.
+    /// Asks the data source to return a configuration of the specified section of the ribbon list.
     ///
-    /// Note: This function is ignored if `RibbonConfiguration.numberOfRows > 1`.
+    /// If you do not implement this method, the ribbon list configures the list with `.default` configuration.
     ///
     /// - Parameters:
-    ///     - ribbonList: The ribbon list object requesting this information.
-    ///     - indexPath: The index path of an item in the ribbon list.
-    /// - Returns: The width of the specified item. The value must be greater than 0. If `nil` is returned, the `itemSize.width` property of the configuration will be used as fallback.
-    func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat?
+    ///     - ribbonList: An object representing the ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: A ribbon configuration to use for the section.
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration
 
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
@@ -176,10 +165,6 @@ public protocol RibbonListViewDelegate: AnyObject {
 }
 
 extension RibbonListViewDelegate {
-    public func ribbonList(_ ribbonList: RibbonListView, heightForSectionAt section: Int) -> CGFloat {
-        return ribbonList.dataSource?.ribbonList(ribbonList, configurationForSectionAt: section)?.calculatedSectionHeight() ?? UITableView.automaticDimension
-    }
-
     public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListLayoutDimension { .zero }
     
     public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
@@ -198,8 +183,6 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
     public func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView) { }
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
-
-    public func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat? { nil }
 
     #if os(iOS)
     @available(iOS 13.0, *)

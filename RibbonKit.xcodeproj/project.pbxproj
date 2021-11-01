@@ -11,16 +11,15 @@
 		300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */; };
 		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
 		303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303F475A24CF6E7900763149 /* LaunchScreen.storyboard */; };
-		303F476224CF6EFC00763149 /* ColorGroup+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */; };
+		303F476224CF6EFC00763149 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
 		303F476324CF6F0200763149 /* RandomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3C24C7456D00ABB183 /* RandomColor.swift */; };
 		303F476424CF6F0200763149 /* Luminosity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3F24C7456D00ABB183 /* Luminosity.swift */; };
 		303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3D24C7456D00ABB183 /* ColorDefinition.swift */; };
 		303F476624CF6F0200763149 /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D3E24C7456D00ABB183 /* Hue.swift */; };
 		3044596324C7B15D0062BA54 /* RibbonConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */; };
-		3044596B24C7B4D90062BA54 /* ColorGroup+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */; };
+		3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
 		3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */; };
-		3057F99E25BFFE48002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
-		3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */; };
+		30B56F12273094AB006AB071 /* RibbonListSectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */; };
 		30BF400425B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF400525B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */; };
@@ -69,9 +68,9 @@
 		303F475B24CF6E7900763149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		303F475D24CF6E7900763149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonConfiguration.swift; sourceTree = "<group>"; };
-		3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorGroup+tvOS.swift"; sourceTree = "<group>"; };
+		3044596A24C7B4D90062BA54 /* ColorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGroup.swift; sourceTree = "<group>"; };
 		3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewFocusUpdateContext.swift; sourceTree = "<group>"; };
-		3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorGroup+iOS.swift"; sourceTree = "<group>"; };
+		30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListSectionLayout.swift; sourceTree = "<group>"; };
 		30BF400325B833E000BE8A98 /* Lorem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
 		30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
 		30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Hashable.swift"; sourceTree = "<group>"; };
@@ -145,8 +144,7 @@
 		3044596924C7B4D10062BA54 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3057F99325BFFE37002E3274 /* ColorGroup+iOS.swift */,
-				3044596A24C7B4D90062BA54 /* ColorGroup+tvOS.swift */,
+				3044596A24C7B4D90062BA54 /* ColorGroup.swift */,
 				30BF400325B833E000BE8A98 /* Lorem.swift */,
 			);
 			path = Data;
@@ -207,6 +205,7 @@
 				30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */,
 				3044596224C7B15D0062BA54 /* RibbonConfiguration.swift */,
 				30D8E9992730507E00002793 /* RibbonListLayoutDimension.swift */,
+				30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -400,8 +399,7 @@
 				303F476624CF6F0200763149 /* Hue.swift in Sources */,
 				303F476524CF6F0200763149 /* ColorDefinition.swift in Sources */,
 				30BF400525B833E000BE8A98 /* Lorem.swift in Sources */,
-				3057F99F25BFFE49002E3274 /* ColorGroup+iOS.swift in Sources */,
-				303F476224CF6EFC00763149 /* ColorGroup+tvOS.swift in Sources */,
+				303F476224CF6EFC00763149 /* ColorGroup.swift in Sources */,
 				30DFDD512721C13F00EAAF87 /* AppDelegate.swift in Sources */,
 				303F476424CF6F0200763149 /* Luminosity.swift in Sources */,
 			);
@@ -415,9 +413,8 @@
 				30C15D4224C7456D00ABB183 /* Hue.swift in Sources */,
 				30C15D4124C7456D00ABB183 /* ColorDefinition.swift in Sources */,
 				30C15D2C24C7436000ABB183 /* ViewController.swift in Sources */,
-				3044596B24C7B4D90062BA54 /* ColorGroup+tvOS.swift in Sources */,
+				3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */,
 				30BF400425B833E000BE8A98 /* Lorem.swift in Sources */,
-				3057F99E25BFFE48002E3274 /* ColorGroup+iOS.swift in Sources */,
 				30C15D4024C7456D00ABB183 /* RandomColor.swift in Sources */,
 				30C15D2824C7436000ABB183 /* AppDelegate.swift in Sources */,
 			);
@@ -428,6 +425,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_24 /* ReusableView.swift in Sources */,
+				30B56F12273094AB006AB071 /* RibbonListSectionLayout.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
 				30D8E99A2730507E00002793 /* RibbonListLayoutDimension.swift in Sources */,
 				30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */,
