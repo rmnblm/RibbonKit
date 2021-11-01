@@ -6,12 +6,12 @@ import RibbonKit
 class ColorGroup {
     let headerTitle: String
     let footerTitle: String
-    let configuration: RibbonConfiguration
+    let configuration: RibbonListSectionConfiguration
     let newColorClosure: (() -> UIColor)
 
     private(set) var colors: [UIColor]
 
-    init(headerTitle: String, footerTitle: String, configuration: RibbonConfiguration, newColorClosure: @escaping (() -> UIColor)) {
+    init(headerTitle: String, footerTitle: String, configuration: RibbonListSectionConfiguration, newColorClosure: @escaping (() -> UIColor)) {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         self.newColorClosure = newColorClosure
@@ -40,7 +40,7 @@ extension ColorGroup {
             headerTitle: "Blue-ish Colors",
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimensions: [.absolute(30), .absolute(100)])
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
@@ -49,7 +49,7 @@ extension ColorGroup {
             headerTitle: "Green-ish Colors",
             footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(50), itemWidthDimension: .absolute(50))
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }
@@ -58,7 +58,7 @@ extension ColorGroup {
             headerTitle: "Red-ish Colors",
             footerTitle: "A range of red colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
             newColorClosure: { randomColor(hue: .red, luminosity: .light) }
@@ -67,7 +67,7 @@ extension ColorGroup {
             headerTitle: "Purple-ish Colors",
             footerTitle: "A range of purple colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .vertical(numberOfRows: 4, heightDimension: .absolute(70), itemWidthDimension: .absolute(70)),
                     interItemSpacing: 4,
                     interGroupSpacing: 4
@@ -78,7 +78,7 @@ extension ColorGroup {
             headerTitle: "Orange-ish Colors",
             footerTitle: "A range of orange colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .vertical(numberOfRows: 4, heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
             newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
@@ -87,7 +87,7 @@ extension ColorGroup {
             headerTitle: "Blue-ish Colors",
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
             newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
@@ -96,7 +96,7 @@ extension ColorGroup {
             headerTitle: "Green-ish Colors",
             footerTitle: "A range of green colors to please your eyes. You can click on a cell to change its color.",
             configuration:
-                RibbonConfiguration(
+                RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
             newColorClosure: { randomColor(hue: .green, luminosity: .light) }

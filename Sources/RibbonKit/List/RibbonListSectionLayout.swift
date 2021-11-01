@@ -8,12 +8,12 @@ public struct RibbonListSectionLayout: Hashable {
 
     public let orientation: Orientation
     public let numberOfRows: Int
-    public let heightDimension: RibbonListLayoutDimension
-    public let itemWidthDimensions: [RibbonListLayoutDimension]
+    public let heightDimension: RibbonListDimension
+    public let itemWidthDimensions: [RibbonListDimension]
 
     public static func horizontal(
-        heightDimension: RibbonListLayoutDimension,
-        itemWidthDimensions: [RibbonListLayoutDimension]
+        heightDimension: RibbonListDimension,
+        itemWidthDimensions: [RibbonListDimension]
     ) -> RibbonListSectionLayout {
         return .init(
             orientation: .horizontal,
@@ -24,8 +24,8 @@ public struct RibbonListSectionLayout: Hashable {
     }
 
     public static func horizontal(
-        heightDimension: RibbonListLayoutDimension,
-        itemWidthDimension: RibbonListLayoutDimension
+        heightDimension: RibbonListDimension,
+        itemWidthDimension: RibbonListDimension
     ) -> RibbonListSectionLayout {
         return .horizontal(
             heightDimension: heightDimension,
@@ -35,8 +35,8 @@ public struct RibbonListSectionLayout: Hashable {
 
     public static func vertical(
         numberOfRows: Int,
-        heightDimension: RibbonListLayoutDimension,
-        itemWidthDimension: RibbonListLayoutDimension
+        heightDimension: RibbonListDimension,
+        itemWidthDimension: RibbonListDimension
     ) -> RibbonListSectionLayout {
         return .init(
             orientation: .vertical,

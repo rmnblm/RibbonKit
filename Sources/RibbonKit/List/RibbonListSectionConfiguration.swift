@@ -2,17 +2,17 @@
 
 import UIKit
 
-public struct RibbonConfiguration: Hashable {
+public struct RibbonListSectionConfiguration: Hashable {
 
-    public var sectionInsets: UIEdgeInsets
     public var layout: RibbonListSectionLayout
     public var interItemSpacing: CGFloat
     public var interGroupSpacing: CGFloat
+    public var sectionInsets: UIEdgeInsets
     public var headerInsets: UIEdgeInsets
     public var footerInsets: UIEdgeInsets
 
     public init(
-        layout: RibbonListSectionLayout = .horizontal(heightDimension: .absolute(80), itemWidthDimensions: [.absolute(80)]),
+        layout: RibbonListSectionLayout,
         interItemSpacing: CGFloat = 6.0,
         interGroupSpacing: CGFloat = 6.0,
         sectionInsets: UIEdgeInsets = .zero,
@@ -27,5 +27,5 @@ public struct RibbonConfiguration: Hashable {
         self.footerInsets = footerInsets
     }
 
-    public static let `default` = RibbonConfiguration()
+    public static let `default` = RibbonListSectionConfiguration(layout: .horizontal(heightDimension: .absolute(80), itemWidthDimension: .absolute(80)))
 }

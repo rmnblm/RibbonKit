@@ -12,7 +12,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Parameters:
     ///     - ribbonList: The ribbon list requesting this information.
     /// - Returns: A layout dimension that specifies the height (in points) of the global header.
-    func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListLayoutDimension
+    func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListDimension
     
     /// Asks the delegate for the height to use for the header of a particular section.
     ///
@@ -24,7 +24,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A layout dimension that specifies the height (in points) of the header for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListDimension
 
     /// Asks the delegate for the height to use for the footer of a particular section.
     ///
@@ -36,7 +36,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - ribbonList: The ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A layout dimension that specifies the height (in points) of the footer for section.
-    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListLayoutDimension
+    func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListDimension
 
     /// Tells the delegate that the item at the specified index path was selected.
     ///
@@ -144,7 +144,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - ribbonList: An object representing the ribbon list requesting this information.
     ///     - section: An index number identifying a section of ribbonList.
     /// - Returns: A ribbon configuration to use for the section.
-    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonListSectionConfiguration
 
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
@@ -165,14 +165,14 @@ public protocol RibbonListViewDelegate: AnyObject {
 }
 
 extension RibbonListViewDelegate {
-    public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListLayoutDimension { .zero }
+    public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListDimension { .zero }
     
     public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didDeselectItemAt indexPath: IndexPath) { }
 
-    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension { .zero }
-    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListLayoutDimension { .zero }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListDimension { .zero }
+    public func ribbonList(_ ribbonList: RibbonListView, heightForFooterInSection section: Int) -> RibbonListDimension { .zero }
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }

@@ -2,12 +2,12 @@
 
 import UIKit
 
-public enum RibbonListLayoutDimension: Hashable {
+public enum RibbonListDimension: Hashable {
     case estimated(CGFloat)
     case absolute(CGFloat)
     case fractionalHeight(CGFloat)
 
-    public static var zero: RibbonListLayoutDimension { .absolute(0.0) }
+    public static var zero: RibbonListDimension { .absolute(0.0) }
 
     var value: CGFloat {
         switch self {

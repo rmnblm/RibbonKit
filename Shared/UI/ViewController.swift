@@ -120,11 +120,11 @@ extension ViewController: RibbonListViewDelegate {
     }
     #endif
 
-    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonConfiguration {
+    func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonListSectionConfiguration {
         return groups[section].configuration
     }
 
-    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension {
+    func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListDimension {
         return .absolute(30)
     }
 }
