@@ -52,10 +52,9 @@ open class RibbonListView: UIView {
 
     /// The view that is displayed above the table's content.
     ///
-    /// Important: A height must be specified using the delegate method `ribbonListHeaderHeightDimension(_:) -> RibbonListLayoutDimension`, returning a non-negative floating-point value.
-    ///
     /// Use this property to specify a header view for your entire list. The header view is the first item to appear in the list's view's scrolling content, and it is separate from the header views you add to individual sections. The default value of this property is nil.
-    /// When assigning a view to this property, set the height of that view to a nonzero value. The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
+    /// When assigning a view to this property, a height must be specified using the delegate method `ribbonListHeaderHeight(_:) -> RibbonListLayoutDimension`, returning a non-negative floating-point value.
+    /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
     open var headerView: UIView? {
         didSet {
             let config = UICollectionViewCompositionalLayoutConfiguration()
