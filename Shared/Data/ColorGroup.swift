@@ -3,26 +3,38 @@
 import UIKit
 import RibbonKit
 
+struct ColorItem: Hashable {
+    let id = UUID()
+    let color: UIColor
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 class ColorGroup {
+
     let headerTitle: String
     let footerTitle: String
     let configuration: RibbonListSectionConfiguration
-    let newColorClosure: (() -> UIColor)
+    let hue: Hue
+    let luminosity: Luminosity
 
-    private(set) var colors: [UIColor]
+    private(set) var colors: [ColorItem]
 
-    init(headerTitle: String, footerTitle: String, configuration: RibbonListSectionConfiguration, newColorClosure: @escaping (() -> UIColor)) {
+    init(headerTitle: String, footerTitle: String, configuration: RibbonListSectionConfiguration, hue: Hue, luminosity: Luminosity) {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
-        self.newColorClosure = newColorClosure
-        self.colors = (0..<10).map { _ in newColorClosure() }
+        self.colors = (0..<10).map { _ in .init(color: randomColor(hue: hue, luminosity: luminosity)) }
         self.configuration = configuration
+        self.hue = hue
+        self.luminosity = luminosity
     }
 
     func insertRandom() -> Int {
         let index = colors.isEmpty ? 0 : Int.random(in: 0..<colors.count)
-        let color = newColorClosure()
-        colors.insert(color, at: index)
+        let color = randomColor(hue: hue, luminosity: luminosity)
+        colors.insert(.init(color: color), at: index)
         return index
     }
 
@@ -31,6 +43,20 @@ class ColorGroup {
         let index = Int.random(in: 0..<colors.count)
         colors.remove(at: index)
         return index
+    }
+}
+
+extension ColorGroup: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(headerTitle)
+        hasher.combine(footerTitle)
+        hasher.combine(configuration)
+        hasher.combine(hue)
+        hasher.combine(luminosity)
+    }
+
+    static func == (lhs: ColorGroup, rhs: ColorGroup) -> Bool {
+        lhs.hashValue == rhs.hashValue
     }
 }
 
@@ -43,7 +69,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimensions: [.absolute(30), .absolute(100)])
                 ),
-            newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
+            hue: .blue,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Green-ish Colors",
@@ -52,7 +79,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(50), itemWidthDimension: .absolute(50))
                 ),
-            newColorClosure: { randomColor(hue: .green, luminosity: .light) }
+            hue: .green,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Red-ish Colors",
@@ -61,7 +89,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
-            newColorClosure: { randomColor(hue: .red, luminosity: .light) }
+            hue: .red,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Purple-ish Colors",
@@ -72,7 +101,8 @@ extension ColorGroup {
                     interItemSpacing: 4,
                     interGroupSpacing: 4
                 ),
-            newColorClosure: { randomColor(hue: .purple, luminosity: .light) }
+            hue: .purple,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Orange-ish Colors",
@@ -81,7 +111,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .vertical(numberOfRows: 4, heightDimension: .absolute(70), itemWidthDimension: .absolute(70))
                 ),
-            newColorClosure: { randomColor(hue: .orange, luminosity: .light) }
+            hue: .orange,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Blue-ish Colors",
@@ -90,7 +121,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
-            newColorClosure: { randomColor(hue: .blue, luminosity: .light) }
+            hue: .blue,
+            luminosity: .light
         ),
         ColorGroup(
             headerTitle: "Green-ish Colors",
@@ -99,7 +131,8 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
-            newColorClosure: { randomColor(hue: .green, luminosity: .light) }
+            hue: .green,
+            luminosity: .light
         )
     ]
 }

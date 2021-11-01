@@ -20,6 +20,10 @@
 		3044596B24C7B4D90062BA54 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
 		3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */; };
 		30B56F12273094AB006AB071 /* RibbonListSectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */; };
+		30B56F142730A45D006AB071 /* RibbonListViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F132730A45D006AB071 /* RibbonListViewCompositionalLayout.swift */; };
+		30B56F162730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F152730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift */; };
+		30B56F182730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F172730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift */; };
+		30B56F1A2730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F192730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift */; };
 		30BF400425B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF400525B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */; };
@@ -37,7 +41,6 @@
 		30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */; };
 		30DFDD502721C10000EAAF87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2B24C7436000ABB183 /* ViewController.swift */; };
 		30DFDD512721C13F00EAAF87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2724C7436000ABB183 /* AppDelegate.swift */; };
-		30F07A2B24C8679900BFFE5E /* RibbonListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */; };
 		30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */; };
 		OBJ_24 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* ReusableView.swift */; };
 		OBJ_25 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* UICollectionView+Reusable.swift */; };
@@ -71,6 +74,10 @@
 		3044596A24C7B4D90062BA54 /* ColorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGroup.swift; sourceTree = "<group>"; };
 		3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewFocusUpdateContext.swift; sourceTree = "<group>"; };
 		30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListSectionLayout.swift; sourceTree = "<group>"; };
+		30B56F132730A45D006AB071 /* RibbonListViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewCompositionalLayout.swift; sourceTree = "<group>"; };
+		30B56F152730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDiffableDataSourceSnapshot.swift; sourceTree = "<group>"; };
+		30B56F172730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		30B56F192730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewScrollingBehaviour.swift; sourceTree = "<group>"; };
 		30BF400325B833E000BE8A98 /* Lorem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
 		30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
 		30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Hashable.swift"; sourceTree = "<group>"; };
@@ -88,7 +95,6 @@
 		30DFDD4B2721B42500EAAF87 /* RibbonListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RibbonListView.swift; sourceTree = "<group>"; };
 		30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHostView.swift; sourceTree = "<group>"; };
 		30F07A2924C7BF0400BFFE5E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDataSource.swift; sourceTree = "<group>"; };
 		30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDelegate.swift; sourceTree = "<group>"; };
 		OBJ_10 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		OBJ_11 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
@@ -200,12 +206,15 @@
 			isa = PBXGroup;
 			children = (
 				30DFDD4B2721B42500EAAF87 /* RibbonListView.swift */,
+				30B56F192730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift */,
+				30B56F172730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift */,
+				30B56F152730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift */,
 				3048262825B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift */,
-				30F07A2A24C8679900BFFE5E /* RibbonListViewDataSource.swift */,
 				30F07A2F24C867CF00BFFE5E /* RibbonListViewDelegate.swift */,
-				3044596224C7B15D0062BA54 /* RibbonListSectionConfiguration.swift */,
 				30D8E9992730507E00002793 /* RibbonListDimension.swift */,
+				3044596224C7B15D0062BA54 /* RibbonListSectionConfiguration.swift */,
 				30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */,
+				30B56F132730A45D006AB071 /* RibbonListViewCompositionalLayout.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -428,16 +437,19 @@
 				30B56F12273094AB006AB071 /* RibbonListSectionLayout.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
 				30D8E99A2730507E00002793 /* RibbonListDimension.swift in Sources */,
+				30B56F162730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift in Sources */,
 				30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */,
 				300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonListSectionConfiguration.swift in Sources */,
+				30B56F1A2730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift in Sources */,
 				30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */,
 				30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */,
 				30DFDD4C2721B42500EAAF87 /* RibbonListView.swift in Sources */,
 				30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */,
 				3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */,
 				300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */,
-				30F07A2B24C8679900BFFE5E /* RibbonListViewDataSource.swift in Sources */,
+				30B56F182730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift in Sources */,
+				30B56F142730A45D006AB071 /* RibbonListViewCompositionalLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,11 +5,6 @@ import UIKit
 /// A view that presents data using paginated items arranged in rows.
 open class RibbonListView: UIView {
 
-    /// The object that acts as the data source of the ribbon list.
-    ///
-    /// The data source must adopt the RibbonListViewDataSource protocol. The data source is not retained.
-    open weak var dataSource: RibbonListViewDataSource?
-
     /// The object that acts as the delegate of the ribbon list.
     ///
     /// The delegate must adopt the RibbonListViewDelegate protocol. The delegate is not retained.
@@ -70,7 +65,7 @@ open class RibbonListView: UIView {
 
                 config.boundarySupplementaryItems = [header]
             }
-            (collectionView.collectionViewLayout as? UICollectionViewCompositionalLayout)?.configuration = config
+            layout.configuration = config
         }
     }
 
@@ -89,10 +84,11 @@ open class RibbonListView: UIView {
     /// An array of the visible items in the ribbon list.
     public var indexPathsForVisibleItems: [IndexPath] { collectionView.indexPathsForVisibleItems }
 
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: buildLayout())
+    private lazy var layout = buildLayout()
+
+    private(set) lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.register(RibbonListReusableFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
@@ -219,21 +215,6 @@ open class RibbonListView: UIView {
     /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
     open func reloadData() {
         collectionView.reloadData()
-    }
-
-    /// Inserts new items at the specified index paths.
-    open func insertItems(at indexPaths: [IndexPath]) {
-        collectionView.insertItems(at: indexPaths)
-    }
-
-    /// Deletes the items at the specified index paths.
-    open func deleteItems(at indexPaths: [IndexPath]) {
-        collectionView.deleteItems(at: indexPaths)
-    }
-
-    /// Reloads just the items at the specified index paths.
-    open func reloadItems(at indexPaths: [IndexPath]) {
-        collectionView.reloadItems(at: indexPaths)
     }
 
     open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -397,54 +378,4 @@ extension RibbonListView: UICollectionViewDelegate {
         return delegate?.ribbonList(self, contextMenuConfigurationForItemAt: indexPath, point: point)
     }
     #endif
-}
-
-extension RibbonListView: UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case "header":
-            let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-            if let headerView = headerView {
-                hostView.setView(headerView)
-            }
-            return hostView
-        case UICollectionView.elementKindSectionHeader:
-            return dataSource?.ribbonList(self, viewForHeaderInSection: indexPath.section) ?? UICollectionReusableView()
-        case UICollectionView.elementKindSectionFooter:
-            return dataSource?.ribbonList(self, viewForFooterInSection: indexPath.section) ?? UICollectionReusableView()
-        default:
-            return UICollectionReusableView()
-        }
-    }
-    
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dataSource?.numberOfSections(in: self) ?? 1
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.ribbonList(self, numberOfItemsInSection: section) ?? 0
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return dataSource?.ribbonList(self, cellForItemAt: indexPath) ?? UICollectionViewCell()
-    }
-}
-
-public enum RibbonListViewScrollingBehaviour {
-    case none
-    case sectionPaging
-}
-
-protocol RibbonListViewCompositionalLayoutDelegate: AnyObject {
-    func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint
-}
-
-class RibbonListViewCompositionalLayout: UICollectionViewCompositionalLayout {
-
-    weak var delegate: RibbonListViewCompositionalLayoutDelegate?
-
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        return delegate?.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
-            ?? super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
-    }
 }

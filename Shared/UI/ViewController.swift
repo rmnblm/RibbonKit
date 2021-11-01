@@ -45,22 +45,55 @@ class ViewController: UIViewController {
     private lazy var ribbonList: RibbonListView = {
         let list = RibbonListView()
         list.delegate = self
-        list.dataSource = self
         list.register(Cell.self, forCellWithReuseIdentifier: "Cell")
         list.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
         return list
     }()
 
+    typealias Snapshot = RibbonListViewDiffableDataSourceSnapshot<ColorGroup, ColorItem>
+    typealias DataSource = RibbonListViewDiffableDataSource<ColorGroup, ColorItem>
+
+    private lazy var dataSource: DataSource = {
+        let dataSource: DataSource = .init(ribbonList: ribbonList) { ribbonList, indexPath, item in
+            let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+            cell.backgroundColor = item.color
+            return cell
+        }
+
+        dataSource.supplementaryViewProvider = { [weak self] ribbonList, kind, indexPath in
+            let headerView = ribbonList.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: "Header",
+                for: IndexPath(item: 0, section: indexPath.section)
+            )
+            (headerView as? HeaderView)?.titleLabel.text = self?.groups[indexPath.section].headerTitle
+            return headerView
+        }
+
+        return dataSource
+    }()
+
+    private lazy var headerView: UIView = {
+        let headerView = UIView()
+        headerView.backgroundColor = .red
+        return headerView
+    }()
+
+    private lazy var toggleHeaderButton = UIBarButtonItem(title: "Toggle Header", style: .plain, target: self, action: #selector(didTapToggleHeader))
     private lazy var addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(didTapAdd))
     private lazy var removeButton = UIBarButtonItem(title: "Remove", style: .plain, target: self, action: #selector(didTapRemove))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Ribbons"
-        navigationItem.leftBarButtonItem = addButton
-        navigationItem.rightBarButtonItem = removeButton
         #if os(iOS)
+        navigationController?.setToolbarHidden(false, animated: false)
+        toolbarItems = [addButton, .flexibleSpace(), removeButton]
+        navigationItem.rightBarButtonItem = toggleHeaderButton
         view.backgroundColor = .systemBackground
+        #else
+        navigationItem.leftBarButtonItems = [addButton, removeButton]
+        navigationItem.rightBarButtonItem = toggleHeaderButton
         #endif
 
         view.addSubview(ribbonList)
@@ -72,19 +105,36 @@ class ViewController: UIViewController {
             ribbonList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
 
-        let headerView = UIView()
-        headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        headerView.backgroundColor = .red
         ribbonList.headerView = headerView
+
+        applySnapshot()
+    }
+
+    func applySnapshot() {
+        let snapshot = Snapshot()
+
+        snapshot.appendSections(groups)
+        groups.forEach {
+            snapshot.appendItems($0.colors, toSection: $0)
+        }
+
+        dataSource.apply(snapshot)
+    }
+
+    @objc private func didTapToggleHeader() {
+        if ribbonList.headerView != nil {
+            ribbonList.headerView = nil
+        }
+        else {
+            ribbonList.headerView = headerView
+        }
     }
 
     @objc private func didTapAdd() {
         let section = Int.random(in: 0..<groups.count)
         let group = groups[section]
-        let itemIndex = group.insertRandom()
-        let indexPath = IndexPath(item: itemIndex, section: section)
-        ribbonList.insertItems(at: [indexPath])
-        print("Insert at \(indexPath)")
+        let _ = group.insertRandom()
+        applySnapshot()
     }
 
     @objc private func didTapRemove() {
@@ -92,19 +142,21 @@ class ViewController: UIViewController {
         guard !sectionsWithItems.isEmpty else { return }
         guard let section = sectionsWithItems.randomElement() else { return }
         let group = groups[section]
-        guard let itemIndex = group.removeRandom() else { return }
-        let indexPath = IndexPath(item: itemIndex, section: section)
-        ribbonList.deleteItems(at: [indexPath])
-        print("Delete at \(indexPath)")
+        guard let _ = group.removeRandom() else { return }
+        applySnapshot()
     }
 }
 
 extension ViewController: RibbonListViewDelegate {
+    func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListDimension {
+        return .absolute(100)
+    }
+
     func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) {
         let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
         UIView.animate(withDuration: 0.5) {
-            cell?.backgroundColor = group.colors.randomElement()
+            cell?.backgroundColor = group.colors.randomElement()?.color
         }
     }
 
@@ -126,33 +178,5 @@ extension ViewController: RibbonListViewDelegate {
 
     func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListDimension {
         return .absolute(30)
-    }
-}
-
-extension ViewController: RibbonListViewDataSource {
-    func numberOfSections(in ribbonList: RibbonListView) -> Int {
-        return groups.count
-    }
-
-    func ribbonList(_ ribbonList: RibbonListView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let group = groups[indexPath.section]
-        let color = group.colors[indexPath.row]
-        cell.backgroundColor = color
-        return cell
-    }
-
-    func ribbonList(_ ribbonList: RibbonListView, numberOfItemsInSection section: Int) -> Int {
-        return groups[section].colors.count
-    }
-
-    func ribbonList(_ ribbonList: RibbonListView, viewForHeaderInSection section: Int) -> UICollectionReusableView {
-        let headerView = ribbonList.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "Header",
-            for: IndexPath(item: 0, section: section)
-        )
-        (headerView as? HeaderView)?.titleLabel.text = groups[section].headerTitle
-        return headerView
     }
 }

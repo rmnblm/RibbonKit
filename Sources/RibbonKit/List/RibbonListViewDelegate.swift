@@ -159,7 +159,6 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - indexPath: The index path of the item.
     ///     - point: The location of the interaction in the ribbon list's coordinate space.
     /// - Returns: A context menu configuration for the indexPath.
-    @available(iOS 13.0, *)
     func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
     #endif
 }
@@ -185,7 +184,6 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
-    @available(iOS 13.0, *)
     public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
     #endif
 }
