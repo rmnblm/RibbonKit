@@ -255,7 +255,6 @@ open class RibbonListView: UIView {
                     heightDimension: .fractionalHeight(1 / CGFloat(configuration.numberOfRows))
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .absolute(configuration.itemSize.width),
                     heightDimension: .absolute(self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight())
@@ -269,34 +268,29 @@ open class RibbonListView: UIView {
             else {
                 let numberOfItems = self.dataSource?.ribbonList(self, numberOfItemsInSection: sectionIndex) ?? 0
 
-                let itemGroups: [NSCollectionLayoutGroup] = (0..<numberOfItems).map { itemIndex in
-                    let itemSize = NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .fractionalHeight(1)
-                    )
-                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let items: [NSCollectionLayoutItem] = (0..<numberOfItems).map { itemIndex in
                     let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
                     let itemWidth = self.delegate?.ribbonList(self, widthForItemAt: indexPath) ?? configuration.itemSize.width
-                    let itemGroupSize = NSCollectionLayoutSize(
+
+                    let itemSize = NSCollectionLayoutSize(
                         widthDimension: .absolute(itemWidth),
                         heightDimension: .fractionalHeight(1)
                     )
-                    return NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: [item])
+                    return NSCollectionLayoutItem(layoutSize: itemSize)
                 }
 
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .estimated(1),
-                    heightDimension: .absolute(self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight())
+                let sectionHeight = self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight()
+                let itemGroupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(sectionHeight)
                 )
-                group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: groupSize,
-                    subitems: itemGroups
-                )
+                group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
             }
             group.interItemSpacing = .fixed(configuration.interItemSpacing)
 
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
+            section.interGroupSpacing = configuration.interGroupSpacing
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
                 leading: configuration.sectionInsets.left,

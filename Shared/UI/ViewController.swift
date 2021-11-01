@@ -24,10 +24,10 @@ class HeaderView: UICollectionReusableView {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
@@ -99,7 +99,11 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: RibbonListViewDelegate {    
+extension ViewController: RibbonListViewDelegate {
+    func ribbonList(_ ribbonList: RibbonListView, widthForItemAt indexPath: IndexPath) -> CGFloat? {
+        return indexPath.item == 0 ? 20 : nil
+    }
+
     func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) {
         let cell = ribbonList.cellForItem(at: indexPath)
         let group = groups[indexPath.section]
@@ -125,7 +129,7 @@ extension ViewController: RibbonListViewDelegate {
     }
 
     func ribbonList(_ ribbonList: RibbonListView, heightForHeaderInSection section: Int) -> RibbonListLayoutDimension {
-        return .absolute(100)
+        return .absolute(30)
     }
 }
 

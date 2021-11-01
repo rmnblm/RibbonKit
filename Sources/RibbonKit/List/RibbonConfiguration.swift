@@ -8,6 +8,7 @@ public struct RibbonConfiguration: Hashable {
     public var sectionInsets: UIEdgeInsets
     public var itemSize: CGSize
     public var interItemSpacing: CGFloat
+    public var interGroupSpacing: CGFloat
     public var headerInsets: UIEdgeInsets
     public var footerInsets: UIEdgeInsets
 
@@ -15,13 +16,15 @@ public struct RibbonConfiguration: Hashable {
         numberOfRows: Int = 1,
         itemSize: CGSize = .init(width: 80.0, height: 80.0),
         interItemSpacing: CGFloat = 6.0,
-        sectionInsets: UIEdgeInsets = .zero,
-        headerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15),
-        footerInsets: UIEdgeInsets = .init(top: 4, left: 15, bottom: 4, right: 15)
+        interGroupSpacing: CGFloat = 6.0,
+        sectionInsets: UIEdgeInsets = .init(top: 0, left: 20, bottom: 0, right: 0),
+        headerInsets: UIEdgeInsets = .zero,
+        footerInsets: UIEdgeInsets = .zero
     ) {
         self.numberOfRows = numberOfRows
         self.itemSize = itemSize
         self.interItemSpacing = interItemSpacing
+        self.interGroupSpacing = interGroupSpacing
         self.sectionInsets = sectionInsets
         self.headerInsets = headerInsets
         self.footerInsets = footerInsets
