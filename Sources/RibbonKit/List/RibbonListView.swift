@@ -281,7 +281,7 @@ open class RibbonListView: UIView {
 
                 let sectionHeight = self.delegate?.ribbonList(self, heightForSectionAt: sectionIndex) ?? configuration.calculatedSectionHeight()
                 let itemGroupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
+                    widthDimension: .estimated(1),
                     heightDimension: .absolute(sectionHeight)
                 )
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
