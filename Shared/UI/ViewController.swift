@@ -64,7 +64,7 @@ class ViewController: UIViewController {
             let headerView = ribbonList.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: "Header",
-                for: IndexPath(item: 0, section: indexPath.section)
+                for: indexPath
             )
             (headerView as? HeaderView)?.titleLabel.text = self?.groups[indexPath.section].headerTitle
             return headerView
