@@ -3,12 +3,12 @@
 import UIKit
 
 /// A view that presents data using paginated items arranged in rows.
-open class RibbonListView: UIView {
+public class RibbonListView: UIView {
 
     /// The object that acts as the delegate of the ribbon list.
     ///
     /// The delegate must adopt the RibbonListViewDelegate protocol. The delegate is not retained.
-    open weak var delegate: RibbonListViewDelegate?
+    public weak var delegate: RibbonListViewDelegate?
 
     /// The point at which the origin of the content view is offset from the origin of the scroll view.
     ///
@@ -18,6 +18,7 @@ open class RibbonListView: UIView {
         set { collectionView.contentOffset = newValue }
     }
 
+    /// The size of the content view.
     public var contentSize: CGSize {
         collectionView.contentSize 
     }
@@ -26,12 +27,6 @@ open class RibbonListView: UIView {
     public var contentInset: UIEdgeInsets {
         get { collectionView.contentInset }
         set { collectionView.contentInset = newValue }
-    }
-    
-    /// A Boolean value that determines whether scrolling is enabled.
-    public var isScrollEnabled: Bool {
-        get { collectionView.isScrollEnabled }
-        set { collectionView.isScrollEnabled = newValue }
     }
 
     public var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
@@ -48,9 +43,9 @@ open class RibbonListView: UIView {
     /// The view that is displayed above the table's content.
     ///
     /// Use this property to specify a header view for your entire list. The header view is the first item to appear in the list's view's scrolling content, and it is separate from the header views you add to individual sections. The default value of this property is nil.
-    /// When assigning a view to this property, a height must be specified using the delegate method `ribbonListHeaderHeight(_:) -> RibbonListLayoutDimension`, returning a non-negative floating-point value.
+    /// When assigning a view to this property, a height must be specified using the delegate method `func ribbonListHeaderHeight(_:) -> RibbonListDimension`, returning a non-negative floating-point value.
     /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
-    open var headerView: UIView? {
+    public var headerView: UIView? {
         didSet {
             let config = UICollectionViewCompositionalLayoutConfiguration()
             if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
@@ -77,26 +72,16 @@ open class RibbonListView: UIView {
         get { collectionView.backgroundView }
         set { collectionView.backgroundView = newValue }
     }
-    
-    /// An array of visible cells currently displayed by the ribbon list.
-    public var visibleCells: [UICollectionViewCell] { collectionView.visibleCells }
-    
-    /// An array of the visible items in the ribbon list.
-    public var indexPathsForVisibleItems: [IndexPath] { collectionView.indexPathsForVisibleItems }
 
     private lazy var layout = buildLayout()
-
     private(set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
-        collectionView.register(RibbonListReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-        collectionView.register(RibbonListReusableFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
         collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
         return collectionView
     }()
 
-    private var forcedNextFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
 
     /// Initializes and returns a ribbon list having the given frame.
@@ -106,15 +91,6 @@ open class RibbonListView: UIView {
     /// - Returns: Returns an initialized RibbonList object.
     public override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        setupView()
-    }
-
-    /// RibbonKit does not support initialization by storyboard or xib.
-    ///
-    /// Do not call this initializer. It will crash.
-    required public init?(coder: NSCoder) { nil }
-    
-    private func setupView() {
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -125,12 +101,17 @@ open class RibbonListView: UIView {
         ])
     }
 
+    /// RibbonKit does not support initialization by storyboard or xib.
+    ///
+    /// Do not call this initializer. It will crash.
+    required public init?(coder: NSCoder) { nil }
+
     /// Returns the ribbon cell at the specified index path.
     ///
     /// - Parameters:
     ///     - indexPath: The index path locating the row in the ribbon list.
     /// - Returns: An object representing a cell of the list, or nil if the cell is not visible or indexPath is out of range.
-    open func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
+    public func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
         collectionView.cellForItem(at: indexPath)
     }
 
@@ -139,18 +120,8 @@ open class RibbonListView: UIView {
     /// - Parameters:
     ///     - elementKind: The kind of supplementary view to locate. This value is defined by the layout object.
     ///     - indexPath: The index path of the supplementary view.
-    open func supplementaryView(forElementKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView? {
+    public func supplementaryView(forElementKind elementKind: String, at indexPath: IndexPath) -> UICollectionReusableView? {
         collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
-    }
-
-    /// Scrolls the ribbon list contents until the specified item is visible.
-    ///
-    /// - Parameters:
-    ///     - indexPath: The index path of the item to scroll into view.
-    ///     - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes. For a list of possible values, see UICollectionView.ScrollPosition.
-    ///     - animated: Specify true to animate the scrolling behavior or false to adjust the ribbon list's visible content immediately.
-    open func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
-        collectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
     }
 
     /// Registers a class for use in creating new ribbon list cells.
@@ -162,7 +133,7 @@ open class RibbonListView: UIView {
     /// - Parameters:
     ///     - cellClass: The class of a cell that you want to use in the list (must be a UICollectionViewCell subclass).
     ///     - identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
-    open func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String) {
+    public func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String) {
         collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
     }
 
@@ -174,7 +145,7 @@ open class RibbonListView: UIView {
     ///     - identifier: A string identifying the cell object to be reused. This parameter must not be nil.
     ///     - indexPath: The index path specifying the location of the cell. Always specify the index path provided to you by your data source object. This method uses the index path to perform additional configuration based on the cell’s position in the ribbon list.
     /// - Returns: A UICollectionViewCell object with the associated reuse identifier. This method always returns a valid cell.
-    open func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
+    public func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
 
@@ -187,7 +158,7 @@ open class RibbonListView: UIView {
     ///     - viewClass: The class to use for the supplementary view.
     ///     - elementKind: The kind of supplementary view to create. This value is defined by the layout object. This parameter must not be nil.
     ///     - identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
-    open func register(_ viewClass: AnyClass?, forSupplementaryViewOfKind elementKind: String, withReuseIdentifier identifier: String) {
+    public func register(_ viewClass: AnyClass?, forSupplementaryViewOfKind elementKind: String, withReuseIdentifier identifier: String) {
         collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: identifier)
     }
 
@@ -201,27 +172,38 @@ open class RibbonListView: UIView {
     ///     - elementKind: The kind of supplementary view to retrieve. This value is defined by the layout object. This parameter must not be nil.
     ///     - identifier: The reuse identifier for the specified view. This parameter must not be nil.
     ///     - indexPath: The index path specifying the location of the supplementary view in the ribbon list. The data source receives this information when it is asked for the view and should just pass it along. This method uses the information to perform additional configuration based on the view’s position in the ribbon list.
-    open func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
+    public func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
         collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: identifier, for: indexPath)
     }
     
     /// Sets the offset from the content view’s origin that corresponds to the receiver’s origin.
-    open func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+    public func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
         collectionView.setContentOffset(contentOffset, animated: animated)
     }
 
     /// Reloads the items and sections of the ribbon list.
     ///
     /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
-    open func reloadData() {
+    public func reloadData() {
         collectionView.reloadData()
     }
 
-    open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    /// Retrieves layout information for an item at the specified index path with a corresponding cell.
+    ///
+    /// - Parameters:
+    ///     - indexPath: The index path of the item.
+    /// - Returns: A layout attributes object containing the information to apply to the item’s cell.
+    public func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)
     }
 
-    open func layoutAttributesForSupplementaryView(ofKind kind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    /// Retrieves the layout attributes for the specified supplementary view.
+    ///
+    /// - Parameters:
+    ///     - kind: A string that identifies the type of the supplementary view.
+    ///     - indexPath: The index path of the item.
+    /// - Returns: A layout attributes object containing the information to apply to the supplementary view.
+    public func layoutAttributesForSupplementaryView(ofKind kind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: kind, at: indexPath)
     }
 
@@ -356,17 +338,9 @@ extension RibbonListView: UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        forcedNextFocusedIndexPath = nil
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        guard let forcedNextFocusedIndexPath = forcedNextFocusedIndexPath else {
-            return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
-        }
-        return indexPath == forcedNextFocusedIndexPath
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {

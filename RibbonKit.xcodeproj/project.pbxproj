@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */; };
-		300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */; };
 		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
 		303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303F475A24CF6E7900763149 /* LaunchScreen.storyboard */; };
 		303F476224CF6EFC00763149 /* ColorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044596A24C7B4D90062BA54 /* ColorGroup.swift */; };
@@ -26,8 +24,6 @@
 		30B56F1A2730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B56F192730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift */; };
 		30BF400425B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
 		30BF400525B833E000BE8A98 /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF400325B833E000BE8A98 /* Lorem.swift */; };
-		30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */; };
-		30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */; };
 		30C15D2824C7436000ABB183 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2724C7436000ABB183 /* AppDelegate.swift */; };
 		30C15D2C24C7436000ABB183 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C15D2B24C7436000ABB183 /* ViewController.swift */; };
 		30C15D3124C7436200ABB183 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30C15D3024C7436200ABB183 /* Assets.xcassets */; };
@@ -64,8 +60,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableHeaderView.swift; sourceTree = "<group>"; };
-		300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListReusableFooterView.swift; sourceTree = "<group>"; };
 		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		303F475824CF6E7900763149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		303F475B24CF6E7900763149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -79,8 +73,6 @@
 		30B56F172730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewDiffableDataSource.swift; sourceTree = "<group>"; };
 		30B56F192730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListViewScrollingBehaviour.swift; sourceTree = "<group>"; };
 		30BF400325B833E000BE8A98 /* Lorem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
-		30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
-		30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Hashable.swift"; sourceTree = "<group>"; };
 		30C15D2524C7436000ABB183 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C15D2724C7436000ABB183 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30C15D2B24C7436000ABB183 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -161,15 +153,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		30BF401025B83E5B00BE8A98 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				30BF401125B83E6500BE8A98 /* CGSize+Hashable.swift */,
-				30BF401F25B83ED900BE8A98 /* UIEdgeInsets+Hashable.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		30C15D2624C7436000ABB183 /* Example */ = {
@@ -262,7 +245,6 @@
 		OBJ_8 /* RibbonKit */ = {
 			isa = PBXGroup;
 			children = (
-				30BF401025B83E5B00BE8A98 /* Extensions */,
 				OBJ_9 /* Reusable */,
 				30F07A2C24C867A100BFFE5E /* List */,
 			);
@@ -274,8 +256,6 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* ReusableView.swift */,
-				300F611225B9C970008AB9EA /* RibbonListReusableHeaderView.swift */,
-				300F611D25B9C98C008AB9EA /* RibbonListReusableFooterView.swift */,
 				30DFDD4D2721B47C00EAAF87 /* RibbonListReusableHostView.swift */,
 				OBJ_11 /* UICollectionView+Reusable.swift */,
 			);
@@ -439,15 +419,11 @@
 				30D8E99A2730507E00002793 /* RibbonListDimension.swift in Sources */,
 				30B56F162730A493006AB071 /* RibbonListViewDiffableDataSourceSnapshot.swift in Sources */,
 				30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */,
-				300F611325B9C970008AB9EA /* RibbonListReusableHeaderView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonListSectionConfiguration.swift in Sources */,
 				30B56F1A2730A54D006AB071 /* RibbonListViewScrollingBehaviour.swift in Sources */,
-				30BF401B25B83E6800BE8A98 /* CGSize+Hashable.swift in Sources */,
 				30F07A3024C867CF00BFFE5E /* RibbonListViewDelegate.swift in Sources */,
 				30DFDD4C2721B42500EAAF87 /* RibbonListView.swift in Sources */,
-				30BF402925B83EDC00BE8A98 /* UIEdgeInsets+Hashable.swift in Sources */,
 				3048262925B876FD001AFC2C /* RibbonListViewFocusUpdateContext.swift in Sources */,
-				300F611E25B9C98C008AB9EA /* RibbonListReusableFooterView.swift in Sources */,
 				30B56F182730A4A8006AB071 /* RibbonListViewDiffableDataSource.swift in Sources */,
 				30B56F142730A45D006AB071 /* RibbonListViewCompositionalLayout.swift in Sources */,
 			);

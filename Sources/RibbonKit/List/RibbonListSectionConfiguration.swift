@@ -29,3 +29,9 @@ public struct RibbonListSectionConfiguration: Hashable {
 
     public static let `default` = RibbonListSectionConfiguration(layout: .horizontal(heightDimension: .absolute(80), itemWidthDimension: .absolute(80)))
 }
+
+extension UIEdgeInsets: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(NSCoder.string(for: self))
+    }
+}
