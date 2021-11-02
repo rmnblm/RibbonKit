@@ -35,4 +35,5 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
     }
 
     public func sections() -> [Section] { dataSource.snapshot().sectionIdentifiers }
+    public func item(for indexPath: IndexPath) -> Item? { dataSource.itemIdentifier(for: indexPath) }
 }
