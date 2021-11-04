@@ -45,8 +45,6 @@ class ViewController: UIViewController {
     private lazy var ribbonList: RibbonListView = {
         let list = RibbonListView()
         list.delegate = self
-        list.register(Cell.self, forCellWithReuseIdentifier: "Cell")
-        list.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
         return list
     }()
 
@@ -54,20 +52,20 @@ class ViewController: UIViewController {
     typealias DataSource = RibbonListViewDiffableDataSource<ColorGroup, ColorItem>
 
     private lazy var dataSource: DataSource = {
-        let dataSource: DataSource = .init(ribbonList: ribbonList) { ribbonList, indexPath, item in
-            let cell: UICollectionViewCell = ribbonList.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cellRegistration = UICollectionView.CellRegistration<Cell, ColorItem> { cell, indexPath, item in
             cell.backgroundColor = item.color
-            return cell
         }
 
-        dataSource.supplementaryViewProvider = { [weak self] ribbonList, kind, indexPath in
-            let headerView = ribbonList.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: "Header",
-                for: indexPath
-            )
-            (headerView as? HeaderView)?.titleLabel.text = self?.groups[indexPath.section].headerTitle
-            return headerView
+        let dataSource: DataSource = .init(ribbonList: ribbonList) { ribbonList, indexPath, item in
+            return ribbonList.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        }
+
+        let headerRegistration = UICollectionView.SupplementaryRegistration<HeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { headerView, _, indexPath in
+            headerView.titleLabel.text = self.groups[indexPath.section].headerTitle
+        }
+
+        dataSource.supplementaryViewProvider = { [weak self] ribbonList, _, indexPath in
+            return ribbonList.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         }
 
         return dataSource

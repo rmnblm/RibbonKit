@@ -5,17 +5,19 @@ import PackageDescription
 let package = Package(
     name: "RibbonKit",
     platforms: [
-        .iOS(.v14), .tvOS(.v14)
+        .iOS(.v14),
+        .tvOS(.v14)
     ],
     products: [
         .library(
             name: "RibbonKit",
-            targets: ["RibbonKit"]),
+            targets: ["RibbonKit"]
+        ),
     ],
     targets: [
         .target(
             name: "RibbonKit",
-            dependencies: [])
-    ],
-    swiftLanguageVersions: [.v5]
+            dependencies: []
+        )
+    ]
 )
