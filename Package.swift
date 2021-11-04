@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "RibbonKit",
     platforms: [
-        .iOS(.v13), .tvOS(.v13)
+        .iOS(.v14), .tvOS(.v14)
     ],
     products: [
         .library(

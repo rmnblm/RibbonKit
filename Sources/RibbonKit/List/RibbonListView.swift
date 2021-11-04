@@ -124,56 +124,25 @@ public class RibbonListView: UIView {
         collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
     }
 
-    /// Registers a class for use in creating new ribbon list cells.
-    ///
-    /// Prior to dequeueing any cells, call this method or the `register(_:forCellReuseIdentifier:)` method to tell the ribbon list how to create new cells. If a cell of the specified type is not currently in a reuse queue, the ribbon list uses the provided information to create a new cell object automatically.
-    ///
-    /// If you previously registered a class with the same reuse identifier, the class you specify in the cellClass parameter replaces the old entry. You may specify nil for cellClass if you want to unregister the class from the specified reuse identifier.
+    /// Dequeues a configured reusable cell object.
     ///
     /// - Parameters:
-    ///     - cellClass: The class of a cell that you want to use in the list (must be a UICollectionViewCell subclass).
-    ///     - identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
-    public func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String) {
-        collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
+    ///     - registration: The cell registration for configuring the cell object.
+    ///     - indexPath: The index path that specifies the location of the cell in the collection view.
+    ///     - item: The item that provides data for the cell.
+    /// - Returns: A configured reusable cell object.
+    public func dequeueConfiguredReusableCell<Cell, Item>(using registration: UICollectionView.CellRegistration<Cell, Item>, for indexPath: IndexPath, item: Item?) -> Cell where Cell: UICollectionViewCell {
+        collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: item)
     }
 
-    /// Returns a reusable ribbon-list cell object for the specified reuse identifier and adds it to the list.
-    ///
-    /// Call this method only from the `ribbonList(_:cellForItemAt:)` method of your ribbon list data source object. This method returns an existing cell of the specified type, if one is available, or it creates and returns a new cell using the class or storyboard you provided earlier. Do not call this method outside of your data source's `ribbonList(_:cellForItemAt:)` method.
+    /// Dequeues a configured reusable supplementary view object.
     ///
     /// - Parameters:
-    ///     - identifier: A string identifying the cell object to be reused. This parameter must not be nil.
-    ///     - indexPath: The index path specifying the location of the cell. Always specify the index path provided to you by your data source object. This method uses the index path to perform additional configuration based on the cell’s position in the ribbon list.
-    /// - Returns: A UICollectionViewCell object with the associated reuse identifier. This method always returns a valid cell.
-    public func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
-    }
-
-    /// Registers a class for use in creating supplementary views for the ribbon list.
-    ///
-    /// Prior to calling the `dequeueReusableSupplementaryView(ofKind:withReuseIdentifier:for:)` method of the ribbon list, you must use this method or the `register(_:forSupplementaryViewOfKind:withReuseIdentifier:)` method to tell the ribbon list how to create a supplementary view of the given type. If a view of the specified type is not currently in a reuse queue, the ribbon list uses the provided information to create a view object automatically.
-    ///
-    /// If you previously registered a class file with the same reuse identifier, the class you specify in the cellClass parameter replaces the old entry. You may specify nil for cellClass if you want to unregister the class from the specified reuse identifier.
-    /// - Parameters:
-    ///     - viewClass: The class to use for the supplementary view.
-    ///     - elementKind: The kind of supplementary view to create. This value is defined by the layout object. This parameter must not be nil.
-    ///     - identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
-    public func register(_ viewClass: AnyClass?, forSupplementaryViewOfKind elementKind: String, withReuseIdentifier identifier: String) {
-        collectionView.register(viewClass, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: identifier)
-    }
-
-    /// Dequeues a reusable supplementary view located by its identifier and kind.
-    ///
-    /// Call this method from your data source object when asked to provide a new supplementary view for the ribbon list. This method dequeues an existing view if one is available or creates a new one based on the class file you previously registered.
-    ///
-    /// You can use this method to access specific template header and footer views that you previously created. You can access a view’s reuse identifier through its `reuseIdentifier` property.
-    ///
-    /// - Parameters:
-    ///     - elementKind: The kind of supplementary view to retrieve. This value is defined by the layout object. This parameter must not be nil.
-    ///     - identifier: The reuse identifier for the specified view. This parameter must not be nil.
-    ///     - indexPath: The index path specifying the location of the supplementary view in the ribbon list. The data source receives this information when it is asked for the view and should just pass it along. This method uses the information to perform additional configuration based on the view’s position in the ribbon list.
-    public func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
-        collectionView.dequeueReusableSupplementaryView(ofKind: elementKind, withReuseIdentifier: identifier, for: indexPath)
+    ///     - registration: The supplementary registration for configuring the supplementary view object.
+    ///     - indexPath: The index path that specifies the location of the supplementary view in the collection view.
+    /// - Returns: A configured reusable supplementary view object.
+    public func dequeueConfiguredReusableSupplementary<Supplementary>(using registration: UICollectionView.SupplementaryRegistration<Supplementary>, for indexPath: IndexPath) -> Supplementary where Supplementary: UICollectionReusableView {
+        collectionView.dequeueConfiguredReusableSupplementary(using: registration, for: indexPath)
     }
     
     /// Sets the offset from the content view’s origin that corresponds to the receiver’s origin.
