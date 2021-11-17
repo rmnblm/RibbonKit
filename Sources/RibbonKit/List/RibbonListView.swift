@@ -46,22 +46,7 @@ public class RibbonListView: UIView {
     /// When assigning a view to this property, a height must be specified using the delegate method `func ribbonListHeaderHeight(_:) -> RibbonListDimension`, returning a non-negative floating-point value.
     /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
     public var headerView: UIView? {
-        didSet {
-            let config = UICollectionViewCompositionalLayoutConfiguration()
-            if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: headerSize.uiDimension
-                    ),
-                    elementKind: "header",
-                    alignment: .top
-                )
-
-                config.boundarySupplementaryItems = [header]
-            }
-            layout.configuration = config
-        }
+        didSet { reloadHeaderView() }
     }
 
     /// The background view of the ribbon list.
@@ -155,6 +140,24 @@ public class RibbonListView: UIView {
     /// Call this method to reload all the data that is used to construct the list, including items, section headers and footers, index arrays, and so on. For efficiency, the ribbon list redisplays only those rows that are visible. It adjusts offsets if the list shrinks as a result of the reload. The ribbon list's delegate or data source calls this method when it wants the ribbon list to completely reload its data.
     public func reloadData() {
         collectionView.reloadData()
+    }
+
+
+    /// Reloads the header view and layouts it.
+    public func reloadHeaderView() {
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: headerSize.uiDimension
+                ),
+                elementKind: "header",
+                alignment: .top
+            )
+            config.boundarySupplementaryItems = [header]
+        }
+        layout.configuration = config
     }
 
     /// Retrieves layout information for an item at the specified index path with a corresponding cell.
