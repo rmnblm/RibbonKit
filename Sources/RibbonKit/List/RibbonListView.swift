@@ -29,6 +29,10 @@ public class RibbonListView: UIView {
         set { collectionView.contentInset = newValue }
     }
 
+    public var adjustedContentInset: UIEdgeInsets {
+        collectionView.adjustedContentInset
+    }
+
     public var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
         get { collectionView.contentInsetAdjustmentBehavior }
         set { collectionView.contentInsetAdjustmentBehavior = newValue }
@@ -84,6 +88,21 @@ public class RibbonListView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deviceOrientationDidChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func deviceOrientationDidChange(_ notification: Notification) {
+        reloadHeaderView()
     }
 
     /// RibbonKit does not support initialization by storyboard or xib.
@@ -141,7 +160,6 @@ public class RibbonListView: UIView {
     public func reloadData() {
         collectionView.reloadData()
     }
-
 
     /// Reloads the header view and layouts it.
     public func reloadHeaderView() {
