@@ -89,21 +89,27 @@ public class RibbonListView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
+        #if os(iOS)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deviceOrientationDidChange),
             name: UIDevice.orientationDidChangeNotification,
             object: nil
         )
+        #endif
     }
 
     deinit {
+        #if os(iOS)
         NotificationCenter.default.removeObserver(self)
+        #endif
     }
 
+    #if os(iOS)
     @objc private func deviceOrientationDidChange(_ notification: Notification) {
         reloadHeaderView()
     }
+    #endif
 
     /// RibbonKit does not support initialization by storyboard or xib.
     ///
