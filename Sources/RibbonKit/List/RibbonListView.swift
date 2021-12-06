@@ -63,7 +63,7 @@ public class RibbonListView: UIView {
     }
 
     private lazy var layout = buildLayout()
-    private(set) lazy var collectionView: UICollectionView = {
+    public private(set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
