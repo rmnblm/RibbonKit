@@ -204,7 +204,8 @@ public class RibbonListView: UIView {
     }
 
     private func buildLayout() -> UICollectionViewCompositionalLayout {
-        let layout = RibbonListViewCompositionalLayout { sectionIndex, layoutEnvironment in
+        let layout = RibbonListViewCompositionalLayout {
+            [unowned self] sectionIndex, layoutEnvironment in
             let configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
 
             let group: NSCollectionLayoutGroup

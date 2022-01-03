@@ -12,11 +12,14 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
     private let dataSource: UICollectionViewDiffableDataSource<Section, Item>
 
     public init(ribbonList: RibbonListView, cellProvider: @escaping RibbonListViewDiffableDataSource<Section, Item>.CellProvider) {
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: ribbonList.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: ribbonList.collectionView, cellProvider: {
+            collectionView, indexPath, itemIdentifier in
             cellProvider(ribbonList, indexPath, itemIdentifier)
         })
         super.init()
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+        dataSource.supplementaryViewProvider = {
+            [weak self] collectionView, kind, indexPath in
+
             switch kind {
             case "header":
                 let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
