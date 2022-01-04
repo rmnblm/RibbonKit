@@ -6,12 +6,16 @@ public enum RibbonListDimension: Hashable {
     case estimated(CGFloat)
     case absolute(CGFloat)
     case fractionalHeight(CGFloat)
+    case fractionalWidth(CGFloat)
 
     public static var zero: RibbonListDimension { .absolute(0.0) }
 
     var value: CGFloat {
         switch self {
-        case .absolute(let value), .estimated(let value), .fractionalHeight(let value):
+        case .absolute(let value),
+            .estimated(let value),
+            .fractionalHeight(let value),
+            .fractionalWidth(let value):
             return value
         }
     }
@@ -24,6 +28,8 @@ public enum RibbonListDimension: Hashable {
             return .estimated(value)
         case .fractionalHeight(let value):
             return .fractionalHeight(value)
+        case .fractionalWidth(let value):
+            return .fractionalWidth(value)
         }
     }
 }
