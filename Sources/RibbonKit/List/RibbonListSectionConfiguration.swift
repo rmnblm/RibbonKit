@@ -10,6 +10,7 @@ public struct RibbonListSectionConfiguration: Hashable {
     public var sectionInsets: UIEdgeInsets
     public var headerInsets: UIEdgeInsets
     public var footerInsets: UIEdgeInsets
+    public var listConfiguration: RibbonListCollectionViewListConfiguration
 
     public init(
         layout: RibbonListSectionLayout,
@@ -17,7 +18,8 @@ public struct RibbonListSectionConfiguration: Hashable {
         interGroupSpacing: CGFloat = 6.0,
         sectionInsets: UIEdgeInsets = .zero,
         headerInsets: UIEdgeInsets = .zero,
-        footerInsets: UIEdgeInsets = .zero
+        footerInsets: UIEdgeInsets = .zero,
+        listConfiguration: RibbonListCollectionViewListConfiguration = .init(appearance: .plain)
     ) {
         self.layout = layout
         self.interItemSpacing = interItemSpacing
@@ -25,6 +27,7 @@ public struct RibbonListSectionConfiguration: Hashable {
         self.sectionInsets = sectionInsets
         self.headerInsets = headerInsets
         self.footerInsets = footerInsets
+        self.listConfiguration = listConfiguration
     }
 
     public static let `default` = RibbonListSectionConfiguration(layout: .horizontal(heightDimension: .absolute(80), itemWidthDimension: .absolute(80)))
