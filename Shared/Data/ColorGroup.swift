@@ -139,7 +139,7 @@ extension ColorGroup {
             footerTitle: "A range of yellow colors to please your eyes. You can click on a cell to change its color.",
             configuration:
                 RibbonListSectionConfiguration(
-                    layout: .list()
+                    layout: .list(.init(appearance: .plain))
                 ),
             hue: .yellow,
             luminosity: .light
