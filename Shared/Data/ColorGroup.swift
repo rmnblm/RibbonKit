@@ -25,7 +25,7 @@ class ColorGroup {
     init(headerTitle: String, footerTitle: String, configuration: RibbonListSectionConfiguration, hue: Hue, luminosity: Luminosity) {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
-        self.colors = (0..<10).map { _ in .init(color: randomColor(hue: hue, luminosity: luminosity)) }
+        self.colors = (0..<3).map { _ in .init(color: randomColor(hue: hue, luminosity: luminosity)) }
         self.configuration = configuration
         self.hue = hue
         self.luminosity = luminosity
