@@ -25,7 +25,7 @@ class ColorGroup {
     init(headerTitle: String, footerTitle: String, configuration: RibbonListSectionConfiguration, hue: Hue, luminosity: Luminosity) {
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
-        self.colors = (0..<10).map { _ in .init(color: randomColor(hue: hue, luminosity: luminosity)) }
+        self.colors = (0..<3).map { _ in .init(color: randomColor(hue: hue, luminosity: luminosity)) }
         self.configuration = configuration
         self.hue = hue
         self.luminosity = luminosity
@@ -132,6 +132,16 @@ extension ColorGroup {
                     layout: .horizontal(heightDimension: .absolute(30), itemWidthDimension: .absolute(30))
                 ),
             hue: .green,
+            luminosity: .light
+        ),
+        ColorGroup(
+            headerTitle: "Yellow-ish Colors",
+            footerTitle: "A range of yellow colors to please your eyes. You can click on a cell to change its color.",
+            configuration:
+                RibbonListSectionConfiguration(
+                    layout: .list(.init(appearance: .plain))
+                ),
+            hue: .yellow,
             luminosity: .light
         )
     ]

@@ -205,10 +205,11 @@ public class RibbonListView: UIView {
 
     private func buildLayout() -> UICollectionViewCompositionalLayout {
         let layout = RibbonListViewCompositionalLayout {
-            [unowned self] sectionIndex, layoutEnvironment in
+            [unowned self] sectionIndex, layoutEnvironment in
             let configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
 
-            let group: NSCollectionLayoutGroup
+            var group: NSCollectionLayoutGroup?
+            let section: NSCollectionLayoutSection
             if configuration.layout.orientation == .vertical {
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -225,7 +226,7 @@ public class RibbonListView: UIView {
                     count: configuration.layout.numberOfRows
                 )
             }
-            else {
+            else if configuration.layout.orientation == .horizontal {
                 let items: [NSCollectionLayoutItem] = (0..<configuration.layout.itemWidthDimensions.count).map { itemIndex in
                     let itemWidth = configuration.layout.itemWidthDimensions[itemIndex]
                     let itemSize = NSCollectionLayoutSize(
@@ -241,10 +242,25 @@ public class RibbonListView: UIView {
                 )
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
             }
-            group.interItemSpacing = .fixed(configuration.interItemSpacing)
 
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
+            if let group = group {
+                group.interItemSpacing = .fixed(configuration.interItemSpacing)
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
+            }
+            else {
+                var listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
+
+                if case .list(let config) = configuration.layout.orientation {
+                    listConfig = config.asCollectionLayoutListConfiguration()
+                }
+
+                section = NSCollectionLayoutSection.list(
+                    using: listConfig,
+                    layoutEnvironment: layoutEnvironment
+                )
+            }
+
             section.interGroupSpacing = configuration.interGroupSpacing
             section.contentInsets = .init(
                 top: configuration.sectionInsets.top,
