@@ -133,6 +133,16 @@ extension ColorGroup {
                 ),
             hue: .green,
             luminosity: .light
+        ),
+        ColorGroup(
+            headerTitle: "Yellow-ish Colors",
+            footerTitle: "A range of yellow colors to please your eyes. You can click on a cell to change its color.",
+            configuration:
+                RibbonListSectionConfiguration(
+                    layout: .list()
+                ),
+            hue: .yellow,
+            luminosity: .light
         )
     ]
 }
