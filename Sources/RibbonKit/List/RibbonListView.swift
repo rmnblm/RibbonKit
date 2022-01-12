@@ -249,8 +249,14 @@ public class RibbonListView: UIView {
                 section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
             }
             else {
+                var listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
+
+                if case .list(let config) = configuration.layout.orientation {
+                    listConfig = config.asCollectionLayoutListConfiguration()
+                }
+
                 section = NSCollectionLayoutSection.list(
-                    using: configuration.listConfiguration.asCollectionLayoutListConfiguration(),
+                    using: listConfig,
                     layoutEnvironment: layoutEnvironment
                 )
             }

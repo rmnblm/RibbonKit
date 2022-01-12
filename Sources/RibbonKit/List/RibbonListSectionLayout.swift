@@ -4,7 +4,11 @@ import UIKit
 
 public struct RibbonListSectionLayout: Hashable {
 
-    public enum Orientation { case horizontal, vertical, list }
+    public enum Orientation: Hashable {
+        case horizontal
+        case vertical
+        case list(RibbonListCollectionViewListConfiguration)
+    }
 
     public let orientation: Orientation
     public let numberOfRows: Int
@@ -46,9 +50,9 @@ public struct RibbonListSectionLayout: Hashable {
         )
     }
     
-    public static func list() -> RibbonListSectionLayout {
+    public static func list(_ configuration: RibbonListCollectionViewListConfiguration) -> RibbonListSectionLayout {
         return .init(
-            orientation: .list,
+            orientation: .list(configuration),
             numberOfRows: 1,
             heightDimension: .fractionalHeight(1),
             itemWidthDimensions: [.fractionalWidth(1)]
