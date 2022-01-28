@@ -23,6 +23,18 @@ public class RibbonListView: UIView {
         collectionView.contentSize 
     }
 
+    /// A Boolean value that controls whether the scroll indicators are visible.
+    public var showsScrollIndicators: Bool {
+        get {
+            collectionView.showsVerticalScrollIndicator
+            && collectionView.showsHorizontalScrollIndicator
+        }
+        set {
+            collectionView.showsVerticalScrollIndicator = newValue
+            collectionView.showsHorizontalScrollIndicator = newValue
+        }
+    }
+
     /// The custom distance that the content view is inset from the safe area or scroll view edges.
     public var contentInset: UIEdgeInsets {
         get { collectionView.contentInset }
