@@ -146,6 +146,14 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Returns: A ribbon configuration to use for the section.
     func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonListSectionConfiguration
 
+    /// Gives the delegate an opportunity to customize the content offset for layout changes and animated updates.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list making the request.
+    ///     - section: The proposed point (in the coordinate space of the ribbon list's content view) for the upper-left corner of the visible content. This represents the point that the ribbon list has calculated as the most likely value to use for the animations or layout update.
+    ///  - Returns: The content offset that you want to use instead. If you do not implement this method, the collection view uses the value in the proposedContentOffset parameter.
+    func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint
+
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
     ///
@@ -178,6 +186,7 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
+    public func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint { proposedContentOffset }
 
     public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }
     public func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView) { }

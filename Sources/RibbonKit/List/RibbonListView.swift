@@ -372,6 +372,10 @@ extension RibbonListView: UICollectionViewDelegate {
         delegate?.ribbonListDidScroll(self)
     }
 
+    public func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        return delegate?.ribbonList(self, targetContentOffsetForProposedContentOffset: proposedContentOffset) ?? proposedContentOffset
+    }
+
     #if os(iOS)
     public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return delegate?.ribbonList(self, contextMenuConfigurationForItemAt: indexPath, point: point)
