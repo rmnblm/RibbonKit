@@ -25,6 +25,7 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
                 let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
                 if let headerView = ribbonList.headerView {
                     hostView.setView(headerView)
+                    hostView.isUserInteractionEnabled = headerView.isUserInteractionEnabled
                 }
                 return hostView
             default:

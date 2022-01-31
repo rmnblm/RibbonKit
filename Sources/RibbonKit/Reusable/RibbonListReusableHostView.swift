@@ -8,6 +8,7 @@ final class RibbonListReusableHostView: UICollectionReusableView, ReusableView {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        isUserInteractionEnabled = true
         currentView?.removeFromSuperview()
     }
 
