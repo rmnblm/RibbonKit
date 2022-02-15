@@ -9,27 +9,31 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
 
     public var supplementaryViewProvider: SupplementaryViewProvider?
 
-    private let dataSource: UICollectionViewDiffableDataSource<Section, Item>
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    private unowned let _ribbonList: RibbonListView
 
     public init(ribbonList: RibbonListView, cellProvider: @escaping RibbonListViewDiffableDataSource<Section, Item>.CellProvider) {
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: ribbonList.collectionView, cellProvider: {
-            collectionView, indexPath, itemIdentifier in
-            cellProvider(ribbonList, indexPath, itemIdentifier)
-        })
+        self._ribbonList = ribbonList
         super.init()
+
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: _ribbonList.collectionView, cellProvider: {
+            [unowned self] collectionView, indexPath, itemIdentifier in
+            cellProvider(_ribbonList, indexPath, itemIdentifier)
+        })
+
         dataSource.supplementaryViewProvider = {
-            [weak self] collectionView, kind, indexPath in
+            [unowned self] collectionView, kind, indexPath in
 
             switch kind {
             case "header":
                 let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
-                if let headerView = ribbonList.headerView {
+                if let headerView = _ribbonList.headerView {
                     hostView.setView(headerView)
                     hostView.isUserInteractionEnabled = headerView.isUserInteractionEnabled
                 }
                 return hostView
             default:
-                return self?.supplementaryViewProvider?(ribbonList, kind, indexPath)
+                return self.supplementaryViewProvider?(_ribbonList, kind, indexPath)
             }
         }
     }
