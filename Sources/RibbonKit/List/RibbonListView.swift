@@ -73,6 +73,11 @@ public class RibbonListView: UIView {
         get { collectionView.backgroundView }
         set { collectionView.backgroundView = newValue }
     }
+    
+    /// An array of visible cells currently displayed by the ribbon list.
+    ///
+    /// This method returns the complete list of visible cells displayed by the ribbon list.
+    public var visibleCells: [UICollectionViewCell] { collectionView.visibleCells }
 
     private lazy var layout = buildLayout()
     public private(set) lazy var collectionView: UICollectionView = {
