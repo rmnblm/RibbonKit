@@ -104,6 +104,12 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - coordinator: The animation coordinator to use when creating any additional animations.
     func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     
+    /// Asks the delegate for the index path of the cell that should be focused.
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list object requesting this information.
+    /// - Returns: The index path of the preferred cell. The index path you specify must correspond to a valid cell in the ribbon list.
+    func indexPathForPreferredFocusedView(in ribbonList: RibbonListView) -> IndexPath?
+    
     /// Asks the delegate whether the item at the specified index path can be focused.
     ///
     /// You can use this method, or a cell’s canBecomeFocused method, to control which items in the collection view can receive focus. The focus engine calls the cell’s `canBecomeFocused` method first, the default implementation of which defers to the ribbon list and this delegate method.
@@ -185,6 +191,7 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
+    public func indexPathForPreferredFocusedView(in ribbonList: RibbonListView) -> IndexPath? { nil }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint { proposedContentOffset }
 
