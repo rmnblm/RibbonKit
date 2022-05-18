@@ -39,15 +39,19 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
     }
 
     public func apply(
-        _ snapshot: RibbonListViewDiffableDataSourceSnapshot<Section, Item>,
+        _ snapshot: NSDiffableDataSourceSnapshot<Section, Item>,
         animatingDifferences animated: Bool = false,
         completion: (() -> Void)? = nil
     ) {
         dataSource.apply(
-            snapshot.snapshot,
+            snapshot,
             animatingDifferences: animated,
             completion: completion
         )
+    }
+    
+    public func snapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
+        dataSource.snapshot()
     }
 
     public func sections() -> [Section] { dataSource.snapshot().sectionIdentifiers }
