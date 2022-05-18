@@ -88,10 +88,12 @@ public class RibbonListView: UIView {
         return collectionView
     }()
     
+    #if os(iOS)
     /// An array of unsupported orientations
     ///
     /// This property will be used to prevent header reload for unsupported UIDeviceOrientation
     public var unsupportedOrientations: [UIDeviceOrientation] = []
+    #endif
 
     private var currentlyFocusedIndexPath: IndexPath?
 
