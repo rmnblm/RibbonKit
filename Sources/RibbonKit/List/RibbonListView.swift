@@ -87,13 +87,6 @@ public class RibbonListView: UIView {
         collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
         return collectionView
     }()
-    
-    #if os(iOS)
-    /// An array of unsupported orientations
-    ///
-    /// This property will be used to prevent header reload for unsupported UIDeviceOrientation
-    public var unsupportedOrientations: [UIDeviceOrientation] = []
-    #endif
 
     private var currentlyFocusedIndexPath: IndexPath?
 
@@ -132,6 +125,7 @@ public class RibbonListView: UIView {
     #if os(iOS)
     @objc private func deviceOrientationDidChange(_ notification: Notification) {
         let orientation = UIDevice.current.orientation
+        let unsupportedOrientations: [UIDeviceOrientation] = [.faceUp, .faceDown]
         guard !unsupportedOrientations.contains(orientation) else { return }
         reloadHeaderView()
     }
