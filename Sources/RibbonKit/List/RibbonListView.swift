@@ -225,8 +225,12 @@ public class RibbonListView: UIView {
 
     private func buildLayout() -> UICollectionViewCompositionalLayout {
         let layout = RibbonListViewCompositionalLayout {
-            [unowned self] sectionIndex, layoutEnvironment in
-            let configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
+            [weak self] sectionIndex, layoutEnvironment in
+
+            var configuration = RibbonListSectionConfiguration.default
+            if let self = self {
+                configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
+            }
 
             var group: NSCollectionLayoutGroup?
             let section: NSCollectionLayoutSection
@@ -266,7 +270,7 @@ public class RibbonListView: UIView {
             if let group = group {
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = self.horizontalScrollingBehavior
+                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
             }
             else {
                 var listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
@@ -290,7 +294,7 @@ public class RibbonListView: UIView {
             )
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
-            if let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
+            if let self = self, let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
                 header = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -302,7 +306,7 @@ public class RibbonListView: UIView {
             }
 
             var footer: NSCollectionLayoutBoundarySupplementaryItem?
-            if let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
+            if let self = self, let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
                 footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
