@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         return list
     }()
 
-    typealias Snapshot = RibbonListViewDiffableDataSourceSnapshot<ColorGroup, ColorItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<ColorGroup, ColorItem>
     typealias DataSource = RibbonListViewDiffableDataSource<ColorGroup, ColorItem>
 
     private lazy var dataSource: DataSource = {
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
     }
 
     func applySnapshot() {
-        let snapshot = Snapshot()
+        var snapshot = Snapshot()
 
         snapshot.appendSections(groups)
         groups.forEach {
