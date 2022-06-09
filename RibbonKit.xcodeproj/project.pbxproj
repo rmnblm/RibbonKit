@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2350F628522E6C0025CD1D /* RibbonListItemsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2350F528522E6C0025CD1D /* RibbonListItemsConfiguration.swift */; };
 		0AC30F76278F20BE00ED8059 /* RibbonListCollectionViewListConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC30F75278F20BD00ED8059 /* RibbonListCollectionViewListConfiguration.swift */; };
 		303F475924CF6E7900763149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303F475824CF6E7900763149 /* Assets.xcassets */; };
 		303F475C24CF6E7900763149 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303F475A24CF6E7900763149 /* LaunchScreen.storyboard */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A2350F528522E6C0025CD1D /* RibbonListItemsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonListItemsConfiguration.swift; sourceTree = "<group>"; };
 		0AC30F75278F20BD00ED8059 /* RibbonListCollectionViewListConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RibbonListCollectionViewListConfiguration.swift; sourceTree = "<group>"; };
 		303F474F24CF6E7800763149 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		303F475824CF6E7900763149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				3044596224C7B15D0062BA54 /* RibbonListSectionConfiguration.swift */,
 				30B56F11273094AB006AB071 /* RibbonListSectionLayout.swift */,
 				30B56F132730A45D006AB071 /* RibbonListViewCompositionalLayout.swift */,
+				0A2350F528522E6C0025CD1D /* RibbonListItemsConfiguration.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				OBJ_24 /* ReusableView.swift in Sources */,
 				30B56F12273094AB006AB071 /* RibbonListSectionLayout.swift in Sources */,
 				OBJ_25 /* UICollectionView+Reusable.swift in Sources */,
+				0A2350F628522E6C0025CD1D /* RibbonListItemsConfiguration.swift in Sources */,
 				30D8E99A2730507E00002793 /* RibbonListDimension.swift in Sources */,
 				30DFDD4E2721B47C00EAAF87 /* RibbonListReusableHostView.swift in Sources */,
 				3044596324C7B15D0062BA54 /* RibbonListSectionConfiguration.swift in Sources */,
