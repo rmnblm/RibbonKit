@@ -266,11 +266,35 @@ public class RibbonListView: UIView {
                 )
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
             }
+            else if configuration.layout.orientation == .single {
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(1.0)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                var numberOfItems = 0
+                let currentDevice = UIDevice.current
+                let itemsConfig = configuration.layout.itemsConfiguration
+                if currentDevice.userInterfaceIdiom == .phone {
+                    numberOfItems = currentDevice.orientation.isPortrait ? itemsConfig.phoneConfiguration.portraitItems : itemsConfig.phoneConfiguration.landscapeItems
+                } else if currentDevice.userInterfaceIdiom == .pad {
+                    numberOfItems = currentDevice.orientation.isPortrait ? itemsConfig.padConfiguration.portraitItems : itemsConfig.padConfiguration.landscapeItems
+                }
+                let fraction = CGFloat(1.0 / Double(numberOfItems))
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: configuration.layout.heightDimension.uiDimension)
+                group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
+            }
 
             if let group = group {
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                
+                if configuration.layout.orientation != .single {
+                    section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                }
             }
             else {
                 var listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
