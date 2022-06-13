@@ -90,6 +90,8 @@ public class RibbonListView: UIView {
 
     private var currentlyFocusedIndexPath: IndexPath?
 
+    private var screenSize: CGSize = UIScreen.main.bounds.size
+    
     /// Initializes and returns a ribbon list having the given frame.
     ///
     /// - Parameters:
@@ -291,10 +293,13 @@ public class RibbonListView: UIView {
                 else {
                     let widthDimension: RibbonListDimension = .absolute(configuration.layout.heightDimension.value * config.aspectRatio)
                     let groupSize = NSCollectionLayoutSize(
-                        widthDimension: widthDimension.uiDimension,
+                        widthDimension: .fractionalWidth(1.0),
                         heightDimension: configuration.layout.heightDimension.uiDimension)
-                    let subItemsCount = CGFloat(UIScreen.main.bounds.width / widthDimension.value).rounded()
-                    group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: Array(repeating: item, count: Int(subItemsCount)))
+                    
+                    if let self = self {
+                        let subItemsCount = self.getScreenWidth() / widthDimension.value
+                        group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: Int(subItemsCount.rounded()))
+                    }
                 }
             }
 
@@ -303,8 +308,7 @@ public class RibbonListView: UIView {
                 section = NSCollectionLayoutSection(group: group)
                 
                 section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
-                if case .single(let config) = configuration.layout.orientation,
-                    config.aspectRatio == 0 {
+                if case .single = configuration.layout.orientation {
                     section.orthogonalScrollingBehavior = .none
                 }
             }
@@ -358,6 +362,14 @@ public class RibbonListView: UIView {
         }
         layout.delegate = self
         return layout
+    }
+    
+    private func getScreenWidth() -> CGFloat {
+        if UIDevice.current.orientation.isPortrait {
+            return screenSize.width < screenSize.height ? screenSize.width : screenSize.height
+        } else {
+            return screenSize.width > screenSize.height ? screenSize.width : screenSize.height
+        }
     }
 }
 
