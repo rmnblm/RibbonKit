@@ -266,7 +266,7 @@ public class RibbonListView: UIView {
                 )
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
             }
-            else if configuration.layout.orientation == .single {
+            else if case .single(let config) = configuration.layout.orientation {
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
                     heightDimension: .fractionalHeight(1.0)
@@ -275,25 +275,37 @@ public class RibbonListView: UIView {
                 
                 var numberOfItems = 0
                 let currentDevice = UIDevice.current
-                let itemsConfig = configuration.layout.itemsConfiguration
-                if currentDevice.userInterfaceIdiom == .phone {
-                    numberOfItems = currentDevice.orientation.isPortrait ? itemsConfig.phoneConfiguration.portraitItems : itemsConfig.phoneConfiguration.landscapeItems
-                } else if currentDevice.userInterfaceIdiom == .pad {
-                    numberOfItems = currentDevice.orientation.isPortrait ? itemsConfig.padConfiguration.portraitItems : itemsConfig.padConfiguration.landscapeItems
+                
+                if config.aspectRatio == 0 {
+                    if currentDevice.userInterfaceIdiom == .phone {
+                        numberOfItems = currentDevice.orientation.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
+                    } else if currentDevice.userInterfaceIdiom == .pad {
+                        numberOfItems = currentDevice.orientation.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
+                    }
+                    
+                    let groupSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1.0),
+                        heightDimension: configuration.layout.heightDimension.uiDimension)
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
                 }
-                let fraction = CGFloat(1.0 / Double(numberOfItems))
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: configuration.layout.heightDimension.uiDimension)
-                group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
+                else {
+                    let widthDimension: RibbonListDimension = .absolute(configuration.layout.heightDimension.value * config.aspectRatio)
+                    let groupSize = NSCollectionLayoutSize(
+                        widthDimension: widthDimension.uiDimension,
+                        heightDimension: configuration.layout.heightDimension.uiDimension)
+                    let subItemsCount = CGFloat(UIScreen.main.bounds.width / widthDimension.value).rounded()
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: Array(repeating: item, count: Int(subItemsCount)))
+                }
             }
 
             if let group = group {
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
                 
-                if configuration.layout.orientation != .single {
-                    section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                if case .single(let config) = configuration.layout.orientation,
+                    config.aspectRatio == 0 {
+                    section.orthogonalScrollingBehavior = .none
                 }
             }
             else {

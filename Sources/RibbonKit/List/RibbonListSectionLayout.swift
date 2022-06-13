@@ -8,14 +8,13 @@ public struct RibbonListSectionLayout: Hashable {
         case horizontal
         case vertical
         case list(RibbonListCollectionViewListConfiguration)
-        case single
+        case single(ItemsConfiguration)
     }
     
     public let orientation: Orientation
     public let numberOfRows: Int
     public let heightDimension: RibbonListDimension
     public let itemWidthDimensions: [RibbonListDimension]
-    public var itemsConfiguration: ItemsConfiguration
 
     public static func horizontal(
         heightDimension: RibbonListDimension,
@@ -25,8 +24,7 @@ public struct RibbonListSectionLayout: Hashable {
             orientation: .horizontal,
             numberOfRows: 1,
             heightDimension: heightDimension,
-            itemWidthDimensions: itemWidthDimensions.isEmpty ? [.estimated(80)] : itemWidthDimensions,
-            itemsConfiguration: .default
+            itemWidthDimensions: itemWidthDimensions.isEmpty ? [.estimated(80)] : itemWidthDimensions
         )
     }
 
@@ -49,8 +47,7 @@ public struct RibbonListSectionLayout: Hashable {
             orientation: .vertical,
             numberOfRows: numberOfRows,
             heightDimension: heightDimension,
-            itemWidthDimensions: [itemWidthDimension],
-            itemsConfiguration: .default
+            itemWidthDimensions: [itemWidthDimension]
         )
     }
     
@@ -59,28 +56,25 @@ public struct RibbonListSectionLayout: Hashable {
             orientation: .list(configuration),
             numberOfRows: 1,
             heightDimension: .fractionalHeight(1),
-            itemWidthDimensions: [.fractionalWidth(1)],
-            itemsConfiguration: .default
+            itemWidthDimensions: [.fractionalWidth(1)]
         )
     }
-    
+
     /// Create a new section with an horizontal layout, each Row is made up of items and you cannot scroll horizontally.
     /// Items are displayed on new lines. (For example: every 3 items you'll have a new row)
     /// - Parameters:
     ///   - heightDimension: Height of each row
-    ///   - portraitItems: Number of items in portrait
-    ///   - landscapeItems: Number of items in landscape
+    ///   - itemsConfiguration: Configuration of items to be displayed
     /// - Returns: New horizontal RibbonListSectionLayout
     public static func single(
         heightDimension: RibbonListDimension,
         itemsConfiguration: ItemsConfiguration
     ) -> RibbonListSectionLayout {
         return .init(
-            orientation: .single,
+            orientation: .single(itemsConfiguration),
             numberOfRows: 1,
             heightDimension: heightDimension,
-            itemWidthDimensions: [.estimated(1)],
-            itemsConfiguration: itemsConfiguration
+            itemWidthDimensions: []
         )
     }
 

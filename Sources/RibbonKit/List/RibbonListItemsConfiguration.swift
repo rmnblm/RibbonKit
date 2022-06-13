@@ -1,6 +1,7 @@
 //  Copyright © 2021 Roman Blum. All rights reserved.
 
 import Foundation
+import CoreGraphics
 
 protocol ItemsConfigurable {
     var portraitItems: Int { get }
@@ -31,6 +32,7 @@ public struct ItemsConfiguration: Hashable {
     
     public var phoneConfiguration: PhoneItemsConfiguration
     public var padConfiguration: PadItemsConfiguration
+    public var aspectRatio: CGFloat
     
     static var `default` = ItemsConfiguration(phoneConfiguration: .init(), padConfiguration: .init())
 
@@ -40,5 +42,14 @@ public struct ItemsConfiguration: Hashable {
     ) {
         self.phoneConfiguration = phoneConfiguration
         self.padConfiguration = padConfiguration
+        self.aspectRatio = 0
+    }
+    
+    public init(
+        aspectRatio: CGFloat
+    ) {
+        self.phoneConfiguration = .init()
+        self.padConfiguration = .init()
+        self.aspectRatio = aspectRatio
     }
 }
