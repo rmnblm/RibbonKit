@@ -8,8 +8,9 @@ public struct RibbonListSectionLayout: Hashable {
         case horizontal
         case vertical
         case list(RibbonListCollectionViewListConfiguration)
+        case single(ItemsConfiguration)
     }
-
+    
     public let orientation: Orientation
     public let numberOfRows: Int
     public let heightDimension: RibbonListDimension
@@ -56,6 +57,24 @@ public struct RibbonListSectionLayout: Hashable {
             numberOfRows: 1,
             heightDimension: .fractionalHeight(1),
             itemWidthDimensions: [.fractionalWidth(1)]
+        )
+    }
+
+    /// Create a new section with an horizontal layout, each Row is made up of items and you cannot scroll horizontally.
+    /// Items are displayed on new lines. (For example: every 3 items you'll have a new row)
+    /// - Parameters:
+    ///   - heightDimension: Height of each row
+    ///   - itemsConfiguration: Configuration of items to be displayed
+    /// - Returns: New horizontal RibbonListSectionLayout
+    public static func single(
+        heightDimension: RibbonListDimension,
+        itemsConfiguration: ItemsConfiguration
+    ) -> RibbonListSectionLayout {
+        return .init(
+            orientation: .single(itemsConfiguration),
+            numberOfRows: 1,
+            heightDimension: heightDimension,
+            itemWidthDimensions: []
         )
     }
 
