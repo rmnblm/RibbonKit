@@ -291,14 +291,26 @@ public class RibbonListView: UIView {
                     group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
                 }
                 else {
-                    let widthDimension: RibbonListDimension = .absolute(configuration.layout.heightDimension.value * config.aspectRatio)
-                    let groupSize = NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: configuration.layout.heightDimension.uiDimension)
-                    
                     if let self = self {
-                        let subItemsCount = self.getScreenWidth() / widthDimension.value
-                        group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: Int(subItemsCount.rounded()))
+                        var decimalPart: CGFloat
+                        var widthDimension: RibbonListDimension = .estimated(configuration.layout.itemWidthDimensions.first?.value ?? 80)
+                        var heightDimension: RibbonListDimension = .estimated(widthDimension.value * config.aspectRatio)
+                        var subItemsCount = (self.getScreenWidth() / widthDimension.value)
+                        decimalPart = subItemsCount.truncatingRemainder(dividingBy: 1)
+
+                        while decimalPart > 0.1 {
+                            widthDimension = .estimated(widthDimension.value + 5)
+                            heightDimension = .estimated(widthDimension.value * config.aspectRatio)
+                            subItemsCount = (self.getScreenWidth() / (widthDimension.value + configuration.interItemSpacing))
+                            decimalPart = subItemsCount.truncatingRemainder(dividingBy: 1)
+                        }
+
+                        let groupSize = NSCollectionLayoutSize(
+                            widthDimension: .fractionalWidth(1.0),
+                            heightDimension: heightDimension.uiDimension
+                        )
+
+                        group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: Int(subItemsCount.rounded(.down)))
                     }
                 }
             }

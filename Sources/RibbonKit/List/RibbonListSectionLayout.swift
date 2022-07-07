@@ -68,13 +68,14 @@ public struct RibbonListSectionLayout: Hashable {
     /// - Returns: New horizontal RibbonListSectionLayout
     public static func single(
         heightDimension: RibbonListDimension,
+        itemWidthDimension: RibbonListDimension,
         itemsConfiguration: ItemsConfiguration
     ) -> RibbonListSectionLayout {
         return .init(
             orientation: .single(itemsConfiguration),
             numberOfRows: 1,
             heightDimension: heightDimension,
-            itemWidthDimensions: []
+            itemWidthDimensions: [itemWidthDimension]
         )
     }
 
