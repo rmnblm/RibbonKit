@@ -279,11 +279,15 @@ public class RibbonListView: UIView {
                 let currentDevice = UIDevice.current
                 
                 if config.aspectRatio == 0 {
+                    #if os(iOS)
                     if currentDevice.userInterfaceIdiom == .phone {
                         numberOfItems = currentDevice.orientation.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
                     } else if currentDevice.userInterfaceIdiom == .pad {
                         numberOfItems = currentDevice.orientation.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
                     }
+                    #elseif os(tvOS)
+                    numberOfItems = config.tvConfiguration.items
+                    #endif
                     
                     let groupSize = NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1.0),
@@ -377,11 +381,15 @@ public class RibbonListView: UIView {
     }
     
     private func getScreenWidth() -> CGFloat {
+        #if os(iOS)
         if UIDevice.current.orientation.isPortrait {
             return screenSize.width < screenSize.height ? screenSize.width : screenSize.height
         } else {
             return screenSize.width > screenSize.height ? screenSize.width : screenSize.height
         }
+        #elseif os(tvOS)
+        return screenSize.width
+        #endif
     }
 }
 

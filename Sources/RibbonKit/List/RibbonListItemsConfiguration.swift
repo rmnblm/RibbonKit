@@ -30,18 +30,33 @@ public struct ItemsConfiguration: Hashable {
         }
     }
     
+    public struct TvItemsConfiguration: Hashable {
+        public let items: Int
+
+        public init(items: Int = 10) {
+            self.items = items
+        }
+    }
+    
     public var phoneConfiguration: PhoneItemsConfiguration
     public var padConfiguration: PadItemsConfiguration
+    public var tvConfiguration: TvItemsConfiguration
     public var aspectRatio: CGFloat
     
-    static var `default` = ItemsConfiguration(phoneConfiguration: .init(), padConfiguration: .init())
+    static var `default` = ItemsConfiguration(
+        phoneConfiguration: .init(),
+        padConfiguration: .init(),
+        tvConfiguration: .init()
+    )
 
     public init(
         phoneConfiguration: PhoneItemsConfiguration,
-        padConfiguration: PadItemsConfiguration
+        padConfiguration: PadItemsConfiguration,
+        tvConfiguration: TvItemsConfiguration
     ) {
         self.phoneConfiguration = phoneConfiguration
         self.padConfiguration = padConfiguration
+        self.tvConfiguration = tvConfiguration
         self.aspectRatio = 0
     }
     
@@ -50,6 +65,7 @@ public struct ItemsConfiguration: Hashable {
     ) {
         self.phoneConfiguration = .init()
         self.padConfiguration = .init()
+        self.tvConfiguration = .init()
         self.aspectRatio = aspectRatio
     }
 }
