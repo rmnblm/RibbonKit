@@ -69,9 +69,11 @@ extension ColorGroup {
                 RibbonListSectionConfiguration(
                     layout: .single(
                         heightDimension: .absolute(70),
+                        itemWidthDimension: .estimated(70),
                         itemsConfiguration: ItemsConfiguration(
                             phoneConfiguration: .init(portraitItems: 2, landscapeItems: 4),
-                            padConfiguration: .init(portraitItems: 4, landscapeItems: 8)
+                            padConfiguration: .init(portraitItems: 4, landscapeItems: 8),
+                            tvConfiguration: .init(items: 8)
                         )
                     )
                 ),
