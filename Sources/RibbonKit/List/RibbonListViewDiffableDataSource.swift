@@ -12,8 +12,6 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     private unowned let _ribbonList: RibbonListView
 
-    private var workingQueue = DispatchQueue(label: "dev.blum.ribbonkit.datasource.workingQueue")
-
     public init(ribbonList: RibbonListView, cellProvider: @escaping RibbonListViewDiffableDataSource<Section, Item>.CellProvider) {
         self._ribbonList = ribbonList
         super.init()
@@ -45,17 +43,11 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
         animatingDifferences animated: Bool = false,
         completion: (() -> Void)? = nil
     ) {
-        workingQueue.async { [weak self] in
-            self?.dataSource.apply(
-                snapshot,
-                animatingDifferences: animated,
-                completion: {
-                    DispatchQueue.main.async {
-                        completion?()
-                    }
-                }
-            )
-        }
+        dataSource.apply(
+            snapshot,
+            animatingDifferences: animated,
+            completion: completion
+        )
     }
     
     public func snapshot() -> NSDiffableDataSourceSnapshot<Section, Item> {
