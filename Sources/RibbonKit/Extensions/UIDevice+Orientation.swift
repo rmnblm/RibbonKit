@@ -1,5 +1,7 @@
 //  Copyright © 2022 Roman Blum. All rights reserved.
 
+#if os(iOS)
+
 import UIKit
 
 extension UIDevice {
@@ -27,3 +29,5 @@ extension UIDevice {
         return [UIDeviceOrientation.portrait, .portraitUpsideDown].contains(orientation)
     }
 }
+
+#endif
