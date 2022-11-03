@@ -281,9 +281,9 @@ public class RibbonListView: UIView {
                 if config.aspectRatio == 0 {
                     #if os(iOS)
                     if currentDevice.userInterfaceIdiom == .phone {
-                        numberOfItems = currentDevice.orientation.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
+                        numberOfItems = currentDevice.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
                     } else if currentDevice.userInterfaceIdiom == .pad {
-                        numberOfItems = currentDevice.orientation.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
+                        numberOfItems = currentDevice.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
                     }
                     #elseif os(tvOS)
                     numberOfItems = config.tvConfiguration.items
@@ -382,7 +382,7 @@ public class RibbonListView: UIView {
     
     private func getScreenWidth() -> CGFloat {
         #if os(iOS)
-        if UIDevice.current.orientation.isPortrait {
+        if UIDevice.current.isPortrait {
             return screenSize.width < screenSize.height ? screenSize.width : screenSize.height
         } else {
             return screenSize.width > screenSize.height ? screenSize.width : screenSize.height
