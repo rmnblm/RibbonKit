@@ -6,7 +6,7 @@ import UIKit
 
 extension UIDevice {
     var isLandscape: Bool {
-        if orientation == .unknown {
+        if orientation == .unknown || orientation == .faceUp || orientation == .faceDown {
             return UIApplication.shared
                 .windows
                 .first(where: { $0.isKeyWindow })?
@@ -18,7 +18,7 @@ extension UIDevice {
     }
 
     var isPortrait: Bool {
-        if orientation == .unknown {
+        if orientation == .unknown || orientation == .faceUp || orientation == .faceDown {
             return UIApplication.shared
                 .windows
                 .first(where: { $0.isKeyWindow })?
