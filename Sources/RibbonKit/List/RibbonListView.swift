@@ -466,7 +466,45 @@ extension RibbonListView: UICollectionViewDelegate {
 
     #if os(iOS)
     public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return delegate?.ribbonList(self, contextMenuConfigurationForItemAt: indexPath, point: point)
+        return delegate?.ribbonList(
+            self,
+            contextMenuConfigurationForItemAt: indexPath,
+            point: point,
+            proposedIdentifier: ContextMenuIdentifier(row: indexPath.row, section: indexPath.section)
+        )
+    }
+    
+    // Called when the interaction begins. Return a UITargetedPreview describing the desired highlight preview.
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+
+    /**
+     Called when the interaction is about to dismiss. Return a UITargetedPreview describing the desired dismissal target.
+        The interaction will animate the presented menu to the target. Use this to customize the dismissal animation.
+    */
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration)
     }
     #endif
+}
+
+public final class ContextMenuIdentifier: NSCopying {
+    public var row: Int
+    public var section: Int
+    
+    public init(row: Int, section: Int) {
+        self.row = row
+        self.section = section
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        ContextMenuIdentifier(row: self.row, section: self.section)
+    }
 }
