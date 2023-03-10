@@ -500,10 +500,7 @@ extension RibbonListView: UICollectionViewDelegate {
         // Get the cell for the index of the model.
         guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
         
-        let parameters = UIPreviewParameters()
-//            parameters.backgroundColor = .clear
-        
-        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+        return UITargetedPreview(view: cell.contentView, parameters: UIPreviewParameters())
     }
     #endif
 }
