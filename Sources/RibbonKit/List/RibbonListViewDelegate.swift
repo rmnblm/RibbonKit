@@ -173,7 +173,10 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - indexPath: The index path of the item.
     ///     - point: The location of the interaction in the ribbon list's coordinate space.
     /// - Returns: A context menu configuration for the indexPath.
-    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint, proposedIdentifier: ContextMenuIdentifier) -> UIContextMenuConfiguration?
+    
+    func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
     #endif
 }
 
@@ -200,6 +203,8 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
-    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint, proposedIdentifier: ContextMenuIdentifier) -> UIContextMenuConfiguration? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? { nil }
     #endif
 }

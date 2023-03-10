@@ -466,7 +466,58 @@ extension RibbonListView: UICollectionViewDelegate {
 
     #if os(iOS)
     public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return delegate?.ribbonList(self, contextMenuConfigurationForItemAt: indexPath, point: point)
+        return delegate?.ribbonList(
+            self,
+            contextMenuConfigurationForItemAt: indexPath,
+            point: point,
+            proposedIdentifier: ContextMenuIdentifier(row: indexPath.row, section: indexPath.section)
+        )
+    }
+    
+    // Called when the interaction begins. Return a UITargetedPreview describing the desired highlight preview.
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration) ?? makeTargetedPreview(for: configuration)
+    }
+
+    /** Called when the interaction is about to dismiss. Return a UITargetedPreview describing the desired dismissal target.
+        The interaction will animate the presented menu to the target. Use this to customize the dismissal animation.
+    */
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        return delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration) ?? makeTargetedPreview(for: configuration)
+    }
+
+    private func makeTargetedPreview(for configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        // Ensure we can get the expected identifier.
+        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
+        
+        let indexPath = IndexPath(row: configIdentifier.row, section: configIdentifier.section)
+        // Get the cell for the index of the model.
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+        
+        let parameters = UIPreviewParameters()
+//            parameters.backgroundColor = .clear
+        
+        return UITargetedPreview(view: cell.contentView, parameters: parameters)
     }
     #endif
+}
+
+public final class ContextMenuIdentifier: NSCopying {
+    public var row: Int
+    public var section: Int
+    
+    public init(row: Int, section: Int) {
+        self.row = row
+        self.section = section
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        ContextMenuIdentifier(row: self.row, section: self.section)
+    }
 }
