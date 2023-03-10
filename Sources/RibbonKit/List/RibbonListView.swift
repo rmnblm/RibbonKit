@@ -479,28 +479,18 @@ extension RibbonListView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
     ) -> UITargetedPreview? {
-        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration) ?? makeTargetedPreview(for: configuration)
+        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration)
     }
 
-    /** Called when the interaction is about to dismiss. Return a UITargetedPreview describing the desired dismissal target.
+    /**
+     Called when the interaction is about to dismiss. Return a UITargetedPreview describing the desired dismissal target.
         The interaction will animate the presented menu to the target. Use this to customize the dismissal animation.
     */
     public func collectionView(
         _ collectionView: UICollectionView,
         previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
     ) -> UITargetedPreview? {
-        return delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration) ?? makeTargetedPreview(for: configuration)
-    }
-
-    private func makeTargetedPreview(for configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        // Ensure we can get the expected identifier.
-        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
-        
-        let indexPath = IndexPath(row: configIdentifier.row, section: configIdentifier.section)
-        // Get the cell for the index of the model.
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
-        
-        return UITargetedPreview(view: cell.contentView, parameters: UIPreviewParameters())
+        delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration)
     }
     #endif
 }
