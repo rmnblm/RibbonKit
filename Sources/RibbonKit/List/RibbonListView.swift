@@ -189,8 +189,8 @@ public class RibbonListView: UIView {
         collectionView.reloadData()
     }
 
-    /// Reloads the header view and layouts it.
-    public func reloadHeaderView() {
+    /// Reloads the RibbonList's layout.
+    public func reloadLayout() {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
             let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -203,7 +203,17 @@ public class RibbonListView: UIView {
             )
             config.boundarySupplementaryItems = [header]
         }
+        config.interSectionSpacing = interSectionSpacing
         layout.configuration = config
+    }
+
+    /// The amount of space between the sections in the layout.
+    ///
+    /// The default value of this property is 0.0.
+    public var interSectionSpacing: CGFloat = 0 {
+        didSet {
+            reloadLayout()
+        }
     }
 
     /// Retrieves layout information for an item at the specified index path with a corresponding cell.
