@@ -62,7 +62,7 @@ public class RibbonListView: UIView {
     /// When assigning a view to this property, a height must be specified using the delegate method `func ribbonListHeaderHeight(_:) -> RibbonListDimension`, returning a non-negative floating-point value.
     /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
     public var headerView: UIView? {
-        didSet { reloadHeaderView() }
+        didSet { reloadLayout() }
     }
 
     /// The background view of the ribbon list.
@@ -129,7 +129,7 @@ public class RibbonListView: UIView {
         let orientation = UIDevice.current.orientation
         let unsupportedOrientations: [UIDeviceOrientation] = [.faceUp, .faceDown]
         guard !unsupportedOrientations.contains(orientation) else { return }
-        reloadHeaderView()
+        reloadLayout()
     }
     #endif
 
