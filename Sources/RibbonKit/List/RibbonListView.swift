@@ -62,7 +62,7 @@ public class RibbonListView: UIView {
     /// When assigning a view to this property, a height must be specified using the delegate method `func ribbonListHeaderHeight(_:) -> RibbonListDimension`, returning a non-negative floating-point value.
     /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
     public var headerView: UIView? {
-        didSet { reloadHeaderView() }
+        didSet { reloadLayout() }
     }
 
     /// The background view of the ribbon list.
@@ -129,7 +129,7 @@ public class RibbonListView: UIView {
         let orientation = UIDevice.current.orientation
         let unsupportedOrientations: [UIDeviceOrientation] = [.faceUp, .faceDown]
         guard !unsupportedOrientations.contains(orientation) else { return }
-        reloadHeaderView()
+        reloadLayout()
     }
     #endif
 
@@ -189,8 +189,8 @@ public class RibbonListView: UIView {
         collectionView.reloadData()
     }
 
-    /// Reloads the header view and layouts it.
-    public func reloadHeaderView() {
+    /// Reloads the RibbonList's layout.
+    public func reloadLayout() {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
             let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -203,7 +203,17 @@ public class RibbonListView: UIView {
             )
             config.boundarySupplementaryItems = [header]
         }
+        config.interSectionSpacing = interSectionSpacing
         layout.configuration = config
+    }
+
+    /// The amount of space between the sections in the layout.
+    ///
+    /// The default value of this property is 0.0.
+    public var interSectionSpacing: CGFloat = 0 {
+        didSet {
+            reloadLayout()
+        }
     }
 
     /// Retrieves layout information for an item at the specified index path with a corresponding cell.
