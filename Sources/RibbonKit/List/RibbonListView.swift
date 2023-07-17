@@ -401,6 +401,8 @@ public class RibbonListView: UIView {
         return screenSize.width
         #endif
     }
+
+    private var presentingContextMenuIndexPath: IndexPath?
 }
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
@@ -475,12 +477,53 @@ extension RibbonListView: UICollectionViewDelegate {
     }
 
     #if os(iOS)
-    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+    public func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let presentingContextMenuIndexPath else { return }
+        delegate?.ribbonList(self, willPerformPreviewActionForMenuWith: configuration, at: presentingContextMenuIndexPath, animator: animator)
+        animator.addCompletion { [weak self] in
+            guard let self else { return }
+            self.presentingContextMenuIndexPath = nil
+        }
+    }
+
+    @available(iOS 16.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPaths.count == 1, let indexPath = indexPaths.first else { return nil }
+        presentingContextMenuIndexPath = indexPath
         return delegate?.ribbonList(
             self,
             contextMenuConfigurationForItemAt: indexPath,
-            point: point,
-            proposedIdentifier: ContextMenuIdentifier(row: indexPath.row, section: indexPath.section)
+            point: point
+        )
+    }
+
+    private func contextMenuDefaultTargetedPreview(at indexPath: IndexPath) -> UITargetedPreview? {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+
+        let parameters = UIPreviewParameters()
+        let visibleRect = cell.contentView.bounds.insetBy(dx: -10, dy: -10)
+        let visiblePath = UIBezierPath(roundedRect: visibleRect, cornerRadius: 20.0)
+        parameters.visiblePath = visiblePath
+        parameters.backgroundColor = delegate?.ribbonListContextMenuPreviewBackgroundColor(self, forItemAt: indexPath) ?? UIColor.systemBackground
+        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+    }
+
+    @available(iOS 16.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration, at: indexPath) ?? contextMenuDefaultTargetedPreview(at: indexPath)
+    }
+
+    @available(iOS 16.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, dismissalPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration, at: indexPath) ?? contextMenuDefaultTargetedPreview(at: indexPath)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        self.presentingContextMenuIndexPath = indexPath
+        return delegate?.ribbonList(
+            self,
+            contextMenuConfigurationForItemAt: indexPath,
+            point: point
         )
     }
     
@@ -489,7 +532,8 @@ extension RibbonListView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
     ) -> UITargetedPreview? {
-        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration)
+        guard let presentingContextMenuIndexPath else { return nil }
+        return delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration, at: presentingContextMenuIndexPath) ?? contextMenuDefaultTargetedPreview(at: presentingContextMenuIndexPath)
     }
 
     /**
@@ -500,21 +544,9 @@ extension RibbonListView: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
     ) -> UITargetedPreview? {
-        delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration)
+        defer { self.presentingContextMenuIndexPath = nil }
+        guard let presentingContextMenuIndexPath else { return nil }
+        return delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration, at: presentingContextMenuIndexPath) ?? contextMenuDefaultTargetedPreview(at: presentingContextMenuIndexPath)
     }
     #endif
-}
-
-public final class ContextMenuIdentifier: NSCopying {
-    public var row: Int
-    public var section: Int
-    
-    public init(row: Int, section: Int) {
-        self.row = row
-        self.section = section
-    }
-    
-    public func copy(with zone: NSZone? = nil) -> Any {
-        ContextMenuIdentifier(row: self.row, section: self.section)
-    }
 }

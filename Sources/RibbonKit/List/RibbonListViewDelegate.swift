@@ -173,7 +173,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - indexPath: The index path of the item.
     ///     - point: The location of the interaction in the ribbon list's coordinate space.
     /// - Returns: A context menu configuration for the indexPath.
-    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint, proposedIdentifier: ContextMenuIdentifier) -> UIContextMenuConfiguration?
+    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
     
     /// Returns a UITargetedPreview that will be used as a preview when presenting a context menu, overriding the default preview the collection view created
     ///
@@ -185,7 +185,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Returns: A view to override the default preview the collection view created
     /// Example:
     /// ```swift
-    ///   func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+    ///   func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? {
     ///        // Ensure we can get the expected identifier.
     ///        // Use the identifier to get the UICollectionViewCell that requested context menu presentation
     ///        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
@@ -202,7 +202,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///        return UITargetedPreview(view: cell.contentView, parameters: parameters)
     ///    }
     /// ```
-    func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview?
 
     /// Returns a UITargetedPreview that will be used as a preview when dismissing a context menu, overriding the default preview the collection view created
     ///
@@ -215,7 +215,7 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///
     ///  Example:
     /// ```swift
-    ///   func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+    ///   func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? {
     ///        // Ensure we can get the expected identifier.
     ///        // Use the identifier to get the UICollectionViewCell that requested context menu presentation
     ///        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
@@ -232,7 +232,9 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///        return UITargetedPreview(view: cell.contentView, parameters: parameters)
     ///    }
     /// ```
-    func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview?
+    func ribbonList(_ ribbonList: RibbonListView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, at indexPath: IndexPath, animator: UIContextMenuInteractionCommitAnimating)
+    func ribbonListContextMenuPreviewBackgroundColor(_ ribbonList: RibbonListView, forItemAt indexPath: IndexPath) -> UIColor?
     #endif
 }
 
@@ -259,8 +261,10 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
     #if os(iOS)
-    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint, proposedIdentifier: ContextMenuIdentifier) -> UIContextMenuConfiguration? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? { nil }
-    public func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, at indexPath: IndexPath, animator: UIContextMenuInteractionCommitAnimating) {}
+    public func ribbonListContextMenuPreviewBackgroundColor(_ ribbonList: RibbonListView, forItemAt indexPath: IndexPath) -> UIColor? { nil }
     #endif
 }
