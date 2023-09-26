@@ -403,6 +403,7 @@ public class RibbonListView: UIView {
     }
 
     private var presentingContextMenuIndexPath: IndexPath?
+    private var forcedFocusIndexPath: IndexPath?
 }
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
@@ -452,16 +453,60 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
     }
-    
+
+    private func moveFocusToLastItem(in section: Int) -> Bool {
+        let numberOfItemsInNextSection = collectionView.numberOfItems(inSection: section)
+        guard numberOfItemsInNextSection > 0 else { return false }
+        let moveTo = IndexPath(
+            item: max(numberOfItemsInNextSection - 1, 0),
+            section: section
+        )
+        self.forcedFocusIndexPath = moveTo
+        collectionView.scrollToItem(at: moveTo, at: .top, animated: true)
+        collectionView.setNeedsFocusUpdate()
+        collectionView.updateFocusIfNeeded()
+        return true
+    }
+
+    private func focusMightSkipSection(context: RibbonListViewFocusUpdateContext) -> Bool {
+        guard let previousIndexPath = context.previouslyFocusedIndexPath else { return false }
+        if context.nextFocusedIndexPath == nil {
+            // Handle the case in which the focus is about to move outside the ribbonListView's collectionView
+            if (previousIndexPath.section == 0 || previousIndexPath.section == collectionView.numberOfSections - 1) {
+                // If the currently focused indexPath's section is 0 or equal to the last section's index, focus is allowed to leave the collection view
+                return false
+            }
+            return moveFocusToLastItem(in: previousIndexPath.section - 1)
+        }
+        guard let nextIndexPath = context.nextFocusedIndexPath else {
+             return false
+        }
+        let isMovingUp = previousIndexPath.section > nextIndexPath.section
+        if isMovingUp {
+            if abs(previousIndexPath.section - nextIndexPath.section) > 1 {
+                return moveFocusToLastItem(in: previousIndexPath.section - 1)
+            }
+        }
+        return false
+    }
+
     public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        if focusMightSkipSection(context: newContext) {
+            return false
+        }
         return delegate?.ribbonList(self, shouldUpdateFocusIn: newContext) ?? true
     }
-    
+
     public func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
+        if let forcedFocusIndexPath {
+            let indexPath = forcedFocusIndexPath
+            self.forcedFocusIndexPath = nil
+            return indexPath
+        }
         return delegate?.indexPathForPreferredFocusedView(in: self)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
