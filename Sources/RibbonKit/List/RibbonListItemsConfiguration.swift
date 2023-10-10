@@ -39,7 +39,7 @@ public struct ItemsConfiguration: Hashable {
     public struct TvItemsConfiguration: Hashable {
         public let items: Int
 
-        public init(items: Int = 8) {
+        public init(items: Int = 7) {
             self.items = items
         }
     }
