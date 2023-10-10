@@ -399,7 +399,7 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
             if let headerFrame = collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader, at: sectionHeaderIndexPath
             )?.frame {
-                return .init(x: proposedContentOffset.x, y: headerFrame.origin.y - contentInset.top)
+                return .init(x: proposedContentOffset.x, y: headerFrame.origin.y)
             }
 
             if let cellFrame = collectionView.collectionViewLayout.layoutAttributesForItem(at: currentlyFocusedIndexPath)?.frame {
