@@ -8,7 +8,7 @@ public struct RibbonListSectionLayout: Hashable {
         case horizontal
         case vertical
         case list(RibbonListCollectionViewListConfiguration)
-        case single(ItemsConfiguration)
+        case wall(ItemsConfiguration)
     }
     
     public let orientation: Orientation
@@ -66,16 +66,14 @@ public struct RibbonListSectionLayout: Hashable {
     ///   - heightDimension: Height of each row
     ///   - itemsConfiguration: Configuration of items to be displayed
     /// - Returns: New horizontal RibbonListSectionLayout
-    public static func single(
-        heightDimension: RibbonListDimension,
-        itemWidthDimension: RibbonListDimension,
+    public static func wall(
         itemsConfiguration: ItemsConfiguration
     ) -> RibbonListSectionLayout {
         return .init(
-            orientation: .single(itemsConfiguration),
+            orientation: .wall(itemsConfiguration),
             numberOfRows: 1,
-            heightDimension: heightDimension,
-            itemWidthDimensions: [itemWidthDimension]
+            heightDimension: .fractionalHeight(1),
+            itemWidthDimensions: [.fractionalWidth(1)]
         )
     }
 

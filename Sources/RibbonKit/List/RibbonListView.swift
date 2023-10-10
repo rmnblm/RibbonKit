@@ -88,10 +88,9 @@ public class RibbonListView: UIView {
         return collectionView
     }()
 
+    private var previouslyFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
 
-    private var screenSize: CGSize = UIScreen.main.bounds.size
-    
     /// Initializes and returns a ribbon list having the given frame.
     ///
     /// - Parameters:
@@ -244,7 +243,6 @@ public class RibbonListView: UIView {
                 configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
             }
 
-            var group: NSCollectionLayoutGroup?
             let section: NSCollectionLayoutSection
             if configuration.layout.orientation == .vertical {
                 let itemSize = NSCollectionLayoutSize(
@@ -256,11 +254,14 @@ public class RibbonListView: UIView {
                     widthDimension: configuration.layout.itemWidthDimensions.first?.uiDimension ?? .estimated(80),
                     heightDimension: configuration.layout.heightDimension.uiDimension
                 )
-                group = NSCollectionLayoutGroup.vertical(
+                let group = NSCollectionLayoutGroup.vertical(
                     layoutSize: groupSize,
                     subitem: item,
                     count: configuration.layout.numberOfRows
                 )
+                group.interItemSpacing = .fixed(configuration.interItemSpacing)
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
             }
             else if configuration.layout.orientation == .horizontal {
                 let items: [NSCollectionLayoutItem] = (0..<configuration.layout.itemWidthDimensions.count).map { itemIndex in
@@ -276,75 +277,52 @@ public class RibbonListView: UIView {
                     widthDimension: .estimated(1),
                     heightDimension: configuration.layout.heightDimension.uiDimension
                 )
-                group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
-            }
-            else if case .single(let config) = configuration.layout.orientation {
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                var numberOfItems = 0
-                let currentDevice = UIDevice.current
-                
-                if config.aspectRatio == 0 {
-                    #if os(iOS)
-                    if currentDevice.userInterfaceIdiom == .phone {
-                        numberOfItems = currentDevice.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
-                    } else if currentDevice.userInterfaceIdiom == .pad {
-                        numberOfItems = currentDevice.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
-                    }
-                    #elseif os(tvOS)
-                    numberOfItems = config.tvConfiguration.items
-                    #endif
-                    
-                    let groupSize = NSCollectionLayoutSize(
-                        widthDimension: .fractionalWidth(1.0),
-                        heightDimension: configuration.layout.heightDimension.uiDimension)
-                    group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
-                }
-                else {
-                    if let self = self {
-                        var decimalPart: CGFloat
-                        var widthDimension: RibbonListDimension = .estimated(configuration.layout.itemWidthDimensions.first?.value ?? 80)
-                        var heightDimension: RibbonListDimension = .estimated(widthDimension.value * config.aspectRatio)
-                        var subItemsCount = (self.getScreenWidth() / widthDimension.value)
-                        decimalPart = subItemsCount.truncatingRemainder(dividingBy: 1)
-
-                        while decimalPart > 0.1 {
-                            widthDimension = .estimated(widthDimension.value + 5)
-                            heightDimension = .estimated(widthDimension.value * config.aspectRatio)
-                            subItemsCount = (self.getScreenWidth() / (widthDimension.value + configuration.interItemSpacing))
-                            decimalPart = subItemsCount.truncatingRemainder(dividingBy: 1)
-                        }
-
-                        let groupSize = NSCollectionLayoutSize(
-                            widthDimension: .fractionalWidth(1.0),
-                            heightDimension: heightDimension.uiDimension
-                        )
-
-                        group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: Int(subItemsCount.rounded(.down)))
-                    }
-                }
-            }
-
-            if let group = group {
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
-                
                 section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
-                if case .single = configuration.layout.orientation {
-                    section.orthogonalScrollingBehavior = .none
+            }
+            else if case .wall(let config) = configuration.layout.orientation {
+                var numberOfItems = 1
+                #if os(iOS)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    numberOfItems = UIDevice.current.isPortrait ? config.phoneConfiguration.portraitItems : config.phoneConfiguration.landscapeItems
+                } else if UIDevice.current.userInterfaceIdiom == .pad {
+                    numberOfItems = UIDevice.current.isPortrait ? config.padConfiguration.portraitItems : config.padConfiguration.landscapeItems
                 }
+                #endif
+
+                #if os(tvOS)
+                numberOfItems = config.tvConfiguration.items
+                #endif
+
+                let fWidth = 1.0 / CGFloat(numberOfItems)
+                let fHeight = fWidth * config.aspectRatio
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(fWidth),
+                    heightDimension: .fractionalWidth(fHeight)
+                )
+
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalWidth(fHeight)
+                )
+
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: numberOfItems)
+                group.interItemSpacing = .fixed(configuration.interItemSpacing)
+
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .none
+            }
+            else if case .list(let config) = configuration.layout.orientation {
+                section = NSCollectionLayoutSection.list(
+                    using: config.asCollectionLayoutListConfiguration(),
+                    layoutEnvironment: layoutEnvironment
+                )
             }
             else {
-                var listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
-
-                if case .list(let config) = configuration.layout.orientation {
-                    listConfig = config.asCollectionLayoutListConfiguration()
-                }
-
+                let listConfig: UICollectionLayoutListConfiguration = .init(appearance: .plain)
                 section = NSCollectionLayoutSection.list(
                     using: listConfig,
                     layoutEnvironment: layoutEnvironment
@@ -360,7 +338,7 @@ public class RibbonListView: UIView {
             )
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
-            if let self = self, let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
+            if let self, let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
                 header = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -372,7 +350,7 @@ public class RibbonListView: UIView {
             }
 
             var footer: NSCollectionLayoutBoundarySupplementaryItem?
-            if let self = self, let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
+            if let self, let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
                 footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -390,7 +368,8 @@ public class RibbonListView: UIView {
         return layout
     }
     
-    private func getScreenWidth() -> CGFloat {
+    private static func getScreenWidth() -> CGFloat {
+        let screenSize = UIScreen.main.bounds.size
         #if os(iOS)
         if UIDevice.current.isPortrait {
             return screenSize.width < screenSize.height ? screenSize.width : screenSize.height
@@ -412,11 +391,22 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
         case .none:
             return proposedContentOffset
         case .sectionPaging:
-            guard
-                let indexPath = currentlyFocusedIndexPath,
-                let frame = collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: indexPath.section))?.frame
-            else { return proposedContentOffset }
-            return .init(x: proposedContentOffset.x, y: frame.origin.y)
+            guard let currentlyFocusedIndexPath else {
+                return proposedContentOffset
+            }
+
+            let sectionHeaderIndexPath = IndexPath(item: 0, section: currentlyFocusedIndexPath.section)
+            if let headerFrame = collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader, at: sectionHeaderIndexPath
+            )?.frame {
+                return .init(x: proposedContentOffset.x, y: headerFrame.origin.y - contentInset.top)
+            }
+
+            if let cellFrame = collectionView.collectionViewLayout.layoutAttributesForItem(at: currentlyFocusedIndexPath)?.frame {
+                return .init(x: proposedContentOffset.x, y: cellFrame.origin.y - contentInset.top)
+            }
+
+            return proposedContentOffset
         }
     }
 }
@@ -508,6 +498,7 @@ extension RibbonListView: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        previouslyFocusedIndexPath = context.previouslyFocusedIndexPath
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
