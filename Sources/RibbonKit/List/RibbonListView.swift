@@ -235,14 +235,11 @@ public class RibbonListView: UIView {
     }
 
     private func buildLayout() -> UICollectionViewCompositionalLayout {
-        let layout = RibbonListViewCompositionalLayout {
+        let layout = RibbonListViewCompositionalLayout(sectionProvider: {
             [weak self] sectionIndex, layoutEnvironment in
+            guard let self else { return nil }
 
-            var configuration = RibbonListSectionConfiguration.default
-            if let self = self {
-                configuration = self.delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
-            }
-
+            let configuration = delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
             let section: NSCollectionLayoutSection
             if configuration.layout.orientation == .vertical {
                 let itemSize = NSCollectionLayoutSize(
@@ -261,7 +258,7 @@ public class RibbonListView: UIView {
                 )
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                section.orthogonalScrollingBehavior = horizontalScrollingBehavior
             }
             else if configuration.layout.orientation == .horizontal {
                 let items: [NSCollectionLayoutItem] = (0..<configuration.layout.itemWidthDimensions.count).map { itemIndex in
@@ -280,7 +277,7 @@ public class RibbonListView: UIView {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
                 group.interItemSpacing = .fixed(configuration.interItemSpacing)
                 section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = self?.horizontalScrollingBehavior ?? .continuousGroupLeadingBoundary
+                section.orthogonalScrollingBehavior = horizontalScrollingBehavior
             }
             else if case .wall(let config) = configuration.layout.orientation {
                 var numberOfItems = 1
@@ -338,7 +335,7 @@ public class RibbonListView: UIView {
             )
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
-            if let self, let headerHeight = self.delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
+            if let headerHeight = delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
                 header = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -350,7 +347,7 @@ public class RibbonListView: UIView {
             }
 
             var footer: NSCollectionLayoutBoundarySupplementaryItem?
-            if let self, let footerHeight = self.delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
+            if let footerHeight = delegate?.ribbonList(self, heightForFooterInSection: sectionIndex), footerHeight.value > 0.0 {
                 footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
@@ -363,7 +360,7 @@ public class RibbonListView: UIView {
 
             section.boundarySupplementaryItems = [header, footer].compactMap { $0 }
             return section
-        }
+        })
         layout.delegate = self
         return layout
     }
