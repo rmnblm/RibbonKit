@@ -9,12 +9,24 @@ public struct RibbonListSectionLayout: Hashable {
         case vertical
         case list(RibbonListCollectionViewListConfiguration)
         case wall(ItemsConfiguration)
+        case single
     }
     
     public let orientation: Orientation
     public let numberOfRows: Int
     public let heightDimension: RibbonListDimension
     public let itemWidthDimensions: [RibbonListDimension]
+
+    public static func carousel(
+        heightDimension: RibbonListDimension
+    ) -> RibbonListSectionLayout {
+        return .init(
+            orientation: .single,
+            numberOfRows: 1,
+            heightDimension: heightDimension,
+            itemWidthDimensions: [.fractionalHeight(1.0)]
+        )
+    }
 
     public static func horizontal(
         heightDimension: RibbonListDimension,

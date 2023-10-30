@@ -241,7 +241,21 @@ public class RibbonListView: UIView {
 
             let configuration = delegate?.ribbonList(self, configurationForSectionAt: sectionIndex) ?? .default
             let section: NSCollectionLayoutSection
-            if configuration.layout.orientation == .vertical {
+            if configuration.layout.orientation == .single {
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(1.0)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let itemGroupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: configuration.layout.heightDimension.uiDimension
+                )
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitem: item, count: 1)
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = horizontalScrollingBehavior
+            } else if configuration.layout.orientation == .vertical {
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1 / CGFloat(configuration.layout.numberOfRows))
