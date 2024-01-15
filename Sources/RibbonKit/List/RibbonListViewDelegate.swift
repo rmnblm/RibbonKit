@@ -239,7 +239,7 @@ public protocol RibbonListViewDelegate: AnyObject {
 }
 
 extension RibbonListViewDelegate {
-    public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListDimension { .zero }
+    public func ribbonListHeaderHeight(_ ribbonList: RibbonListView) -> RibbonListDimension { .estimated(44) }
     
     public func ribbonListDidScroll(_ ribbonList: RibbonListView) { }
     public func ribbonList(_ ribbonList: RibbonListView, didSelectItemAt indexPath: IndexPath) { }

@@ -10,11 +10,12 @@ protocol ItemsConfigurable {
 
 public struct ItemsConfiguration: Hashable {
     
+    #if os(iOS)
     public struct PhoneItemsConfiguration: ItemsConfigurable, Hashable {
         public let portraitItems: Int
         public let landscapeItems: Int
         
-        public init(portraitItems: Int = 1, landscapeItems: Int = 2) {
+        public init(portraitItems: Int = 3, landscapeItems: Int = 6) {
             self.portraitItems = portraitItems
             self.landscapeItems = landscapeItems
         }
@@ -24,48 +25,49 @@ public struct ItemsConfiguration: Hashable {
         public let portraitItems: Int
         public let landscapeItems: Int
         
-        public init(portraitItems: Int = 2, landscapeItems: Int = 4) {
+        public init(portraitItems: Int = 5, landscapeItems: Int = 8) {
             self.portraitItems = portraitItems
             self.landscapeItems = landscapeItems
         }
     }
-    
+
+    public var phoneConfiguration: PhoneItemsConfiguration
+    public var padConfiguration: PadItemsConfiguration
+    #endif
+
+    #if os(tvOS)
     public struct TvItemsConfiguration: Hashable {
         public let items: Int
 
-        public init(items: Int = 10) {
+        public init(items: Int = 7) {
             self.items = items
         }
     }
-    
-    public var phoneConfiguration: PhoneItemsConfiguration
-    public var padConfiguration: PadItemsConfiguration
+
     public var tvConfiguration: TvItemsConfiguration
+    #endif
+
     public var aspectRatio: CGFloat
     
-    static var `default` = ItemsConfiguration(
-        phoneConfiguration: .init(),
-        padConfiguration: .init(),
-        tvConfiguration: .init()
-    )
-
+    #if os(iOS)
     public init(
-        phoneConfiguration: PhoneItemsConfiguration,
-        padConfiguration: PadItemsConfiguration,
-        tvConfiguration: TvItemsConfiguration
+        phoneConfiguration: PhoneItemsConfiguration = .init(),
+        padConfiguration: PadItemsConfiguration = .init(),
+        aspectRatio: CGFloat
     ) {
         self.phoneConfiguration = phoneConfiguration
         self.padConfiguration = padConfiguration
-        self.tvConfiguration = tvConfiguration
-        self.aspectRatio = 0
-    }
-    
-    public init(
-        aspectRatio: CGFloat
-    ) {
-        self.phoneConfiguration = .init()
-        self.padConfiguration = .init()
-        self.tvConfiguration = .init()
         self.aspectRatio = aspectRatio
     }
+    #endif
+
+    #if os(tvOS)
+    public init(
+        tvConfiguration: TvItemsConfiguration = .init(),
+        aspectRatio: CGFloat
+    ) {
+        self.tvConfiguration = tvConfiguration
+        self.aspectRatio = aspectRatio
+    }
+    #endif
 }

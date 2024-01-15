@@ -63,24 +63,6 @@ extension ColorGroup: Hashable {
 extension ColorGroup {
     static let exampleGroups: [ColorGroup] = [
         ColorGroup(
-            headerTitle: "Monochrom-ish Colors",
-            footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
-            configuration:
-                RibbonListSectionConfiguration(
-                    layout: .single(
-                        heightDimension: .absolute(70),
-                        itemWidthDimension: .estimated(70),
-                        itemsConfiguration: ItemsConfiguration(
-                            phoneConfiguration: .init(portraitItems: 2, landscapeItems: 4),
-                            padConfiguration: .init(portraitItems: 4, landscapeItems: 8),
-                            tvConfiguration: .init(items: 8)
-                        )
-                    )
-                ),
-            hue: .monochrome,
-            luminosity: .light
-        ),
-        ColorGroup(
             headerTitle: "Blue-ish Colors",
             footerTitle: "A range of blue colors to please your eyes. You can click on a cell to change its color.",
             configuration:
