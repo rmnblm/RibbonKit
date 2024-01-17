@@ -450,6 +450,10 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         delegate?.ribbonList(self, didEndDisplaying: cell, forItemAt: indexPath)
     }
+
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        delegate?.ribbonList(self, didEndDisplayingSupplementaryView: view, forItemAt: indexPath)
+    }
     
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
