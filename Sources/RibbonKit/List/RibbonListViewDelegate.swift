@@ -83,6 +83,16 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///     - indexPath: The index path of the data item that the cell represented.
     func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 
+    /// Tells the delegate that the specified supplementary view was removed from the ribbon list.
+    ///
+    /// Use this method to detect when a cell is removed from a ribbon list, as opposed to monitoring the view itself to see when it disappears.
+    ///
+    /// - Parameters:
+    ///     - collectionView: The ribbon list object that removed the cell.
+    ///     - view: The supplementary view object that was removed.
+    ///     - indexPath: The index path of the data item that the cell represented.
+    func ribbonList(_ ribbonList: RibbonListView, didEndDisplayingSupplementaryView supplementaryView: UICollectionReusableView, forItemAt indexPath: IndexPath)
+
     /// Asks the delegate whether a change in focus should occur.
     ///
     /// Before a focus change can occur, the focus engine asks all affected views if such a change should occur. In response, the ribbon list calls this method to give you the opportunity to allow or prevent the change. Return this method to prevent changes that should not occur. For example, you might use it to ensure that the navigation between cells occurs in a specific order.
@@ -250,6 +260,7 @@ extension RibbonListViewDelegate {
     
     public func ribbonList(_ ribbonList: RibbonListView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) { }
+    public func ribbonList(_ ribbonList: RibbonListView, didEndDisplayingSupplementaryView supplementaryView: UICollectionReusableView, forItemAt indexPath: IndexPath) { }
     public func ribbonList(_ ribbonList: RibbonListView, shouldUpdateFocusIn context: RibbonListViewFocusUpdateContext) -> Bool { true }
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func indexPathForPreferredFocusedView(in ribbonList: RibbonListView) -> IndexPath? { nil }
