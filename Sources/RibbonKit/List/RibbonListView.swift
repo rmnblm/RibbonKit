@@ -41,8 +41,15 @@ public class RibbonListView: UIView {
         set { collectionView.contentInset = newValue }
     }
 
+    /// The insets derived from the content insets and the safe area of the scroll view.
     public var adjustedContentInset: UIEdgeInsets {
         collectionView.adjustedContentInset
+    }
+
+    /// The vertical distance the scroll indicators are inset from the edge of the scroll view.
+    public var verticalScrollIndicatorInsets: UIEdgeInsets {
+        get { collectionView.verticalScrollIndicatorInsets }
+        set { collectionView.verticalScrollIndicatorInsets = newValue }
     }
 
     public var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior {
@@ -234,6 +241,17 @@ public class RibbonListView: UIView {
         return collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(ofKind: kind, at: indexPath)
     }
 
+    public var isScrolledToTop: Bool {
+        contentOffset.y == -adjustedContentInset.top
+    }
+
+    public private(set) var isScrollingToTop = false
+    public func scrollToTop() {
+        guard !isScrolledToTop, !isScrollingToTop else { return }
+        isScrollingToTop = true
+        setContentOffset(CGPoint(x: contentOffset.x, y: -adjustedContentInset.top), animated: true)
+    }
+
     private func buildLayout() -> UICollectionViewCompositionalLayout {
         let layout = RibbonListViewCompositionalLayout(sectionProvider: {
             [weak self] sectionIndex, layoutEnvironment in
@@ -401,6 +419,16 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
         switch verticalScrollingBehaviour {
         case .none:
             return proposedContentOffset
+        case .itemPaging:
+            guard let currentlyFocusedIndexPath else {
+                return proposedContentOffset
+            }
+
+            if let cellFrame = collectionView.collectionViewLayout.layoutAttributesForItem(at: currentlyFocusedIndexPath)?.frame {
+                return .init(x: proposedContentOffset.x, y: cellFrame.origin.y - contentInset.top)
+            }
+
+            return proposedContentOffset
         case .sectionPaging:
             guard let currentlyFocusedIndexPath else {
                 return proposedContentOffset
@@ -410,7 +438,7 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
             if let headerFrame = collectionView.collectionViewLayout.layoutAttributesForSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader, at: sectionHeaderIndexPath
             )?.frame {
-                return .init(x: proposedContentOffset.x, y: headerFrame.origin.y)
+                return .init(x: proposedContentOffset.x, y: headerFrame.origin.y - contentInset.top)
             }
 
             if let cellFrame = collectionView.collectionViewLayout.layoutAttributesForItem(at: currentlyFocusedIndexPath)?.frame {
@@ -424,6 +452,9 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
 
 extension RibbonListView: UICollectionViewDelegate {
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if isScrolledToTop {
+            isScrollingToTop = false
+        }
         delegate?.ribbonListDidEndScrollingAnimation(self)
     }
 

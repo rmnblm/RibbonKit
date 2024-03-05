@@ -4,5 +4,6 @@ import UIKit
 
 public enum RibbonListViewScrollingBehaviour {
     case none
+    case itemPaging
     case sectionPaging
 }
