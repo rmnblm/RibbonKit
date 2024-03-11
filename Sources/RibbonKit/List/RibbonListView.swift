@@ -419,6 +419,8 @@ extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
         switch verticalScrollingBehaviour {
         case .none:
             return proposedContentOffset
+        case .manual:
+            return delegate?.ribbonList(self, targetContentOffsetForProposedContentOffset: proposedContentOffset) ?? proposedContentOffset
         case .itemPaging:
             guard let currentlyFocusedIndexPath else {
                 return proposedContentOffset
