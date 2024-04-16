@@ -397,19 +397,6 @@ public class RibbonListView: UIView {
         return layout
     }
     
-    private static func getScreenWidth() -> CGFloat {
-        let screenSize = UIScreen.main.bounds.size
-        #if os(iOS)
-        if UIDevice.current.isPortrait {
-            return screenSize.width < screenSize.height ? screenSize.width : screenSize.height
-        } else {
-            return screenSize.width > screenSize.height ? screenSize.width : screenSize.height
-        }
-        #elseif os(tvOS)
-        return screenSize.width
-        #endif
-    }
-
     private var presentingContextMenuIndexPath: IndexPath?
     private var forcedFocusIndexPath: IndexPath?
 }
