@@ -10,7 +10,7 @@ protocol ItemsConfigurable {
 
 public struct ItemsConfiguration: Hashable {
     
-    #if os(iOS)
+    #if os(iOS) 
     public struct PhoneItemsConfiguration: ItemsConfigurable, Hashable {
         public let portraitItems: Int
         public let landscapeItems: Int
@@ -35,7 +35,7 @@ public struct ItemsConfiguration: Hashable {
     public var padConfiguration: PadItemsConfiguration
     #endif
 
-    #if os(tvOS)
+    #if os(tvOS) || os(visionOS)
     public struct TvItemsConfiguration: Hashable {
         public let items: Int
 
@@ -61,7 +61,7 @@ public struct ItemsConfiguration: Hashable {
     }
     #endif
 
-    #if os(tvOS)
+    #if os(tvOS) || os(visionOS)
     public init(
         tvConfiguration: TvItemsConfiguration = .init(),
         aspectRatio: CGFloat
