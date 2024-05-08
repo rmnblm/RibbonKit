@@ -206,6 +206,7 @@ public class RibbonListView: UIView {
                 elementKind: "header",
                 alignment: .top
             )
+            header.zIndex = 1000
             config.boundarySupplementaryItems = [header]
         }
         config.interSectionSpacing = interSectionSpacing
