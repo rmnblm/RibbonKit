@@ -68,9 +68,7 @@ public class RibbonListView: UIView {
     /// Use this property to specify a header view for your entire list. The header view is the first item to appear in the list's view's scrolling content, and it is separate from the header views you add to individual sections. The default value of this property is nil.
     /// When assigning a view to this property, a height must be specified using the delegate method `func ribbonListHeaderHeight(_:) -> RibbonListDimension`, returning a non-negative floating-point value.
     /// The ribbon list respects only the height of your view's frame rectangle; it adjusts the width of your header view automatically to match the ribbon list's width.
-    public var headerView: UIView? {
-        didSet { reloadLayout() }
-    }
+    public var headerView: UIView?
 
     /// The background view of the ribbon list.
     ///
@@ -198,7 +196,8 @@ public class RibbonListView: UIView {
     /// Reloads the RibbonList's layout.
     public func reloadLayout() {
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        if headerView != nil, let headerSize = delegate?.ribbonListHeaderHeight(self) {
+        if headerView != nil {
+            let headerSize = delegate?.ribbonListHeaderHeight(self) ?? .estimated(44)
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
@@ -391,9 +390,13 @@ public class RibbonListView: UIView {
             }
 
             section.boundarySupplementaryItems = [header, footer].compactMap { $0 }
+
+            let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "SectionBackground")
+            section.decorationItems = [sectionBackground]
             return section
         })
         layout.delegate = self
+        layout.register(SectionBackgroundView.self, forDecorationViewOfKind: "SectionBackground")
         return layout
     }
     
@@ -621,3 +624,9 @@ extension RibbonListView: UICollectionViewDelegate {
     }
     #endif
 }
+
+// NOTE: This backgorund view solves the iOS 14 issue where the decoration view
+// UICollectionViewListLayoutSectionBackgroundColorDecorationView
+// has user interaction set to on.
+
+class SectionBackgroundView: UICollectionReusableView, ReusableView { }
