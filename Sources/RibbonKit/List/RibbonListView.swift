@@ -3,7 +3,7 @@
 import UIKit
 
 /// A view that presents data using paginated items arranged in rows.
-public class RibbonListView: UIView {
+open class RibbonListView: UIView {
 
     /// The object that acts as the delegate of the ribbon list.
     ///
@@ -84,14 +84,8 @@ public class RibbonListView: UIView {
     /// This method returns the complete list of visible cells displayed by the ribbon list.
     public var visibleCells: [UICollectionViewCell] { collectionView.visibleCells }
 
-    private lazy var layout = buildLayout()
-    public private(set) lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
-        collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
-        return collectionView
-    }()
+    private var layout: UICollectionViewCompositionalLayout!
+    public private(set) var collectionView: UICollectionView!
 
     private var previouslyFocusedIndexPath: IndexPath?
     private var currentlyFocusedIndexPath: IndexPath?
@@ -103,6 +97,11 @@ public class RibbonListView: UIView {
     /// - Returns: Returns an initialized RibbonList object.
     public override init(frame: CGRect = .zero) {
         super.init(frame: frame)
+        layout = buildLayout()
+        collectionView = createCollectionView(using: layout)
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -141,6 +140,21 @@ public class RibbonListView: UIView {
     ///
     /// Do not call this initializer. It will crash.
     required public init?(coder: NSCoder) { nil }
+
+    /// Returns the collection view during initialization. Use this function to use an inherited UICollectionView.
+    ///
+    /// - Parameters:
+    ///     - layout: The reference to the layout used during the lifetime of the ribbon list.
+    /// - Returns: An object representing the underlying collection view.
+    open func createCollectionView(using layout: UICollectionViewCompositionalLayout) -> UICollectionView {
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }
+
+    /// Invalidates the view’s and underlying collection view's intrinsic content size.
+    open override func invalidateIntrinsicContentSize() {
+        super.invalidateIntrinsicContentSize()
+        collectionView.invalidateIntrinsicContentSize()
+    }
 
     /// Returns the ribbon cell at the specified index path.
     ///
