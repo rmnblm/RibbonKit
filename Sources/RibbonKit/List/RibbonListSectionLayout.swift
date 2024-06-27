@@ -17,6 +17,17 @@ public struct RibbonListSectionLayout: Hashable {
     public let heightDimension: RibbonListDimension
     public let itemWidthDimensions: [RibbonListDimension]
 
+    public static func single(
+        heightDimension: RibbonListDimension
+    ) -> RibbonListSectionLayout {
+        return .init(
+            orientation: .single,
+            numberOfRows: 1,
+            heightDimension: heightDimension,
+            itemWidthDimensions: []
+        )
+    }
+
     public static func carousel(
         heightDimension: RibbonListDimension
     ) -> RibbonListSectionLayout {

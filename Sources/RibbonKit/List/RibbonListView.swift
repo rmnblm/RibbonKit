@@ -372,13 +372,15 @@ open class RibbonListView: UIView {
                 )
             }
 
-            section.interGroupSpacing = configuration.interGroupSpacing
-            section.contentInsets = .init(
-                top: configuration.sectionInsets.top,
-                leading: configuration.sectionInsets.left,
-                bottom: configuration.sectionInsets.bottom,
-                trailing: configuration.sectionInsets.right
-            )
+            if configuration.layout.orientation != .single {
+                section.interGroupSpacing = configuration.interGroupSpacing
+                section.contentInsets = .init(
+                    top: configuration.sectionInsets.top,
+                    leading: configuration.sectionInsets.left,
+                    bottom: configuration.sectionInsets.bottom,
+                    trailing: configuration.sectionInsets.right
+                )
+            }
 
             var header: NSCollectionLayoutBoundarySupplementaryItem?
             if let headerHeight = delegate?.ribbonList(self, heightForHeaderInSection: sectionIndex), headerHeight.value > 0.0 {
