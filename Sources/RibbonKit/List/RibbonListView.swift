@@ -535,10 +535,14 @@ extension RibbonListView: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        if let shouldUpdateFocus = delegate?.ribbonList(self, shouldUpdateFocusIn: newContext) {
+            return shouldUpdateFocus
+        }
+
         if focusMightSkipSection(context: newContext) {
             return false
         }
-        return delegate?.ribbonList(self, shouldUpdateFocusIn: newContext) ?? true
+        return true
     }
 
     public func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
