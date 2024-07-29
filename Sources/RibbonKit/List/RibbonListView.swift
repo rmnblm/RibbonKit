@@ -462,6 +462,7 @@ extension RibbonListView: UICollectionViewDelegate {
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if isScrolledToTop {
             isScrollingToTop = false
+            delegate?.ribbonListDidScrollToTop(self)
         }
         delegate?.ribbonListDidEndScrollingAnimation(self)
     }
