@@ -247,7 +247,6 @@ public protocol RibbonListViewDelegate: AnyObject {
     func ribbonListContextMenuPreviewBackgroundColor(_ ribbonList: RibbonListView, forItemAt indexPath: IndexPath) -> UIColor?
     #endif
 
-    #if os(tvOS)
     /// Tells the delegate that the ribbon list has ended decelerating the scrolling to top movement.
     ///
     /// The ribbon list calls this method when the scrolling movement comes to a halt at the top.
@@ -255,7 +254,6 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Parameters:
     ///     - ribbonList: The ribbon list object that is performing the scrolling animation.
     func ribbonListDidScrollToTop(_ ribbonList: RibbonListView)
-    #endif
 }
 
 extension RibbonListViewDelegate {
@@ -281,9 +279,7 @@ extension RibbonListViewDelegate {
     public func ribbonListWillBeginDecelerating(_ ribbonList: RibbonListView) { }
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
-    #if os(tvOS)
     public func ribbonListDidScrollToTop(_ ribbonList: RibbonListView) { }
-    #endif
 
     #if os(iOS)
     public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
