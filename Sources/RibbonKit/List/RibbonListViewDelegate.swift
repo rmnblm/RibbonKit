@@ -162,6 +162,26 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Returns: A ribbon configuration to use for the section.
     func ribbonList(_ ribbonList: RibbonListView, configurationForSectionAt section: Int) -> RibbonListSectionConfiguration
 
+    /// Asks the delegate to return the itemIdentifier of the first cell inside the specified section of the ribbon list, to identify.
+    ///
+    /// If you do not implement this method, the ribbon list applies no custom width to the first cell in section.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: An object representing the ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: An hashable value used to identify the first cell in section that should be handled by ribbonList itself as a RibbonListSectionLeadingCell instance.
+    func ribbonList(_ ribbonList: RibbonListView, viewForLeadingCellInSection section: Int) -> UIView?
+
+    /// Asks the delegate to return the itemIdentifier of the first cell inside the specified section of the ribbon list, to identify.
+    ///
+    /// If you do not implement this method, the ribbon list applies no custom width to the first cell in section.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: An object representing the ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: An hashable value used to identify the first cell in section that should be handled by ribbonList itself as a RibbonListSectionLeadingCell instance.
+    func ribbonList(_ ribbonList: RibbonListView, defaultScrollOffsetForSectionAt section: Int) -> CGFloat?
+
     /// Gives the delegate an opportunity to customize the content offset for layout changes and animated updates.
     ///
     /// - Parameters:
@@ -273,6 +293,8 @@ extension RibbonListViewDelegate {
     public func ribbonList(_ ribbonList: RibbonListView, didUpdateFocusIn context: RibbonListViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) { }
     public func indexPathForPreferredFocusedView(in ribbonList: RibbonListView) -> IndexPath? { nil }
     public func ribbonList(_ ribbonList: RibbonListView, canFocusItemAt indexPath: IndexPath) -> Bool { true }
+    public func ribbonList(_ ribbonList: RibbonListView, viewForLeadingCellInSection section: Int) -> UIView? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, defaultScrollOffsetForSectionAt section: Int) -> CGFloat? { nil }
     public func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint { proposedContentOffset }
 
     public func ribbonListDidEndScrollingAnimation(_ ribbonList: RibbonListView) { }

@@ -102,6 +102,7 @@ open class RibbonListView: UIView {
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
+        collectionView.register(RibbonListSectionLeadingCell.self)
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -418,6 +419,8 @@ open class RibbonListView: UIView {
     
     private var presentingContextMenuIndexPath: IndexPath?
     private var forcedFocusIndexPath: IndexPath?
+    private var didPerformSectionsWithLeadingComponentInitialScroll = false
+    var sectionsWithLeadingCellComponent = Set<Int>()
 }
 
 extension RibbonListView: RibbonListViewCompositionalLayoutDelegate {
@@ -496,7 +499,11 @@ extension RibbonListView: UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        return delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
+        delegate?.ribbonList(self, canFocusItemAt: indexPath) ?? true
+    }
+
+    public func viewForLeadingCell(inSection section: Int) -> UIView? {
+        delegate?.ribbonList(self, viewForLeadingCellInSection: section)
     }
 
     private func moveFocusToLastItem(in section: Int) -> Bool {
@@ -556,10 +563,44 @@ extension RibbonListView: UICollectionViewDelegate {
         return delegate?.indexPathForPreferredFocusedView(in: self)
     }
 
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        guard !didPerformSectionsWithLeadingComponentInitialScroll,
+              !sectionsWithLeadingCellComponent.isEmpty else { return }
+        sectionsWithLeadingCellComponent.forEach {
+            guard let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: $0) else { return }
+            scroll(section: $0, horizontallyTo: scrollOffset)
+        }
+        didPerformSectionsWithLeadingComponentInitialScroll = true
+    }
+
+    func scroll(section: Int, horizontallyTo xPosition: CGFloat) {
+        guard let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: section)) else { return }
+        let scroll = cell.superview as! UIScrollView
+        let destinationXPosition = xPosition + abs(scroll.contentInset.left)
+        scroll.setContentOffset(CGPoint(x: destinationXPosition, y: 0), animated: true)
+    }
+
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         previouslyFocusedIndexPath = context.previouslyFocusedIndexPath
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
         let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        if newContext.nextFocusedIndexPath?.section != newContext.previouslyFocusedIndexPath?.section {
+            if let nextSection = newContext.nextFocusedIndexPath?.section,
+               let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: nextSection)) as? RibbonListSectionLeadingCell {
+                if let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: nextSection) {
+                    scroll(section: nextSection, horizontallyTo: scrollOffset)
+                }
+                cell.hideContentView = false
+            }
+            if let previousSection = newContext.previouslyFocusedIndexPath?.section,
+               let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: previousSection)) as? RibbonListSectionLeadingCell {
+                if let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: previousSection) {
+                    scroll(section: previousSection, horizontallyTo: scrollOffset)
+                }
+                cell.hideContentView = true
+            }
+        }
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
     }
 

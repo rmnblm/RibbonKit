@@ -16,9 +16,19 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
         self._ribbonList = ribbonList
         super.init()
 
+        let sectionLeadingCellRegistration = UICollectionView.CellRegistration<RibbonListSectionLeadingCell, Item> { _, _, _ in }
+
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: _ribbonList.collectionView, cellProvider: {
             [unowned self] collectionView, indexPath, itemIdentifier in
-            cellProvider(_ribbonList, indexPath, itemIdentifier)
+            guard indexPath.item == 0,
+                  let leadingCellView = _ribbonList.viewForLeadingCell(inSection: indexPath.section) else {
+                return cellProvider(_ribbonList, indexPath, itemIdentifier)
+            }
+            let cell = collectionView.dequeueConfiguredReusableCell(using: sectionLeadingCellRegistration, for: indexPath, item: itemIdentifier)
+            cell.setView(leadingCellView)
+            cell.hideContentView = true
+            _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
+            return cell
         })
 
         dataSource.supplementaryViewProvider = {
