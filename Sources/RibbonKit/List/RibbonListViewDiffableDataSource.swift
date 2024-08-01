@@ -22,7 +22,7 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
             [unowned self] collectionView, indexPath, itemIdentifier in
             guard indexPath.item == 0,
                   let leadingCellView = _ribbonList.viewForLeadingCell(inSection: indexPath.section) else {
-                if _ribbonList.sectionsWithLeadingCellComponent.contains(indexPath.section) {
+                if indexPath.item == 0, _ribbonList.sectionsWithLeadingCellComponent.contains(indexPath.section) {
                     _ribbonList.sectionsWithLeadingCellComponent.remove(indexPath.section)
                 }
                 return cellProvider(_ribbonList, indexPath, itemIdentifier)
