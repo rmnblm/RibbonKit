@@ -29,7 +29,13 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
             }
             let cell = collectionView.dequeueConfiguredReusableCell(using: sectionLeadingCellRegistration, for: indexPath, item: itemIdentifier)
             cell.setView(leadingCellView)
-            cell.hideContentView = true
+            if let focusedCell = _ribbonList.collectionView.visibleCells.first(where: { $0.isFocused }),
+               let focusedIndexPath = _ribbonList.collectionView.indexPath(for: focusedCell) {
+                cell.hideContentView = focusedIndexPath.section != indexPath.section
+            }
+            else {
+                cell.hideContentView = true
+            }
             _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
             return cell
         })
@@ -87,4 +93,14 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
 
     public func sections() -> [Section] { dataSource.snapshot().sectionIdentifiers }
     public func item(for indexPath: IndexPath) -> Item? { dataSource.itemIdentifier(for: indexPath) }
+
+    public func reconfigureItem(_ itemId: Item, animatingDifferences: Bool = true) {
+        reconfigureItems([itemId], animatingDifferences: animatingDifferences)
+    }
+
+    public func reconfigureItems(_ itemIds: [Item], animatingDifferences: Bool = true) {
+        var snapshot = snapshot()
+        snapshot.reconfigureItems(itemIds)
+        apply(snapshot, animatingDifferences: animatingDifferences)
+    }
 }
