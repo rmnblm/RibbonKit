@@ -612,6 +612,19 @@ extension RibbonListView: UICollectionViewDelegate {
         return delegate?.ribbonList(self, targetContentOffsetForProposedContentOffset: proposedContentOffset) ?? proposedContentOffset
     }
 
+    #if os(tvOS)
+    @available(tvOS 17.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPaths.count == 1, let indexPath = indexPaths.first else { return nil }
+        presentingContextMenuIndexPath = indexPath
+        return delegate?.ribbonList(
+            self,
+            contextMenuConfigurationForItemAt: indexPath,
+            point: point
+        )
+    }
+    #endif
+
     #if os(iOS)
     public func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         guard let presentingContextMenuIndexPath else { return }

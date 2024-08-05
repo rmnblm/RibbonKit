@@ -190,6 +190,22 @@ public protocol RibbonListViewDelegate: AnyObject {
     ///  - Returns: The content offset that you want to use instead. If you do not implement this method, the collection view uses the value in the proposedContentOffset parameter.
     func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint
 
+    #if os(tvOS)
+    /// Returns a context menu configuration for the item at a point.
+    ///
+    /// Use this method to provide a UIContextMenuConfiguration describing the menu to present.
+    /// Return nil to prevent the interaction from beginning.
+    /// Return an empty configuration to begin the interaction and then fail with a cancellation effect.
+    /// Use the empty configuration to indicate to users that it’s possible for this element to present a menu, but that there are no actions to present at this time.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list containing the item.
+    ///     - indexPath: The index path of the item.
+    ///     - point: The location of the interaction in the ribbon list's coordinate space.
+    /// - Returns: A context menu configuration for the indexPath.
+    @available(tvOS 17.0, *)
+    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+    #endif
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
     ///
@@ -302,6 +318,10 @@ extension RibbonListViewDelegate {
     public func ribbonListDidEndDecelerating(_ ribbonList: RibbonListView) { }
 
     public func ribbonListDidScrollToTop(_ ribbonList: RibbonListView) { }
+    #if os(tvOS)
+    @available(tvOS 17.0, *)
+    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
+    #endif
 
     #if os(iOS)
     public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
