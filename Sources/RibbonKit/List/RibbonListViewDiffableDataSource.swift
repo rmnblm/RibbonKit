@@ -29,7 +29,13 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
             }
             let cell = collectionView.dequeueConfiguredReusableCell(using: sectionLeadingCellRegistration, for: indexPath, item: itemIdentifier)
             cell.setView(leadingCellView)
-            cell.hideContentView = true
+            if let focusedCell = _ribbonList.collectionView.visibleCells.first(where: { $0.isFocused }),
+               let focusedIndexPath = _ribbonList.collectionView.indexPath(for: focusedCell) {
+                cell.hideContentView = focusedIndexPath.section != indexPath.section
+            }
+            else {
+                cell.hideContentView = true
+            }
             _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
             return cell
         })
