@@ -87,4 +87,14 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
 
     public func sections() -> [Section] { dataSource.snapshot().sectionIdentifiers }
     public func item(for indexPath: IndexPath) -> Item? { dataSource.itemIdentifier(for: indexPath) }
+
+    public func reconfigureItem(_ itemId: Item, animatingDifferences: Bool = true) {
+        reconfigureItems([itemId], animatingDifferences: animatingDifferences)
+    }
+
+    public func reconfigureItems(_ itemIds: [Item], animatingDifferences: Bool = true) {
+        var snapshot = snapshot()
+        snapshot.reconfigureItems(itemIds)
+        apply(snapshot, animatingDifferences: animatingDifferences)
+    }
 }
