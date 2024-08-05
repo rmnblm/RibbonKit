@@ -623,7 +623,43 @@ extension RibbonListView: UICollectionViewDelegate {
             point: point
         )
     }
+
+    @available(tvOS 17.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForHighlightingContextMenuWithConfiguration: configuration, at: indexPath) ?? contextMenuDefaultTargetedPreview(at: indexPath)
+    }
+
+    @available(tvOS 17.0, *)
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, dismissalPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        delegate?.ribbonList(self, previewForDismissingContextMenuWithConfiguration: configuration, at: indexPath) ?? contextMenuDefaultTargetedPreview(at: indexPath)
+    }
+
+    @available(tvOS 17.0, *)
+    public func collectionView(_ collectionView: UICollectionView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        guard let presentingContextMenuIndexPath else { return }
+        delegate?.ribbonList(self, willEndContextMenuInteraction: configuration, at: presentingContextMenuIndexPath, animator: animator)
+        guard let animator else {
+            self.presentingContextMenuIndexPath = nil
+            return
+        }
+        animator.addCompletion { [weak self] in
+            guard let self else { return }
+            self.presentingContextMenuIndexPath = nil
+        }
+    }
     #endif
+
+    @available(iOS 15.0, tvOS 17.0, *)
+    private func contextMenuDefaultTargetedPreview(at indexPath: IndexPath) -> UITargetedPreview? {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+
+        let parameters = UIPreviewParameters()
+        let visibleRect = cell.contentView.bounds.insetBy(dx: -10, dy: -10)
+        let visiblePath = UIBezierPath(roundedRect: visibleRect, cornerRadius: 20.0)
+        parameters.visiblePath = visiblePath
+        parameters.backgroundColor = delegate?.ribbonListContextMenuPreviewBackgroundColor(self, forItemAt: indexPath) ?? UIColor.clear
+        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+    }
 
     #if os(iOS)
     public func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
@@ -644,17 +680,6 @@ extension RibbonListView: UICollectionViewDelegate {
             contextMenuConfigurationForItemAt: indexPath,
             point: point
         )
-    }
-
-    private func contextMenuDefaultTargetedPreview(at indexPath: IndexPath) -> UITargetedPreview? {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
-
-        let parameters = UIPreviewParameters()
-        let visibleRect = cell.contentView.bounds.insetBy(dx: -10, dy: -10)
-        let visiblePath = UIBezierPath(roundedRect: visibleRect, cornerRadius: 20.0)
-        parameters.visiblePath = visiblePath
-        parameters.backgroundColor = delegate?.ribbonListContextMenuPreviewBackgroundColor(self, forItemAt: indexPath) ?? UIColor.systemBackground
-        return UITargetedPreview(view: cell.contentView, parameters: parameters)
     }
 
     @available(iOS 16.0, *)

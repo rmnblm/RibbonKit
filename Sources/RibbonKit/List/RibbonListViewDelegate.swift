@@ -205,6 +205,73 @@ public protocol RibbonListViewDelegate: AnyObject {
     /// - Returns: A context menu configuration for the indexPath.
     @available(tvOS 17.0, *)
     func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration?
+
+    /// Returns a UITargetedPreview that will be used as a preview when presenting a context menu, overriding the default preview the collection view created
+    ///
+    /// Use this method to tell the delegate that the user has requested a preview of view for the item that requested a context menu presentation.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list containing the item.
+    ///     - configuration: The context menu configuration.
+    /// - Returns: A view to override the default preview the collection view created
+    /// Example:
+    /// ```swift
+    ///   func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? {
+    ///        // Ensure we can get the expected identifier.
+    ///        // Use the identifier to get the UICollectionViewCell that requested context menu presentation
+    ///        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
+    ///
+    ///        let indexPath = IndexPath(row: configIdentifier.row, section: configIdentifier.section)
+    ///        // Get the cell for the index of the model.
+    ///        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+    ///
+    ///        let parameters = UIPreviewParameters()
+    ///        let visibleRect = cell.contentView.bounds.insetBy(dx: -10, dy: -10)
+    ///        let visiblePath = UIBezierPath(roundedRect: visibleRect, cornerRadius: 20.0)
+    ///        parameters.visiblePath = visiblePath
+    ///        parameters.backgroundColor = UIColor.systemTeal
+    ///        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+    ///    }
+    /// ```
+    @available(tvOS 17.0, *)
+    func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview?
+
+    /// Returns a UITargetedPreview that will be used as a preview when dismissing a context menu, overriding the default preview the collection view created
+    ///
+    /// Use this method to tell the delegate that the user has requested a preview of view for the item that requested a context menu presentation.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: The ribbon list containing the item.
+    ///     - configuration: The context menu configuration.
+    /// - Returns: A view to override the default preview the collection view created
+    ///
+    ///  Example:
+    /// ```swift
+    ///   func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? {
+    ///        // Ensure we can get the expected identifier.
+    ///        // Use the identifier to get the UICollectionViewCell that requested context menu presentation
+    ///        guard let configIdentifier = configuration.identifier as? ContextMenuIdentifier else { return nil }
+    ///
+    ///        let indexPath = IndexPath(row: configIdentifier.row, section: configIdentifier.section)
+    ///        // Get the cell for the index of the model.
+    ///        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+    ///
+    ///        let parameters = UIPreviewParameters()
+    ///        let visibleRect = cell.contentView.bounds.insetBy(dx: -10, dy: -10)
+    ///        let visiblePath = UIBezierPath(roundedRect: visibleRect, cornerRadius: 20.0)
+    ///        parameters.visiblePath = visiblePath
+    ///        parameters.backgroundColor = UIColor.systemTeal
+    ///        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+    ///    }
+    /// ```
+    @available (tvOS 17.0, *)
+    func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview?
+
+    @available(tvOS 17.0, *)
+    func ribbonList(_ ribbonList: RibbonListView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, at indexPath: IndexPath, animator: UIContextMenuInteractionAnimating?)
+
+    @available(tvOS 17.0, *)
+    func ribbonListContextMenuPreviewBackgroundColor(_ ribbonList: RibbonListView, forItemAt indexPath: IndexPath) -> UIColor?
     #endif
     #if os(iOS)
     /// Returns a context menu configuration for the item at a point.
@@ -321,6 +388,14 @@ extension RibbonListViewDelegate {
     #if os(tvOS)
     @available(tvOS 17.0, *)
     func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
+    @available(tvOS 17.0, *)
+    public func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? { nil }
+    @available(tvOS 17.0, *)
+    public func ribbonList(_ ribbonList: RibbonListView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? { nil }
+    @available(tvOS 17.0, *)
+    public func ribbonList(_ ribbonList: RibbonListView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, at indexPath: IndexPath, animator: UIContextMenuInteractionAnimating?) { }
+    @available(tvOS 17.0, *)
+    public func ribbonListContextMenuPreviewBackgroundColor(_ ribbonList: RibbonListView, forItemAt indexPath: IndexPath) -> UIColor? { nil }
     #endif
 
     #if os(iOS)
