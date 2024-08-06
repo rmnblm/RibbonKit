@@ -387,7 +387,7 @@ extension RibbonListViewDelegate {
     public func ribbonListDidScrollToTop(_ ribbonList: RibbonListView) { }
     #if os(tvOS)
     @available(tvOS 17.0, *)
-    func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
+    public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
     @available(tvOS 17.0, *)
     public func ribbonList(_ ribbonList: RibbonListView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration, at: IndexPath) -> UITargetedPreview? { nil }
     @available(tvOS 17.0, *)
