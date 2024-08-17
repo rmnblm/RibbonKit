@@ -5,7 +5,7 @@ import UIKit
 public struct RibbonListSectionLayout: Hashable {
 
     public enum Orientation: Hashable {
-        case horizontal
+        case horizontal(leadingCellWidth: RibbonListDimension? = nil)
         case vertical
         case list(RibbonListCollectionViewListConfiguration)
         case wall(ItemsConfiguration)
@@ -41,10 +41,11 @@ public struct RibbonListSectionLayout: Hashable {
 
     public static func horizontal(
         heightDimension: RibbonListDimension,
-        itemWidthDimensions: [RibbonListDimension]
+        itemWidthDimensions: [RibbonListDimension],
+        leadingCellWidth: RibbonListDimension? = nil
     ) -> RibbonListSectionLayout {
         return .init(
-            orientation: .horizontal,
+            orientation: .horizontal(leadingCellWidth: leadingCellWidth),
             numberOfRows: 1,
             heightDimension: heightDimension,
             itemWidthDimensions: itemWidthDimensions.isEmpty ? [.estimated(80)] : itemWidthDimensions
@@ -53,11 +54,13 @@ public struct RibbonListSectionLayout: Hashable {
 
     public static func horizontal(
         heightDimension: RibbonListDimension,
-        itemWidthDimension: RibbonListDimension
+        itemWidthDimension: RibbonListDimension,
+        leadingCellWidth: RibbonListDimension? = nil
     ) -> RibbonListSectionLayout {
         return .horizontal(
             heightDimension: heightDimension,
-            itemWidthDimensions: [itemWidthDimension]
+            itemWidthDimensions: [itemWidthDimension],
+            leadingCellWidth: leadingCellWidth
         )
     }
 

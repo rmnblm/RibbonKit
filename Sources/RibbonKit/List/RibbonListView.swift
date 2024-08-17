@@ -306,7 +306,7 @@ open class RibbonListView: UIView {
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = horizontalScrollingBehavior
             }
-            else if configuration.layout.orientation == .horizontal {
+            else if case .horizontal(let leadingCellWidth) = configuration.layout.orientation {
                 let items: [NSCollectionLayoutItem] = (0..<configuration.layout.itemWidthDimensions.count).map { itemIndex in
                     let itemWidth = configuration.layout.itemWidthDimensions[itemIndex]
                     let itemSize = NSCollectionLayoutSize(
@@ -316,14 +316,40 @@ open class RibbonListView: UIView {
                     return NSCollectionLayoutItem(layoutSize: itemSize)
                 }
 
+                var leadingCellGroup: NSCollectionLayoutGroup? = nil
+                if let leadingCellWidth {
+                    let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+                        widthDimension: leadingCellWidth.uiDimension,
+                        heightDimension: .fractionalHeight(1)
+                    ))
+                    let groupSize = NSCollectionLayoutSize(
+                        widthDimension: leadingCellWidth.uiDimension,
+                        heightDimension: configuration.layout.heightDimension.uiDimension
+                    )
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
+                    leadingCellGroup = group
+                }
+                
                 let itemGroupSize = NSCollectionLayoutSize(
                     widthDimension: .estimated(1),
                     heightDimension: configuration.layout.heightDimension.uiDimension
                 )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
-                group.interItemSpacing = .fixed(configuration.interItemSpacing)
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = horizontalScrollingBehavior
+                
+                if let leadingCellGroup {
+                    let group = NSCollectionLayoutGroup.horizontal(
+                        layoutSize: itemGroupSize,
+                        subitems: [leadingCellGroup] + items
+                    )
+                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
+                    section = NSCollectionLayoutSection(group: group)
+                    section.orthogonalScrollingBehavior = .groupPaging
+                } else {
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
+                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
+                    section = NSCollectionLayoutSection(group: group)
+                    section.orthogonalScrollingBehavior = horizontalScrollingBehavior
+                }
             }
             else if case .wall(let config) = configuration.layout.orientation {
                 var numberOfItems = 1
@@ -574,30 +600,38 @@ extension RibbonListView: UICollectionViewDelegate {
         didPerformSectionsWithLeadingComponentInitialScroll = true
     }
 
-    func scroll(section: Int, horizontallyTo xPosition: CGFloat) {
+    func scroll(section: Int, horizontallyTo xPosition: CGFloat, animated: Bool = true) {
         guard let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: section)) else { return }
         let scroll = cell.superview as! UIScrollView
-        let destinationXPosition = xPosition + abs(scroll.contentInset.left)
-        scroll.setContentOffset(CGPoint(x: destinationXPosition, y: 0), animated: true)
+        let destinationXPosition = xPosition
+        scroll.setContentOffset(
+            CGPoint(x: destinationXPosition, y: 0),
+            animated: animated
+        )
     }
 
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         previouslyFocusedIndexPath = context.previouslyFocusedIndexPath
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
-        let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        let newContext = RibbonListViewFocusUpdateContext(
+            previouslyFocusedIndexPath: context.previouslyFocusedIndexPath,
+            nextFocusedIndexPath: context.nextFocusedIndexPath
+        )
+        let nextSection = newContext.nextFocusedIndexPath?.section
+        let prevSection = newContext.previouslyFocusedIndexPath?.section
         if newContext.nextFocusedIndexPath?.section != newContext.previouslyFocusedIndexPath?.section {
-            if let nextSection = newContext.nextFocusedIndexPath?.section,
+            if let nextSection,
+               sectionsWithLeadingCellComponent.contains(nextSection) {
+                forcedFocusIndexPath = IndexPath(item: 1, section: nextSection)
+                setNeedsFocusUpdate()
+                updateFocusIfNeeded()
+            }
+            if let nextSection,
                let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: nextSection)) as? RibbonListSectionLeadingCell {
-                if let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: nextSection) {
-                    scroll(section: nextSection, horizontallyTo: scrollOffset)
-                }
                 cell.hideContentView = false
             }
-            if let previousSection = newContext.previouslyFocusedIndexPath?.section,
-               let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: previousSection)) as? RibbonListSectionLeadingCell {
-                if let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: previousSection) {
-                    scroll(section: previousSection, horizontallyTo: scrollOffset)
-                }
+            if let prevSection,
+                let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: prevSection)) as? RibbonListSectionLeadingCell {
                 cell.hideContentView = true
             }
         }
