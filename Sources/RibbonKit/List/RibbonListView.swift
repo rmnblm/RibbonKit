@@ -5,6 +5,12 @@ import UIKit
 /// A view that presents data using paginated items arranged in rows.
 open class RibbonListView: UIView {
 
+    struct Constants {
+        static let headerKind = "header"
+        static let supplementaryLeftKind = "supplementaryLeft"
+        static let sectionBackgroundKind = "sectionBackground"
+    }
+
     /// The object that acts as the delegate of the ribbon list.
     ///
     /// The delegate must adopt the RibbonListViewDelegate protocol. The delegate is not retained.
@@ -101,8 +107,8 @@ open class RibbonListView: UIView {
         collectionView = createCollectionView(using: layout)
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
-        collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: "header")
-        collectionView.register(RibbonListSectionLeadingCell.self)
+        collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: Constants.headerKind)
+        collectionView.register(RibbonListSectionLeadingCell.self, forSupplementaryViewOfKind: Constants.supplementaryLeftKind)
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -218,7 +224,7 @@ open class RibbonListView: UIView {
                     widthDimension: .fractionalWidth(1.0),
                     heightDimension: headerSize.uiDimension
                 ),
-                elementKind: "header",
+                elementKind: Constants.headerKind,
                 alignment: .top
             )
             header.zIndex = 1000
@@ -315,41 +321,28 @@ open class RibbonListView: UIView {
                     )
                     return NSCollectionLayoutItem(layoutSize: itemSize)
                 }
-
-                var leadingCellGroup: NSCollectionLayoutGroup? = nil
-                if let leadingCellWidth {
-                    let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-                        widthDimension: leadingCellWidth.uiDimension,
-                        heightDimension: .fractionalHeight(1)
-                    ))
-                    let groupSize = NSCollectionLayoutSize(
-                        widthDimension: leadingCellWidth.uiDimension,
-                        heightDimension: configuration.layout.heightDimension.uiDimension
-                    )
-                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
-                    leadingCellGroup = group
-                }
                 
                 let itemGroupSize = NSCollectionLayoutSize(
                     widthDimension: .estimated(1),
                     heightDimension: configuration.layout.heightDimension.uiDimension
                 )
+                let itemsGroup = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
                 
-                if let leadingCellGroup {
-                    let group = NSCollectionLayoutGroup.horizontal(
-                        layoutSize: itemGroupSize,
-                        subitems: [leadingCellGroup] + items
+                if let leadingCellWidth {
+                    let supplementarySize = NSCollectionLayoutSize(
+                        widthDimension: leadingCellWidth.uiDimension,
+                        heightDimension: configuration.layout.heightDimension.uiDimension
                     )
-                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
-                    section = NSCollectionLayoutSection(group: group)
-                    section.orthogonalScrollingBehavior = .groupPaging
-                } else {
-                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemGroupSize, subitems: items)
-                    group.interItemSpacing = .fixed(configuration.interItemSpacing)
-                    section = NSCollectionLayoutSection(group: group)
-                    section.orthogonalScrollingBehavior = horizontalScrollingBehavior
+                    itemsGroup.supplementaryItems = [NSCollectionLayoutSupplementaryItem(
+                        layoutSize: supplementarySize,
+                        elementKind: Constants.supplementaryLeftKind,
+                        containerAnchor: NSCollectionLayoutAnchor(edges: [.leading, .top]),
+                        itemAnchor: NSCollectionLayoutAnchor(edges: [.trailing, .top])
+                    )]
                 }
+                itemsGroup.interItemSpacing = .fixed(configuration.interItemSpacing)
+                section = NSCollectionLayoutSection(group: itemsGroup)
+                section.orthogonalScrollingBehavior = horizontalScrollingBehavior
             }
             else if case .wall(let config) = configuration.layout.orientation {
                 var numberOfItems = 1
@@ -400,9 +393,16 @@ open class RibbonListView: UIView {
 
             if configuration.layout.orientation != .single {
                 section.interGroupSpacing = configuration.interGroupSpacing
+                var leadingInset: CGFloat = configuration.sectionInsets.left
+                if case .horizontal(let leadingCellWidth) = configuration.layout.orientation,
+                   leadingCellWidth != nil,
+                   configuration.sectionInsets.left == 0 {
+                    // Cheap Trick: With no inset the supplementary left view won't be dequeued nor presented on screen
+                    leadingInset = 0.1
+                }
                 section.contentInsets = .init(
                     top: configuration.sectionInsets.top,
-                    leading: configuration.sectionInsets.left,
+                    leading: leadingInset,
                     bottom: configuration.sectionInsets.bottom,
                     trailing: configuration.sectionInsets.right
                 )
@@ -434,18 +434,17 @@ open class RibbonListView: UIView {
 
             section.boundarySupplementaryItems = [header, footer].compactMap { $0 }
 
-            let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "SectionBackground")
+            let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: Constants.sectionBackgroundKind)
             section.decorationItems = [sectionBackground]
             return section
         })
         layout.delegate = self
-        layout.register(SectionBackgroundView.self, forDecorationViewOfKind: "SectionBackground")
+        layout.register(SectionBackgroundView.self, forDecorationViewOfKind: Constants.sectionBackgroundKind)
         return layout
     }
     
     private var presentingContextMenuIndexPath: IndexPath?
     private var forcedFocusIndexPath: IndexPath?
-    private var didPerformSectionsWithLeadingComponentInitialScroll = false
     var sectionsWithLeadingCellComponent = Set<Int>()
 }
 
@@ -589,25 +588,21 @@ extension RibbonListView: UICollectionViewDelegate {
         return delegate?.indexPathForPreferredFocusedView(in: self)
     }
 
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        guard !didPerformSectionsWithLeadingComponentInitialScroll,
-              !sectionsWithLeadingCellComponent.isEmpty else { return }
-        sectionsWithLeadingCellComponent.forEach {
-            guard let scrollOffset = delegate?.ribbonList(self, defaultScrollOffsetForSectionAt: $0) else { return }
-            scroll(section: $0, horizontallyTo: scrollOffset)
-        }
-        didPerformSectionsWithLeadingComponentInitialScroll = true
-    }
-
-    func scroll(section: Int, horizontallyTo xPosition: CGFloat, animated: Bool = true) {
+    func scroll(section: Int, horizontallyTo xPosition: CGFloat? = nil, animated: Bool = true) {
         guard let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: section)) else { return }
         let scroll = cell.superview as! UIScrollView
-        let destinationXPosition = xPosition
+        let destinationXPosition = xPosition ?? -abs(scroll.contentInset.left)
         scroll.setContentOffset(
-            CGPoint(x: destinationXPosition, y: 0),
+            CGPoint(x: destinationXPosition, y: scroll.contentOffset.y),
             animated: animated
         )
+    }
+
+    private func supplementaryLeftCell(forSection section: Int) -> RibbonListSectionLeadingCell? {
+        collectionView.supplementaryView(
+            forElementKind: Constants.supplementaryLeftKind,
+            at: IndexPath(item: 0, section: section)
+        ) as? RibbonListSectionLeadingCell
     }
 
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -619,20 +614,26 @@ extension RibbonListView: UICollectionViewDelegate {
         )
         let nextSection = newContext.nextFocusedIndexPath?.section
         let prevSection = newContext.previouslyFocusedIndexPath?.section
+        let nextItem = newContext.nextFocusedIndexPath?.item
         if newContext.nextFocusedIndexPath?.section != newContext.previouslyFocusedIndexPath?.section {
             if let nextSection,
-               sectionsWithLeadingCellComponent.contains(nextSection) {
-                forcedFocusIndexPath = IndexPath(item: 1, section: nextSection)
-                setNeedsFocusUpdate()
-                updateFocusIfNeeded()
-            }
-            if let nextSection,
-               let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: nextSection)) as? RibbonListSectionLeadingCell {
+               let cell = supplementaryLeftCell(forSection: nextSection) {
                 cell.hideContentView = false
             }
             if let prevSection,
-                let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: prevSection)) as? RibbonListSectionLeadingCell {
+               let cell = supplementaryLeftCell(forSection: prevSection) {
                 cell.hideContentView = true
+            }
+        }
+        else if let nextSection,
+                  sectionsWithLeadingCellComponent.contains(nextSection),
+                  nextItem == 0 {
+            if let nextFocusedView = context.nextFocusedView,
+               let cell = supplementaryLeftCell(forSection: nextSection),
+               cell.containsSubview(nextFocusedView) {
+                DispatchQueue.main.async { [self] in
+                    scroll(section: nextSection, horizontallyTo: cell.frame.origin.x)
+                }
             }
         }
         delegate?.ribbonList(self, didUpdateFocusIn: newContext, with: coordinator)
@@ -643,7 +644,7 @@ extension RibbonListView: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return delegate?.ribbonList(self, targetContentOffsetForProposedContentOffset: proposedContentOffset) ?? proposedContentOffset
+        delegate?.ribbonList(self, targetContentOffsetForProposedContentOffset: proposedContentOffset) ?? proposedContentOffset
     }
 
     #if os(tvOS)
@@ -764,3 +765,22 @@ extension RibbonListView: UICollectionViewDelegate {
 // has user interaction set to on.
 
 class SectionBackgroundView: UICollectionReusableView, ReusableView { }
+
+extension UIView {
+    func containsSubview(_ view: UIView) -> Bool {
+        // Se la subview è una delle subview dirette, ritorna true
+        if subviews.contains(view) {
+            return true
+        }
+        
+        // Altrimenti, ricorsivamente verifica tra le subview
+        for subview in subviews {
+            if subview.containsSubview(view) {
+                return true
+            }
+        }
+        
+        // Se nessuna delle subview contiene la view cercata, ritorna false
+        return false
+    }
+}

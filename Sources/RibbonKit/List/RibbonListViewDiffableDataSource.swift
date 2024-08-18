@@ -19,32 +19,32 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
         let sectionLeadingCellRegistration = UICollectionView.CellRegistration<RibbonListSectionLeadingCell, Item> { _, _, _ in }
 
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: _ribbonList.collectionView, cellProvider: {
-            [unowned self] collectionView, indexPath, itemIdentifier in
-            guard indexPath.item == 0,
-                  let leadingCellView = _ribbonList.viewForLeadingCell(inSection: indexPath.section) else {
-                if indexPath.item == 0, _ribbonList.sectionsWithLeadingCellComponent.contains(indexPath.section) {
-                    _ribbonList.sectionsWithLeadingCellComponent.remove(indexPath.section)
-                }
-                return cellProvider(_ribbonList, indexPath, itemIdentifier)
-            }
-            let cell = collectionView.dequeueConfiguredReusableCell(using: sectionLeadingCellRegistration, for: indexPath, item: itemIdentifier)
-            cell.setView(leadingCellView)
-            if let focusedCell = _ribbonList.collectionView.visibleCells.first(where: { $0.isFocused }),
-               let focusedIndexPath = _ribbonList.collectionView.indexPath(for: focusedCell) {
-                cell.hideContentView = focusedIndexPath.section != indexPath.section
-            }
-            else {
-                cell.hideContentView = true
-            }
-            _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
-            return cell
+            [unowned self] _, indexPath, itemIdentifier in
+            cellProvider(_ribbonList, indexPath, itemIdentifier)
         })
 
         dataSource.supplementaryViewProvider = {
             [unowned self] collectionView, kind, indexPath in
 
             switch kind {
-            case "header":
+            case RibbonListView.Constants.supplementaryLeftKind:
+                let hostView: RibbonListSectionLeadingCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
+                if let leadingCellView = _ribbonList.viewForLeadingCell(inSection: indexPath.section) {
+                    hostView.setView(leadingCellView)
+                    if let focusedCell = _ribbonList.collectionView.visibleCells.first(where: { $0.isFocused }),
+                       let focusedIndexPath = _ribbonList.collectionView.indexPath(for: focusedCell) {
+                        hostView.hideContentView = focusedIndexPath.section != indexPath.section
+                    }
+                    else {
+                        hostView.hideContentView = true
+                    }
+                    _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
+                }
+                else {
+                    _ribbonList.sectionsWithLeadingCellComponent.remove(indexPath.section)
+                }
+                return hostView
+            case RibbonListView.Constants.headerKind:
                 let hostView: RibbonListReusableHostView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
                 if let headerView = _ribbonList.headerView {
                     hostView.setView(headerView)
