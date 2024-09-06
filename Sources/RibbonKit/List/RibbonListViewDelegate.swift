@@ -181,6 +181,16 @@ public protocol RibbonListViewDelegate: AnyObject {
     func ribbonList(_ ribbonList: RibbonListView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint
 
     #if os(tvOS)
+    /// Asks the delegate to if the leading cell in the provided section has to be hidden when the the content of the leading cell loses focus.
+    ///
+    /// If you do not implement this method, the ribbon list will hide the leading cell content automatically when the it loses focus.
+    ///
+    /// - Parameters:
+    ///     - ribbonList: An object representing the ribbon list requesting this information.
+    ///     - section: An index number identifying a section of ribbonList.
+    /// - Returns: A boolean value that determines if the leading cell content of the section should be hidden when its content loses focus.
+    func ribbonList(_ ribbonList: RibbonListView, shouldHideLeadingCellOnFocusLossInSection section: Int) -> Bool
+
     /// Returns a context menu configuration for the item at a point.
     ///
     /// Use this method to provide a UIContextMenuConfiguration describing the menu to present.
@@ -375,6 +385,7 @@ extension RibbonListViewDelegate {
 
     public func ribbonListDidScrollToTop(_ ribbonList: RibbonListView) { }
     #if os(tvOS)
+    public func ribbonList(_ ribbonList: RibbonListView, shouldHideLeadingCellOnFocusLossInSection section: Int) -> Bool { true }
     @available(tvOS 17.0, *)
     public func ribbonList(_ ribbonList: RibbonListView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? { nil }
     @available(tvOS 17.0, *)

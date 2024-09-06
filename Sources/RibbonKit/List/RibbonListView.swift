@@ -7,7 +7,7 @@ open class RibbonListView: UIView {
 
     struct Constants {
         static let headerKind = "header"
-        static let supplementaryLeftKind = "supplementaryLeft"
+        static let supplementaryLeadingKind = "supplementaryLeading"
         static let sectionBackgroundKind = "sectionBackground"
     }
 
@@ -108,7 +108,7 @@ open class RibbonListView: UIView {
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
         collectionView.register(RibbonListReusableHostView.self, forSupplementaryViewOfKind: Constants.headerKind)
-        collectionView.register(RibbonListSectionLeadingCell.self, forSupplementaryViewOfKind: Constants.supplementaryLeftKind)
+        collectionView.register(RibbonListSectionLeadingCell.self, forSupplementaryViewOfKind: Constants.supplementaryLeadingKind)
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -335,7 +335,7 @@ open class RibbonListView: UIView {
                     )
                     itemsGroup.supplementaryItems = [NSCollectionLayoutSupplementaryItem(
                         layoutSize: supplementarySize,
-                        elementKind: Constants.supplementaryLeftKind,
+                        elementKind: Constants.supplementaryLeadingKind,
                         containerAnchor: NSCollectionLayoutAnchor(edges: [.leading, .top]),
                         itemAnchor: NSCollectionLayoutAnchor(edges: [.trailing, .top])
                     )]
@@ -531,6 +531,12 @@ extension RibbonListView: UICollectionViewDelegate {
         delegate?.ribbonList(self, viewForLeadingCellInSection: section)
     }
 
+    #if os(tvOS)
+    public func shouldHideLeadingCellOnFocusLoss(inSection section: Int) -> Bool {
+        delegate?.ribbonList(self, shouldHideLeadingCellOnFocusLossInSection: section) ?? true
+    }
+    #endif
+
     private func moveFocusToLastItem(in section: Int) -> Bool {
         let numberOfItemsInNextSection = collectionView.numberOfItems(inSection: section)
         guard numberOfItemsInNextSection > 0 else { return false }
@@ -598,9 +604,9 @@ extension RibbonListView: UICollectionViewDelegate {
         )
     }
 
-    private func supplementaryLeftCell(forSection section: Int) -> RibbonListSectionLeadingCell? {
+    private func supplementaryLeadingCell(forSection section: Int) -> RibbonListSectionLeadingCell? {
         collectionView.supplementaryView(
-            forElementKind: Constants.supplementaryLeftKind,
+            forElementKind: Constants.supplementaryLeadingKind,
             at: IndexPath(item: 0, section: section)
         ) as? RibbonListSectionLeadingCell
     }
@@ -613,20 +619,24 @@ extension RibbonListView: UICollectionViewDelegate {
         let prevSection = newContext.previouslyFocusedIndexPath?.section
         let nextItem = newContext.nextFocusedIndexPath?.item
         if newContext.nextFocusedIndexPath?.section != newContext.previouslyFocusedIndexPath?.section {
+            #if os(tvOS)
             if let nextSection,
-               let cell = supplementaryLeftCell(forSection: nextSection) {
+               let cell = supplementaryLeadingCell(forSection: nextSection) {
                 cell.hideContentView = false
             }
             if let prevSection,
-               let cell = supplementaryLeftCell(forSection: prevSection) {
-                cell.hideContentView = true
+               let cell = supplementaryLeadingCell(forSection: prevSection) {
+                if delegate?.ribbonList(self, shouldHideLeadingCellOnFocusLossInSection: prevSection) ?? true {
+                    cell.hideContentView = true
+                }
             }
+            #endif
         }
         else if let nextSection,
                   sectionsWithLeadingCellComponent.contains(nextSection),
                   nextItem == 0 {
             if let nextFocusedView = context.nextFocusedView,
-               let cell = supplementaryLeftCell(forSection: nextSection),
+               let cell = supplementaryLeadingCell(forSection: nextSection),
                cell.containsSubview(nextFocusedView) {
                 DispatchQueue.main.async { [self] in
                     scroll(section: nextSection, horizontallyTo: cell.frame.origin.x)

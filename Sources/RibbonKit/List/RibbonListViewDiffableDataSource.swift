@@ -16,8 +16,6 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
         self._ribbonList = ribbonList
         super.init()
 
-        let sectionLeadingCellRegistration = UICollectionView.CellRegistration<RibbonListSectionLeadingCell, Item> { _, _, _ in }
-
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: _ribbonList.collectionView, cellProvider: {
             [unowned self] _, indexPath, itemIdentifier in
             cellProvider(_ribbonList, indexPath, itemIdentifier)
@@ -27,17 +25,21 @@ open class RibbonListViewDiffableDataSource<Section: Hashable, Item: Hashable>: 
             [unowned self] collectionView, kind, indexPath in
 
             switch kind {
-            case RibbonListView.Constants.supplementaryLeftKind:
+            case RibbonListView.Constants.supplementaryLeadingKind:
                 let hostView: RibbonListSectionLeadingCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
                 if let leadingCellView = _ribbonList.viewForLeadingCell(inSection: indexPath.section) {
                     hostView.setView(leadingCellView)
+                    #if os(tvOS)
                     if let focusedCell = _ribbonList.collectionView.visibleCells.first(where: { $0.isFocused }),
                        let focusedIndexPath = _ribbonList.collectionView.indexPath(for: focusedCell) {
-                        hostView.hideContentView = focusedIndexPath.section != indexPath.section
+                        if _ribbonList.shouldHideLeadingCellOnFocusLoss(inSection: indexPath.section) {
+                            hostView.hideContentView = focusedIndexPath.section != indexPath.section
+                        }
                     }
-                    else {
+                    else if _ribbonList.shouldHideLeadingCellOnFocusLoss(inSection: indexPath.section) {
                         hostView.hideContentView = true
                     }
+                    #endif
                     _ribbonList.sectionsWithLeadingCellComponent.insert(indexPath.section)
                 }
                 else {
