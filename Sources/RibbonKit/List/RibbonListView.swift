@@ -568,7 +568,7 @@ extension RibbonListView: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
-        let newContext = RibbonListViewFocusUpdateContext(previouslyFocusedIndexPath: context.previouslyFocusedIndexPath, nextFocusedIndexPath: context.nextFocusedIndexPath)
+        let newContext = RibbonListViewFocusUpdateContext(context: context)
         if let shouldUpdateFocus = delegate?.ribbonList(self, shouldUpdateFocusIn: newContext) {
             return shouldUpdateFocus
         }
@@ -608,10 +608,7 @@ extension RibbonListView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         previouslyFocusedIndexPath = context.previouslyFocusedIndexPath
         currentlyFocusedIndexPath = context.nextFocusedIndexPath
-        let newContext = RibbonListViewFocusUpdateContext(
-            previouslyFocusedIndexPath: context.previouslyFocusedIndexPath,
-            nextFocusedIndexPath: context.nextFocusedIndexPath
-        )
+        let newContext = RibbonListViewFocusUpdateContext(context: context)
         let nextSection = newContext.nextFocusedIndexPath?.section
         let prevSection = newContext.previouslyFocusedIndexPath?.section
         let nextItem = newContext.nextFocusedIndexPath?.item
